@@ -87,8 +87,13 @@
     "webpack": "^1.13.2"
   },
   "dependencies": {
+    "bcryptjs": "^2.3.0",
+    "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "isomorphic-fetch": "^2.2.1",
+    "mongoose": "^4.6.3",
+    "passport": "^0.3.2",
+    "passport-http": "^0.3.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
