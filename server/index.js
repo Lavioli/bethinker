@@ -2,8 +2,8 @@ import 'babel-polyfill';
 import express from 'express';
 import mongoose from 'mongoose';
 mongoose.connect('http://127.0.0.1:3306'); // connect to our database
-import UserSchema from 'User';
-import StickySchema from 'Sticky';
+import User from 'User';
+import Sticky from 'Sticky';
 
 const HOST = process.env.HOST;
 const PORT = process.env.PORT || 8080;
