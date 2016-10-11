@@ -31,7 +31,18 @@ function runServer() {
 if (require.main === module) {
     runServer();
 }
-
+//Allows users to see the sticky note
+app.get('/stickies', function(req,res){
+    StickySchema.find(function(err, sticky){
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        res.json(sticky);
+    });
+});
+//Allows users to create the title for a sticky note
 app.post('/stickies', function(req, res) {
     Sticky.create({
         title: req.body.title
