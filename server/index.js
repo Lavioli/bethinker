@@ -108,6 +108,9 @@ app.post('/users/:userId/stickies', jsonParser, passport.authenticate('basic', {
         if(err) {
             return res.sendStatus(500);
         }
+        if(id !== authenticatedId) {
+            return res.sendStatus(401).json({message: "Not Authorized"});
+        }
 
         return res.status(201).location("/users/" + authenticatedId + "/stickies/" + sticky._id).json({});
     })
