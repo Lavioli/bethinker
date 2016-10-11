@@ -16,19 +16,23 @@ function stickyReducer(state, action) {
     switch(action.type) {
         
         case FETCH_STICKIES_SUCCESS:
-            var newError = state.error;
-            newState = Object.assign({}, state, {
-                stickies: action.payload
+            var newState = Object.assign({}, state, {
+                stickies: action.payload,
+                fetchGetError: null
             });
+            
             return newState;
             
         case FETCH_STICKIES_ERROR:
             newState = Object.assign({}, state, {
                 error: action.payload
-            })
+            });
+            
             return newState;
             
         default:
             return state;
     }
 }
+
+export default stickyReducer;
