@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 var bcrypt = require('bcryptjs');
 
 var StickySchema = new Schema({
+    _user: { type: String, ref: 'User'},
     name: String,
     date: Date,
     content: String,
@@ -19,6 +20,6 @@ StickySchema.methods.validatePassword = function(password, callback) {
 		}
 		callback(null, isValid);
 	});
-}
+};
 
 module.exports = mongoose.model('Sticky', StickySchema);
