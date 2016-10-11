@@ -4,7 +4,9 @@ import mongoose from 'mongoose';
 mongoose.connect('mongodb://localhost:27017/stickies'); // connect to our database
 import User from './models/user';
 import Sticky from './models/sticky';
+import bodyParser from 'body-parser';
 
+const jsonParser = bodyParser.json();
 const HOST = process.env.HOST;
 const PORT = process.env.PORT || 8080;
 
@@ -44,11 +46,13 @@ app.get('/stickies', function(req,res){
     });
 });
 //Allows users to create the title for a sticky note
-app.post('/stickies', function(req, res) {
+app.post('/stickies', jsonParser, function(req, res) {
     console.log(req.body);
     Sticky.create({
         name: req.body.name,
-        content: req.body.content
+        date: req.body.date,
+        content: req.body.content,
+        rating: req.body.rating
     }, function(err, sticky) {
         if (err) {
             return res.status(500).json({
