@@ -49,8 +49,8 @@ function fetchStickies() {
     console.log('fetching')
     return function(dispatch) {
         console.log('dispatch')
-        var endpoint = '/user/stickies';
-        return fetch(endpoint)
+        var endpoint = '/stickies';
+        return fetch(endpoint, {method:'GET'})
             .then(function(response) {
                 if(response.status < 200 || response.status >= 300) {
                     var error = new Error(response.statusText);
@@ -86,7 +86,8 @@ function fetchStickiesError(error) {
     }
 };
 
-
+exports.FETCH_STICKIES = FETCH_STICKIES;
+exports.fetchStickies = fetchStickies;
 
 exports.FETCH_STICKIES_SUCCESS = FETCH_STICKIES_SUCCESS;
 exports.fetchStickiesSuccess = fetchStickiesSuccess;
