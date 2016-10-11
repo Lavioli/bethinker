@@ -37,7 +37,7 @@ if (require.main === module) {
 
 
 
-//Allows users to see the sticky note
+//Allows authorizied users to see their sticky notes
 app.get('/user/stickies', function(req,res){
     Sticky.find(function(err, sticky){
         if (err) {
@@ -48,7 +48,7 @@ app.get('/user/stickies', function(req,res){
         res.json(sticky);
     });
 });
-//Allows users to create the title for a sticky note
+//Allows users to create the title for their sticky note
 app.post('/user/stickies', jsonParser, function(req, res) {
     Sticky.create({
         name: req.body.name,
