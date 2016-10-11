@@ -71,8 +71,8 @@ if (require.main === module) {
 
 
 //get all the stickies for now, this is for testing purposes atm
-app.get('/stickies', passport.authenticate('basic', {session: false}, function(req,res){
-    Sticky.find(function(err, sticky){
+app.get('/stickies', jsonParser, passport.authenticate('basic', {session: false}, function(req, res) {
+    Sticky.find({}, function(err, sticky){
         if (err) {
             return res.status(500).json({
                 message: 'Internal Server Error'
@@ -80,7 +80,7 @@ app.get('/stickies', passport.authenticate('basic', {session: false}, function(r
         }
         res.json(sticky);
     });
-});
+}));
 
 
 //Allows authorizied users to see their sticky notes

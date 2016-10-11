@@ -1,16 +1,16 @@
 var fetch = require('isomorphic-fetch');
 
-// var username;
-// var password; 
-
-// var authString = btoa(username + ':' + password);
-
-// var authValue = "Basic" + authString
-
-// var headers = new Headers();
-// headers.append('Authorization', authValue);
-
-// var request = new Request('/users', {headers: headers});
+function idPasswordToHeader(username,password) {
+    var authString = btoa(username + ':' + password);
+    
+    var authValue = "Basic" + authString
+    
+    var headers = new Headers();
+    headers.append('Authorization', authValue);
+    
+    var request = new Request('/stickies', {headers: headers});
+    return request;
+}
 
 var ADD_STICKY = 'ADD_STICKY';
 function addSticky(title, content) {
@@ -46,11 +46,10 @@ var fetchStickiesRequest = function() {
 
 var FETCH_STICKIES = 'FETCH_STICKIES';
 function fetchStickies() {
-    console.log('fetching')
     return function(dispatch) {
-        console.log('dispatch')
+
         var endpoint = '/stickies';
-        return fetch(endpoint, {method:'GET'})
+        return fetch(idPasswordToHeader('admin','password'))
             .then(function(response) {
                 if(response.status < 200 || response.status >= 300) {
                     var error = new Error(response.statusText);
@@ -64,8 +63,8 @@ function fetchStickies() {
             })
             .catch(function(error) {
                 dispatch(fetchStickiesError(error));
-            })
-    }
+            });
+    };
 }
 
 
