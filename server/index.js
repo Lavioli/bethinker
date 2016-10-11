@@ -70,8 +70,8 @@ if (require.main === module) {
 }
 
 
-//Allows authorizied users to see their sticky notes
-app.get('/stickies', function(req,res){
+//get all the stickies for now, this is for testing purposes atm
+app.get('/stickies', passport.authenticate('basic', {session: false}, function(req,res){
     Sticky.find(function(err, sticky){
         if (err) {
             return res.status(500).json({
@@ -81,6 +81,21 @@ app.get('/stickies', function(req,res){
         res.json(sticky);
     });
 });
+
+
+//Allows authorizied users to see their sticky notes
+app.get('/users/:userId/stickies', jsonParser, passport.authenticate('basic', {session: false}, function(req, res) {
+    var routeId = req.params.userId;
+    var authenticatedId = req.user._id.toString();
+
+    if(routeId !== authenticatedId) {
+         return res.status(422).json({
+            "message": "you can't "
+         });   
+    }
+    
+}));
+
 
 //Allows users to create the title for their sticky notes
 app.post('/users/:userId/stickies', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
@@ -98,25 +113,6 @@ app.post('/users/:userId/stickies', jsonParser, passport.authenticate('basic', {
     })
 
 });
-
-
-// app.post('/stickies', jsonParser, passport.authenticate('basic', {
-//         session: false
-//     }),function(req, res) {
-            
-    
-//     Sticky.create({
-//         name: req.body.name,
-//         content: req.body.content
-//     }, function(err, sticky) {
-//         if (err) {
-//             return res.status(500).json({
-//                 message: 'Internal Server Error'
-//             });
-//         }
-//         res.status(201).json({});
-//     });
-// });
 
 
 //Allows users to log in 
@@ -216,16 +212,7 @@ app.post('/user', jsonParser, function(req, res) {
 
     });
 
-    /* User.create({username: req.body.username}, function(err, user) {
 
-        if(!req.body.username) {
-            return res.status(422).json({'message': 'Missing field: username'});
-        } else if(typeof req.body.username !== 'string') {
-            return res.status(422).json({'message': 'Incorrect field type: username'})
-        }
-        
-        res.status(201).location('/users/' + user._id).json({});
-    }); */
 });
 
 
