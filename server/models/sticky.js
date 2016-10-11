@@ -1,13 +1,14 @@
 var mongoose = require('mongoose');
-var user = require('./user');
+var User = require('./user');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcryptjs');
 
 var StickySchema = new Schema({
+    _user: { type: String, ref: 'User'},
     name: String,
-    date: Date,
-    content: String,
-    rating: { type: Number, min: 1, max: 3 }
+    // date: Date,
+    content: String
+    // rating: { type: Number, min: 1, max: 3 }
 });
 
 
@@ -19,6 +20,6 @@ StickySchema.methods.validatePassword = function(password, callback) {
 		}
 		callback(null, isValid);
 	});
-}
+};
 
 module.exports = mongoose.model('Sticky', StickySchema);

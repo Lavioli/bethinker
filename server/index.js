@@ -5,7 +5,42 @@ mongoose.connect('mongodb://localhost:27017/stickies'); // connect to our databa
 import User from './models/user';
 import Sticky from './models/sticky';
 import bodyParser from 'body-parser';
+var bcrypt = require('bcryptjs');
+var passport = require('passport');
+var BasicStrategy = require('passport-http').BasicStrategy;
+//Basic strategy
+var stategy = new BasicStrategy(function(username, password, callback) {
+    User.findOne({
+        username: username
+    }, function(err, user) {
+        if (err) {
+            callback(err);
+            return;
+        }
+        if (!user) {
+            return callback(null, false, {
+                message: 'Incorrect username.'
+            });
+        }
 
+        user.validatePassword(password, function(err, isValid) {
+            if (err) {
+                return callback(err);
+            }
+
+            if (!isValid) {
+                return callback(null, false, {
+                    message: 'Incorrect password.'
+                });
+            }
+            return callback(null, user);
+        });
+    });
+});
+
+passport.use(stategy);
+
+//app.use(passport.initialize());
 const jsonParser = bodyParser.json();
 const HOST = process.env.HOST;
 const PORT = process.env.PORT || 8080;
@@ -15,7 +50,6 @@ console.log(`Server running in ${process.env.NODE_ENV} mode`);
 const app = express();
 
 app.use(express.static(process.env.CLIENT_PATH));
-
 
 function runServer() {
     return new Promise((resolve, reject) => {
@@ -36,9 +70,8 @@ if (require.main === module) {
 }
 
 
-
 //Allows authorizied users to see their sticky notes
-app.get('/user/stickies', function(req,res){
+app.get('/stickies', function(req,res){
     Sticky.find(function(err, sticky){
         if (err) {
             return res.status(500).json({
@@ -48,23 +81,45 @@ app.get('/user/stickies', function(req,res){
         res.json(sticky);
     });
 });
-//Allows users to create the title for their sticky note
-app.post('/user/stickies', jsonParser, function(req, res) {
-    Sticky.create({
-        name: req.body.name,
-        date: req.body.date,
-        content: req.body.content,
-        rating: req.body.rating
-    }, function(err, sticky) {
-        if (err) {
-            return res.status(500).json({
-                message: 'Internal Server Error'
-            });
+
+//Allows users to create the title for their sticky notes
+app.post('/users/:userId/stickies', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
+    var id = req.params.userId;
+    var name = req.body.name;
+    var content = req.body.content;
+    var authenticatedId = req.user._id.toString();
+
+    Sticky.create({name: name, content: content, _user: authenticatedId}, function(err, sticky) {
+        if(err) {
+            return res.sendStatus(500);
         }
-        res.status(201).json({});
-    });
+
+        return res.status(201).location("/users/" + authenticatedId + "/stickies/" + sticky._id).json({});
+    })
+
 });
 
+
+// app.post('/stickies', jsonParser, passport.authenticate('basic', {
+//         session: false
+//     }),function(req, res) {
+            
+    
+//     Sticky.create({
+//         name: req.body.name,
+//         content: req.body.content
+//     }, function(err, sticky) {
+//         if (err) {
+//             return res.status(500).json({
+//                 message: 'Internal Server Error'
+//             });
+//         }
+//         res.status(201).json({});
+//     });
+// });
+
+
+//Allows users to log in 
 app.get('/user', function(req,res){
     User.find(function(err, user){
         if (err) {
@@ -76,23 +131,101 @@ app.get('/user', function(req,res){
     });
 });
 
-app.use('*', function(req, res) {
-    res.status(404).json({
-        message: 'Not Found'
-    });
-});
 
 app.post('/user', jsonParser, function(req, res) {
-    User.create({
-        username: req.body.username
-    }, function(err, user) {
+    if (!req.body) {
+        return res.status(400).json({
+            message: "No request body"
+        })
+    }
+
+    if (!('username' in req.body)) {
+        return res.status(422).json({
+            message: 'Missing field: username'
+        });
+    }
+
+    var username = req.body.username;
+
+    if (typeof username !== 'string') {
+        return res.status(422).json({
+            message: 'Incorrect field type: username'
+        });
+    }
+
+    username = username.trim();
+
+    if (username === '') {
+        return res.status(422).json({
+            message: 'Incorrect field length: username'
+        });
+    }
+
+    if (!('password' in req.body)) {
+        return res.status(422).json({
+            message: 'Missing field: password'
+        });
+    }
+
+    var password = req.body.password;
+
+    if (typeof password !== 'string') {
+        return res.status(422).json({
+            message: 'Incorrect field type: password'
+        });
+    }
+
+    password = password.trim();
+
+    if (password === '') {
+        return res.status(422).json({
+            message: 'Incorrect field length: password'
+        });
+    }
+
+    bcrypt.genSalt(10, function(err, salt) {
         if (err) {
             return res.status(500).json({
-                message: 'Internal Server Error'
+                message: 'Internal server error'
             });
         }
-        res.status(201).json({});
+
+        bcrypt.hash(password, salt, function(err, hash) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Internal server error'
+                });
+            }
+
+            var user = new User({
+                username: username,
+                password: hash
+            });
+
+            user.save(function(err) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Internal server error'
+                    });
+                }
+                //   return res.status(201).json({});
+                console.log('Username and password created');
+                return res.status(201).location('/users/' + user._id).json({});
+            });
+        })
+
     });
+
+    /* User.create({username: req.body.username}, function(err, user) {
+
+        if(!req.body.username) {
+            return res.status(422).json({'message': 'Missing field: username'});
+        } else if(typeof req.body.username !== 'string') {
+            return res.status(422).json({'message': 'Incorrect field type: username'})
+        }
+        
+        res.status(201).location('/users/' + user._id).json({});
+    }); */
 });
 
 
