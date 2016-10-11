@@ -89,11 +89,21 @@ app.get('/users/:userId/stickies', jsonParser, passport.authenticate('basic', {s
 
     if(routeId !== authenticatedId) {
          return res.status(422).json({
-            "message": "you can't "
+            "message": "Identification error"
          });   
     }
+
+    Sticky.find({_user: authenticatedId}, function(err, stickies) {
+        if(err) {
+            return res.status(err);
+        }
+
+        return res.status(200).json(stickies);
+    });
     
 });
+
+
 
 
 //Allows users to create the title for their sticky notes
