@@ -1,4 +1,4 @@
-import 'babel-polyfill';
+\import 'babel-polyfill';
 import express from 'express';
 import mongoose from 'mongoose';
 mongoose.connect('mongodb://localhost:27017/stickies'); // connect to our database
@@ -34,6 +34,9 @@ function runServer() {
 if (require.main === module) {
     runServer();
 }
+
+
+
 //Allows users to see the sticky note
 app.get('/stickies', function(req,res){
     Sticky.find(function(err, sticky){
