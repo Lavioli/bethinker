@@ -71,30 +71,37 @@ if (require.main === module) {
 
 
 //get all the stickies for now, this is for testing purposes atm
-app.get('/stickies', jsonParser, passport.authenticate('basic', {session: false}, function(req, res) {
-    Sticky.find({}, function(err, sticky){
-        if (err) {
-            return res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        }
-        res.json(sticky);
-    });
-}));
 
+app.get('/stickies', passport.authenticate('basic', {session: false}), function(req, res) {
+    Sticky.find(function(err, sticky) {
+        if (err) {
+            return res.status(500).json({message: 'Internal Server Error'});
+        }
+
+        return res.status(200).json(sticky);
+    })
+})
 
 //Allows authorizied users to see their sticky notes
-app.get('/users/:userId/stickies', jsonParser, passport.authenticate('basic', {session: false}, function(req, res) {
+app.get('/users/:userId/stickies', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
     var routeId = req.params.userId;
     var authenticatedId = req.user._id.toString();
 
     if(routeId !== authenticatedId) {
          return res.status(422).json({
-            "message": "you can't "
+            "message": "Identification error"
          });   
     }
+
+    Sticky.find({_user: authenticatedId}, function(err, stickies) {
+        if(err) {
+            return res.status(err);
+        }
+
+        return res.status(200).json(stickies);
+    });
     
-}));
+});
 
 
 //Allows users to create the title for their sticky notes
@@ -204,7 +211,6 @@ app.post('/user', jsonParser, function(req, res) {
                         message: 'Internal server error'
                     });
                 }
-                //   return res.status(201).json({});
                 console.log('Username and password created');
                 return res.status(201).location('/users/' + user._id).json({});
             });
