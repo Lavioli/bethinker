@@ -34,6 +34,9 @@ function runServer() {
 if (require.main === module) {
     runServer();
 }
+
+
+
 //Allows users to see the sticky note
 app.get('/user/stickies', function(req,res){
     Sticky.find(function(err, sticky){
