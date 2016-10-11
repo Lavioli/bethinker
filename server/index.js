@@ -35,7 +35,7 @@ if (require.main === module) {
     runServer();
 }
 //Allows users to see the sticky note
-app.get('/stickies', function(req,res){
+app.get('/user/stickies', function(req,res){
     Sticky.find(function(err, sticky){
         if (err) {
             return res.status(500).json({
@@ -46,8 +46,7 @@ app.get('/stickies', function(req,res){
     });
 });
 //Allows users to create the title for a sticky note
-app.post('/stickies', jsonParser, function(req, res) {
-    console.log(req.body);
+app.post('/user/stickies', jsonParser, function(req, res) {
     Sticky.create({
         name: req.body.name,
         date: req.body.date,
@@ -63,11 +62,36 @@ app.post('/stickies', jsonParser, function(req, res) {
     });
 });
 
+app.get('/user', function(req,res){
+    User.find(function(err, user){
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        res.json(user);
+    });
+});
+
 app.use('*', function(req, res) {
     res.status(404).json({
         message: 'Not Found'
     });
 });
+
+app.post('/user', jsonParser, function(req, res) {
+    User.create({
+        username: req.body.username
+    }, function(err, user) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        res.status(201).json({});
+    });
+});
+
 
 exports.app = app;
 exports.runServer = runServer;
