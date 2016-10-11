@@ -104,8 +104,6 @@ app.get('/users/:userId/stickies', jsonParser, passport.authenticate('basic', {s
 });
 
 
-
-
 //Allows users to create the title for their sticky notes
 app.post('/users/:userId/stickies', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
     var id = req.params.userId;
@@ -213,7 +211,6 @@ app.post('/user', jsonParser, function(req, res) {
                         message: 'Internal server error'
                     });
                 }
-                //   return res.status(201).json({});
                 console.log('Username and password created');
                 return res.status(201).location('/users/' + user._id).json({});
             });
