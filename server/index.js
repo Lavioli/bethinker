@@ -113,7 +113,7 @@ app.post('/users/:userId/stickies', jsonParser, passport.authenticate('basic', {
         }
 
         return res.status(201).location("/users/" + authenticatedId + "/stickies/" + sticky._id).json({});
-    })
+    });
 
 });
 
@@ -135,7 +135,7 @@ app.post('/user', jsonParser, function(req, res) {
     if (!req.body) {
         return res.status(400).json({
             message: "No request body"
-        })
+        });
     }
 
     if (!('username' in req.body)) {
@@ -211,7 +211,7 @@ app.post('/user', jsonParser, function(req, res) {
                 console.log('Username and password created');
                 return res.status(201).location('/users/' + user._id).json({});
             });
-        })
+        });
 
     });
 
