@@ -70,7 +70,6 @@ if (require.main === module) {
 }
 
 
-
 //Allows authorizied users to see their sticky notes
 app.get('/stickies', function(req,res){
     Sticky.find(function(err, sticky){
@@ -82,41 +81,42 @@ app.get('/stickies', function(req,res){
         res.json(sticky);
     });
 });
+
 //Allows users to create the title for their sticky notes
-app.post('/stickies', jsonParser, passport.authenticate('basic', {
-        session: false
-    }),function(req, res) {
-            if(!req.body.username) {
-                 return res.status(422).json({
-                "message": "Missing field: text"
-            });
+app.post('/users/:userId/stickies', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
+    var id = req.params.userId;
+    var name = req.body.name;
+    var content = req.body.content;
+    var authenticatedId = req.user._id.toString();
+
+    Sticky.create({name: name, content: content, _user: authenticatedId}, function(err, sticky) {
+        if(err) {
+            return res.sendStatus(500);
         }
-        else if (typeof(req.body.username) !== "string") {
-            return res.status(422).json ({
-                "message": "Incorrect field type: text"
-            });
-        }
-        if ((req.User._id.toString()) !== req.body.from){
-            return res.status(422).json({
-                "message": "you can't steal another person's identication"
-            });
-        }
+
+        return res.status(201).location("/users/" + authenticatedId + "/stickies/" + sticky._id).json({});
+    })
+
+});
+
+
+// app.post('/stickies', jsonParser, passport.authenticate('basic', {
+//         session: false
+//     }),function(req, res) {
             
     
-    Sticky.create({
-        name: req.body.name,
-        date: req.body.date,
-        content: req.body.content,
-        rating: req.body.rating
-    }, function(err, sticky) {
-        if (err) {
-            return res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        }
-        res.status(201).json({});
-    });
-});
+//     Sticky.create({
+//         name: req.body.name,
+//         content: req.body.content
+//     }, function(err, sticky) {
+//         if (err) {
+//             return res.status(500).json({
+//                 message: 'Internal Server Error'
+//             });
+//         }
+//         res.status(201).json({});
+//     });
+// });
 
 
 //Allows users to log in 
@@ -131,28 +131,103 @@ app.get('/user', function(req,res){
     });
 });
 
-//Allows users to change
-app.post('/user', jsonParser, passport.authenticate('basic', {
-        session: false
-    }), function(req, res) {
-    User.create({
-        username: req.body.username,
-        password: req.body.password
-    }, function(err, user) {
+
+app.post('/user', jsonParser, function(req, res) {
+    if (!req.body) {
+        return res.status(400).json({
+            message: "No request body"
+        })
+    }
+
+    if (!('username' in req.body)) {
+        return res.status(422).json({
+            message: 'Missing field: username'
+        });
+    }
+
+    var username = req.body.username;
+
+    if (typeof username !== 'string') {
+        return res.status(422).json({
+            message: 'Incorrect field type: username'
+        });
+    }
+
+    username = username.trim();
+
+    if (username === '') {
+        return res.status(422).json({
+            message: 'Incorrect field length: username'
+        });
+    }
+
+    if (!('password' in req.body)) {
+        return res.status(422).json({
+            message: 'Missing field: password'
+        });
+    }
+
+    var password = req.body.password;
+
+    if (typeof password !== 'string') {
+        return res.status(422).json({
+            message: 'Incorrect field type: password'
+        });
+    }
+
+    password = password.trim();
+
+    if (password === '') {
+        return res.status(422).json({
+            message: 'Incorrect field length: password'
+        });
+    }
+
+    bcrypt.genSalt(10, function(err, salt) {
         if (err) {
             return res.status(500).json({
-                message: 'Internal Server Error'
+                message: 'Internal server error'
             });
         }
-        res.status(201).json({});
+
+        bcrypt.hash(password, salt, function(err, hash) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Internal server error'
+                });
+            }
+
+            var user = new User({
+                username: username,
+                password: hash
+            });
+
+            user.save(function(err) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Internal server error'
+                    });
+                }
+                //   return res.status(201).json({});
+                console.log('Username and password created');
+                return res.status(201).location('/users/' + user._id).json({});
+            });
+        })
+
     });
+
+    /* User.create({username: req.body.username}, function(err, user) {
+
+        if(!req.body.username) {
+            return res.status(422).json({'message': 'Missing field: username'});
+        } else if(typeof req.body.username !== 'string') {
+            return res.status(422).json({'message': 'Incorrect field type: username'})
+        }
+        
+        res.status(201).location('/users/' + user._id).json({});
+    }); */
 });
 
-app.use('*', function(req, res) {
-    res.status(404).json({
-        message: 'Not Found'
-    });
-});
 
 exports.app = app;
 exports.runServer = runServer;

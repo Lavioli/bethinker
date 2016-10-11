@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var Sticky = require('./sticky');
 var bcrypt = require('bcryptjs');
 
 var UserSchema = new mongoose.Schema({
