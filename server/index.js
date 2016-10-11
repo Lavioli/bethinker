@@ -14,6 +14,7 @@ const app = express();
 
 app.use(express.static(process.env.CLIENT_PATH));
 
+
 function runServer() {
     return new Promise((resolve, reject) => {
         app.listen(PORT, HOST, (err) => {
@@ -35,12 +36,12 @@ if (require.main === module) {
 app.post('/stickies', function(req, res) {
     Sticky.create({
         title: req.body.title
-    }, function(err, sticky){
+    }, function(err, sticky) {
         if (err) {
-            return res.status(500).json ({
+            return res.status(500).json({
                 message: 'Internal Server Error'
             });
         }
         res.status(201).json(sticky);
     });
-})
+});
