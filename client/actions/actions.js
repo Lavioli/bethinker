@@ -1,15 +1,5 @@
 var fetch = require('isomorphic-fetch');
 
-// var username;
-// var password; 
-var username = 'admin';
-var password = 'password';
-var authString = btoa(username + ':' + password);
-var authValue = "Basic" + authString
-var headers = new Headers();
-headers.append('Authorization', authValue);
-var request = new Request('/stickies', {headers: headers});
-
 var ADD_STICKY = 'ADD_STICKY';
 function addSticky(title, content) {
     return {

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {fetchStickies} from '../actions/actions'
 import {connect} from 'react-redux';
 
-let StickyList = React.createClass({
+var StickyList = React.createClass({
     
     onClicker: function (event) {
         event.preventDefault();
@@ -23,7 +23,7 @@ let StickyList = React.createClass({
 //     return{cheeses: state.cheeses};
 // };
 
-let mapDispatchToProps = function(dispatch) {
+var mapDispatchToProps = function(dispatch) {
     return{
         fetchSticky: function() {
             dispatch(fetchStickies('admin','password'));
