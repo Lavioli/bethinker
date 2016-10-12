@@ -113,26 +113,40 @@ app.put("/users/:username/stickies/:stickyId", jsonParser, passport.authenticate
             var name = req.body.name;
             var content = req.body.content;
             var authenticatedUsername = req.user.username.toString();
+            var authenticatedId = req.user._id.toString();
+
     //finds stick-id and then allow user to edit sticky
     Sticky.findOne({_user: authenticatedId, _id: stickyId}, function(err, sticky) {
+            
             if(routerUsername !== authenticatedUsername) {
                 return res.status(401).json({message: "Unauthorized"});
             }   
-            if(err) {
-                    return res.sendStatus(500);
-            }
-            if(userId !== authenticatedId) {
-                return res.sendStatus(401).json({message: "Not Authorized"});
-            }
+            
             //check to see if name or content was changed
             if (name && !content){
-                Sticky.findOneAndUpdate({content: sticky.content, name: name})
+                Sticky.findOneAndUpdate(
+                    {_user: authenticatedId, _id: stickyId}, 
+                    {content: sticky.content, name: name}, 
+                    function(err, sticky) {
+                        if(err) {
+                            return res.sendStatus(500);
+                        }
+                        return res.status(201).json({message: "Succesfully saved"});
+                        }
+                );
             }
+
             if (content && !name){
-                Sticky.findOneAndUpdate({name: sticky.name, content: content})
+                Sticky.findOneAndUpdate(
+                    {_user: authenticatedId, _id: stickyId}, 
+                    {name: sticky.name, content: content}, 
+                    function(err, sticky) {
+                        if(err) {
+                            return res.sendStatus(500);
+                        }
+                    return res.status(201).json({message: "Succesfully saved"});
+                });
             }
-           
-        return res.status(201).json({message: "Succesfully saved"});
 
     });
 
