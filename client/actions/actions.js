@@ -7,7 +7,6 @@ function idPasswordToHeader(username,password) {
     
     var headers = new Headers();
     headers.append('Authorization', authValue);
-    
     var request = new Request('/stickies', {headers: headers});
     return request;
 }
@@ -44,12 +43,14 @@ var fetchStickiesRequest = function() {
     }
 };
 
+
+
 var FETCH_STICKIES = 'FETCH_STICKIES';
 function fetchStickies() {
     return function(dispatch) {
 
         var endpoint = '/stickies';
-        return fetch(idPasswordToHeader('admin','password'))
+        fetch(idPasswordToHeader('lavie','password'))
             .then(function(response) {
                 if(response.status < 200 || response.status >= 300) {
                     var error = new Error(response.statusText);
