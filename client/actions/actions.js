@@ -46,7 +46,7 @@ var FETCH_STICKIES = 'FETCH_STICKIES';
 function fetchStickies(username, password) {
   return (dispatch) => {
     const hash = new Buffer(`${username}:${password}`).toString('base64')
-    return fetch('https://bethinker-fullstack-project-kl012.c9users.io/stickies', {
+    return fetch('/stickies', {
       headers: {
         'Authorization': `Basic ${hash}`
       }
