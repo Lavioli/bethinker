@@ -81,9 +81,8 @@ function(req, res) {
         }
 
         return res.status(200).json(sticky);
-    })
-})
-
+    });
+});
 //Allows authorizied users to see their sticky notes
 app.get('/users/:username/stickies', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
 
@@ -94,7 +93,7 @@ app.get('/users/:username/stickies', jsonParser, passport.authenticate('basic', 
     if(routerUsername !== authenticatedUsername) {
          return res.status(422).json({
             "message": "Unauthorized"
-         })
+         });
     }   
 
     Sticky.find({_user: authenticatedId}, function(err, stickies) {
@@ -105,11 +104,52 @@ app.get('/users/:username/stickies', jsonParser, passport.authenticate('basic', 
     });
     
 });
+//should allow authorized users to delete their sticky
+app.delete("/users/:username/stickies/:stickyId", jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
+    //putting all requests in variables
+            var username = req.params.username;
+            var stickyId = req.params.stickyId;
+            var authenticatedUsername = req.user.username.toString();
+
+    //finds to allow user to delete sticky by stick:id
+    Sticky.findByIdAndRemove({_id: stickyId}, function(err, sticky) {
+            if(err) {
+                return res.status(500);
+            }
+            if(username !== authenticatedUsername) {
+                return res.status(401).json({message: "Unauthorized"});
+            }e
+        return res.status(200).json({});
+
+    });
+});
+//Allows users to create the title for their sticky notes
+app.post('/users/:username/stickies', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
+            var routeUsername = req.params.username;
+            var stickyId = req.params.stickyId;
+            var authenticatedUsername = req.user.username.toString();
+            var authenticatedId = req.user._id.toString();
+            var name = req.body.name;
+            var content = req.body.content;
+
+    Sticky.create({name: name, content: content, _user: authenticatedId}, function(err, sticky) {
+        if(err) {
+            return res.status(500);
+        }
+        if(routeUsername !== authenticatedUsername) {
+            return res.status(401).json({message: "Unauthorized"});
+        }
+
+        return res.status(201).location("/users/" + authenticatedUsername + "/stickies/" + sticky._id).json({});
+    });
+
+});
+
 //Allows user to edit a sticky note
 app.put("/users/:username/stickies/:stickyId", jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
     //putting all requests in variables
             var routerUsername = req.params.username;
-            var stickyId = req.params.stickyId
+            var stickyId = req.params.stickyId;
             var name = req.body.name;
             var content = req.body.content;
             var authenticatedUsername = req.user.username.toString();
@@ -152,79 +192,129 @@ app.put("/users/:username/stickies/:stickyId", jsonParser, passport.authenticate
 
 });
 
-
-//should allow authorized users to delete their sticky
-app.delete("/users/:username/stickies/:stickyId", jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
-    //putting all requests in variables
-            var username = req.params.username;
-            var stickyId = req.params.stickyId;
-            var authenticatedUsername = req.user.username.toString();
-
-    //finds to allow user to delete sticky by stick:id
-    Sticky.findByIdAndRemove({_id: stickyId}, function(err, sticky) {
-            if(err) {
-                return res.status(500);
-            }
-            if(username !== authenticatedUsername) {
-                return res.status(401).json({message: "Unauthorized"});
-            }e
-        return res.status(200).json({});
-
-    });
-});
-
-
-
-//Allows users to create the title for their sticky notes
-app.post('/users/:username/stickies', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
-            var routeUsername = req.params.username;
-            var stickyId = req.params.stickyId
-            var authenticatedUsername = req.user.username.toString();
-            var authenticatedId = req.user._id.toString();
-            var name = req.body.name;
-            var content = req.body.content;
-
-    Sticky.create({name: name, content: content, _user: authenticatedId}, function(err, sticky) {
-        if(err) {
-            return res.status(500);
-        }
-        if(routeUsername !== authenticatedUsername) {
-            return res.status(401).json({message: "Unauthorized"});
-        }
-
-        return res.status(201).location("/users/" + authenticatedUsername + "/stickies/" + sticky._id).json({});
-    });
-
-});
-
-
 /************************************USER ENDPOINTS***************************************/
 
-
-//Allows users to edit their password
-app.put("/users/:userId", jsonParser, passport.authenticate('basic', {
-        session: false
-    }), function(req, res) {
-        
-        var id = req.params.userId,
-            newName = req.body.username,
-            newPassword = req.body.password,
-            authenticatedId = req.user._id,
-            type = req.body.type;
-            
-console.log('this is params: ' + id);
-console.log('this is from object: ' + authenticatedId);
-        if (id.toString() !== authenticatedId.toString()) {
-            return res.status(422).json({
-                'message': 'Unauthorized user'
+//should list all users along with their passwords
+app.get('/user', function(req,res){
+    User.find(function(err, user){
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
             });
         }
-        
+        res.json(user);
+    });
+});
+
+//should allow user to delete an account
+app.delete("/users/:username", jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
+    var routerUsername = req.params.username;
+    var authenticatedUsername = req.user.username.toString();
+    
+    if (routerUsername !== authenticatedUsername){
+        return res.status(422).json({
+            message: "Unauthorized"
+                });
+            }
+            
+    User.findOneAndRemove({username: routerUsername}, function(user) { 
+            res.status(200).json({message: "User deleted"});
+    });
+});
+
+//allow a user to create a username
+app.post('/createuser', jsonParser, function(req, res) {
+    if (!req.body) {
+        return res.status(400).json({
+            message: "No request body"
+        });
+    }
+    if (!('username' in req.body)) {
+        return res.status(422).json({
+            message: 'Missing field: username'
+        });
+    }
+    var username = req.body.username;
+
+    if (typeof username !== 'string') {
+        return res.status(422).json({
+            message: 'Incorrect field type: username'
+        });
+    }
+    username = username.trim();
+
+    if (username === '') {
+        return res.status(422).json({
+            message: 'Incorrect field length: username'
+        });
+    }
+    if (!('password' in req.body)) {
+        return res.status(422).json({
+            message: 'Missing field: password'
+        });
+    }
+    var password = req.body.password;
+
+    if (typeof password !== 'string') {
+        return res.status(422).json({
+            message: 'Incorrect field type: password'
+        });
+    }
+    password = password.trim();
+    if (password === '') {
+        return res.status(422).json({
+            message: 'Incorrect field length: password'
+        });
+    }
+    bcrypt.genSalt(10, function(err, salt) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal server error'
+            });
+        }
+        bcrypt.hash(password, salt, function(err, hash) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Internal server error'
+                });
+            }
+            var user = new User({
+                username: username,
+                password: hash
+            });
+            user.save(function(err) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Internal server error'
+                    });
+                }
+                console.log('Username and password created');
+                return res.status(201).location('/users/' + user._id).json({});
+            });
+        });
+    });
+});
+//Allows users to edit their password
+app.put("/users/:username", jsonParser, passport.authenticate('basic', {
+        session: false
+    }), function(req, res) {
+        //req to varibles
+        var username = req.params.username,
+            newName = req.body.username,
+            newPassword = req.body.password,
+            authenticatedUsername = req.user.username,
+            type = req.body.type;
+        //conditionals
+        if (username.toString() !== authenticatedUsername.toString()) {
+            return res.status(401).json({
+                message: 'Unauthorized'
+            });
+        }
         if(type === "updateUsernamePassword") {
             if(typeof newName !== 'string') {
-                return res.status(422).json({
-                    'message': 'Incorrect field type: username'
-                })
+                return res.status(401).json({
+                    message: 'Incorrect field type: username'
+                });
             }
             bcrypt.genSalt(10, function(err, salt) {
                 if (err) {
@@ -243,20 +333,18 @@ console.log('this is from object: ' + authenticatedId);
                     {username: newName.toString(), password: hash.toString()}, 
                     {upsert: true}, 
                     function(err, user) {
-                        res.status(200).json({})
+                        res.status(200).json({});
                         });
-    
                 });
             });
         }
-        
         if(type === "updateUsername") {
-            console.log(req.body)
+            console.log(req.body);
             console.log(req.body);
            if(typeof newName !== 'string') {
                 return res.status(422).json({
                     'message': 'Incorrect field type: username'
-                })
+                });
             }
             User.findByIdAndUpdate(
                 id,
@@ -285,126 +373,11 @@ console.log('this is from object: ' + authenticatedId);
                     {password: hash.toString()}, 
                     {upsert: true}, 
                     function(err, user) {
-                        res.status(200).json({})
+                        res.status(200).json({message: "Okay"});
                         });
                 });
             });
-        };
-});
-
-
-//should list all users along with their passwords
-app.get('/user', function(req,res){
-    User.find(function(err, user){
-        if (err) {
-            return res.status(500).json({
-                message: 'Internal Server Error'
-            });
         }
-        res.json(user);
-    });
-});
-
-//should allow user to delete an account
-app.delete("/users/:userId", jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
-    var id = req.params.userId;
-    User.findOneAndRemove({
-        _id: id
-    }, function(user) {
-        if (!user) {
-            return res.status(404).json({
-                message: 'User not found'
-            });
-        }
-        res.status(200).json({});
-    });
-});
-
-//allow a user to create a username
-app.post('/createuser', jsonParser, function(req, res) {
-    if (!req.body) {
-        return res.status(400).json({
-            message: "No request body"
-        });
-    }
-
-    if (!('username' in req.body)) {
-        return res.status(422).json({
-            message: 'Missing field: username'
-        });
-    }
-
-    var username = req.body.username;
-
-    if (typeof username !== 'string') {
-        return res.status(422).json({
-            message: 'Incorrect field type: username'
-        });
-    }
-
-    username = username.trim();
-
-    if (username === '') {
-        return res.status(422).json({
-            message: 'Incorrect field length: username'
-        });
-    }
-
-    if (!('password' in req.body)) {
-        return res.status(422).json({
-            message: 'Missing field: password'
-        });
-    }
-
-    var password = req.body.password;
-
-    if (typeof password !== 'string') {
-        return res.status(422).json({
-            message: 'Incorrect field type: password'
-        });
-    }
-
-    password = password.trim();
-
-    if (password === '') {
-        return res.status(422).json({
-            message: 'Incorrect field length: password'
-        });
-    }
-
-    bcrypt.genSalt(10, function(err, salt) {
-        if (err) {
-            return res.status(500).json({
-                message: 'Internal server error'
-            });
-        }
-
-        bcrypt.hash(password, salt, function(err, hash) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Internal server error'
-                });
-            }
-
-            var user = new User({
-                username: username,
-                password: hash
-            });
-
-            user.save(function(err) {
-                if (err) {
-                    return res.status(500).json({
-                        message: 'Internal server error'
-                    });
-                }
-                console.log('Username and password created');
-                return res.status(201).location('/users/' + user._id).json({});
-            });
-        });
-
-    });
-
-
 });
 
 
