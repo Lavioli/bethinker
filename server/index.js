@@ -103,40 +103,47 @@ app.get('/users/:userId/stickies', jsonParser, passport.authenticate('basic', {s
     
 });
 //Allows user to edit a sticky note
-app.put("/users/:userId/stickies", jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
-    //putting all requests in varibles
-            var id = req.params.userId;
+app.put("/users/:userId/stickies/:stickyId", jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
+    //putting all requests in variables
+            var userId = req.params.userId;
+            var stickyId = req.params.stickyId;
             var name = req.body.name;
             var content = req.body.content;
             var authenticatedId = req.user._id.toString();
-    //using .update to allow user to edit sticky
-    Sticky.update({name: name, content: content, _user: authenticatedId}, function(err, sticky) {
-        if(err) {
-            return res.sendStatus(500);
-        }
-        if(id !== authenticatedId) {
-            return res.sendStatus(401).json({message: "Not Authorized"});
-        }
 
-        return res.status(201).location("/users/" + authenticatedId + "/stickies/" + sticky._id).json({});
+    //using .update to allow user to edit sticky
+    Sticky.findOneAndUpdate({_user: authenticatedId, _id: stickyId}, {name: name, content: content}, function(err, sticky) {
+        
+            if(err) {
+                return res.sendStatus(500);
+            }
+            if(userId !== authenticatedId) {
+                return res.sendStatus(401).json({message: "Not Authorized"});
+            }
+        return res.status(201).json({});
+
     });
 
 });
 
-//Allows a user to delete a sticky note
-app.delete("/users/:userId/stickies", jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
-    var name = req.body.name;
-    var content= req.body.content;
-    Sticky.findOneAndRemove({
-        name,
-        content
-    }, function(sticky) {
-        if (!Sticky.id) {
-            return res.status(404).json({
-                message: 'Could not delete sticky'
-            });
-        }
-        res.status(200).json({});
+
+//should allow authorized users to delete their sticky
+app.delete("/users/:userId/stickies/:stickyId", jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
+    //putting all requests in variables
+            var userId = req.params.userId;
+            var stickyId = req.params.stickyId;
+            var authenticatedId = req.user._id.toString();
+
+    //using .update to allow user to edit sticky
+    Sticky.findOneAndRemove({_id: stickyId}, function(err, sticky) {
+            if(err) {
+                return res.sendStatus(500);
+            }
+            if(userId !== authenticatedId) {
+                return res.sendStatus(401).json({message: "Not Authorized"});
+            }
+        return res.status(200).json({});
+
     });
 });
 
@@ -161,6 +168,11 @@ app.post('/users/:userId/stickies', jsonParser, passport.authenticate('basic', {
     });
 
 });
+
+
+/************************************USER ENDPOINTS***************************************/
+
+
 //********************************Allows users to edit their password****************************************//
 app.put("/users/:userId", jsonParser, passport.authenticate('basic', {
         session: false
@@ -171,6 +183,7 @@ app.put("/users/:userId", jsonParser, passport.authenticate('basic', {
             newPassword = req.body.password,
             authenticatedId = req.user._id,
             type = req.body.type;
+            
 console.log('this is params: ' + id);
 console.log('this is from object: ' + authenticatedId);
         if (id.toString() !== authenticatedId.toString()) {
@@ -251,9 +264,8 @@ console.log('this is from object: ' + authenticatedId);
         };
 });
 
-/************************************USER ENDPOINTS***************************************/
 
-//Allows users to log in 
+//should list all users along with their passwords
 app.get('/user', function(req,res){
     User.find(function(err, user){
         if (err) {
