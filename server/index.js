@@ -129,7 +129,7 @@ app.put("/users/:username/stickies/:stickyId", jsonParser, passport.authenticate
                     {content: sticky.content, name: name}, 
                     function(err, sticky) {
                         if(err) {
-                            return res.sendStatus(500);
+                            return res.status(500);
                         }
                         return res.status(201).json({message: "Succesfully saved"});
                         }
@@ -142,7 +142,7 @@ app.put("/users/:username/stickies/:stickyId", jsonParser, passport.authenticate
                     {name: sticky.name, content: content}, 
                     function(err, sticky) {
                         if(err) {
-                            return res.sendStatus(500);
+                            return res.status(500);
                         }
                     return res.status(201).json({message: "Succesfully saved"});
                 });
@@ -154,20 +154,20 @@ app.put("/users/:username/stickies/:stickyId", jsonParser, passport.authenticate
 
 
 //should allow authorized users to delete their sticky
-app.delete("/users/:userId/stickies/:stickyId", jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
+app.delete("/users/:username/stickies/:stickyId", jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
     //putting all requests in variables
-            var userId = req.params.userId;
+            var username = req.params.username;
             var stickyId = req.params.stickyId;
-            var authenticatedId = req.user._id.toString();
+            var authenticatedUsername = req.user.username.toString();
 
     //finds to allow user to delete sticky by stick:id
     Sticky.findByIdAndRemove({_id: stickyId}, function(err, sticky) {
             if(err) {
-                return res.sendStatus(500);
+                return res.status(500);
             }
-            if(userId !== authenticatedId) {
-                return res.sendStatus(401).json({message: "Not Authorized"});
-            }
+            if(username !== authenticatedUsername) {
+                return res.status(401).json({message: "Unauthorized"});
+            }e
         return res.status(200).json({});
 
     });
@@ -176,21 +176,23 @@ app.delete("/users/:userId/stickies/:stickyId", jsonParser, passport.authenticat
 
 
 //Allows users to create the title for their sticky notes
-app.post('/users/:userId/stickies', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
-    var id = req.params.userId;
-    var name = req.body.name;
-    var content = req.body.content;
-    var authenticatedId = req.user._id.toString();
+app.post('/users/:username/stickies', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
+            var routeUsername = req.params.username;
+            var stickyId = req.params.stickyId
+            var authenticatedUsername = req.user.username.toString();
+            var authenticatedId = req.user._id.toString();
+            var name = req.body.name;
+            var content = req.body.content;
 
     Sticky.create({name: name, content: content, _user: authenticatedId}, function(err, sticky) {
         if(err) {
-            return res.sendStatus(500);
+            return res.status(500);
         }
-        if(id !== authenticatedId) {
-            return res.sendStatus(401).json({message: "Not Authorized"});
+        if(routeUsername !== authenticatedUsername) {
+            return res.status(401).json({message: "Unauthorized"});
         }
 
-        return res.status(201).location("/users/" + authenticatedId + "/stickies/" + sticky._id).json({});
+        return res.status(201).location("/users/" + authenticatedUsername + "/stickies/" + sticky._id).json({});
     });
 
 });
