@@ -20,7 +20,7 @@ function stickyReducer(state, action) {
                 stickies: action.payload,
                 fetchGetError: null
             });
-            
+            console.log(newState);
             return newState;
             
         case FETCH_STICKIES_ERROR:

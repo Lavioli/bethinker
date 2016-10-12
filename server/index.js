@@ -72,7 +72,8 @@ if (require.main === module) {
 //************************************STICKIE ENDPOINTS*****************************************/
 
 //get all the stickies for now, this is for testing purposes atm
-app.get('/stickies', passport.authenticate('basic', {session: false}), function(req, res) {
+app.get('/stickies', passport.authenticate('basic', {session: false}), 
+function(req, res) {
     Sticky.find(function(err, sticky) {
         if (err) {
             return res.status(500).json({message: 'Internal Server Error'});
