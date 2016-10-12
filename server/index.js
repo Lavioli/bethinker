@@ -202,7 +202,7 @@ app.get('/user', function(req,res){
                 message: 'Internal Server Error'
             });
         }
-        res.json(user);
+        res.status(200).json(user);
     });
 });
 
