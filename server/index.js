@@ -106,24 +106,33 @@ app.get('/users/:username/stickies', jsonParser, passport.authenticate('basic', 
     
 });
 //Allows user to edit a sticky note
-app.put("/users/:userId/stickies/:stickyId", jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
+app.put("/users/:username/stickies/:stickyId", jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
     //putting all requests in variables
-            var userId = req.params.userId;
-            var stickyId = req.params.stickyId;
+            var routerUsername = req.params.username;
+            var stickyId = req.params.stickyId
             var name = req.body.name;
             var content = req.body.content;
-            var authenticatedId = req.user._id.toString();
-
-    //using .update to allow user to edit sticky
-    Sticky.findOneAndUpdate({_user: authenticatedId, _id: stickyId}, {name: name, content: content}, function(err, sticky) {
-        
+            var authenticatedUsername = req.user.username.toString();
+    //finds stick-id and then allow user to edit sticky
+    Sticky.findOne({_user: authenticatedId, _id: stickyId}, function(err, sticky) {
+            if(routerUsername !== authenticatedUsername) {
+                return res.status(401).json({message: "Unauthorized"});
+            }   
             if(err) {
-                return res.sendStatus(500);
+                    return res.sendStatus(500);
             }
             if(userId !== authenticatedId) {
                 return res.sendStatus(401).json({message: "Not Authorized"});
             }
-        return res.status(201).json({});
+            //check to see if name or content was changed
+            if (name && !content){
+                Sticky.findOneAndUpdate({content: sticky.content, name: name})
+            }
+            if (content && !name){
+                Sticky.findOneAndUpdate({name: sticky.name, content: content})
+            }
+           
+        return res.status(201).json({message: "Succesfully saved"});
 
     });
 
@@ -137,8 +146,8 @@ app.delete("/users/:userId/stickies/:stickyId", jsonParser, passport.authenticat
             var stickyId = req.params.stickyId;
             var authenticatedId = req.user._id.toString();
 
-    //using .update to allow user to edit sticky
-    Sticky.findOneAndRemove({_id: stickyId}, function(err, sticky) {
+    //finds to allow user to delete sticky by stick:id
+    Sticky.findByIdAndRemove({_id: stickyId}, function(err, sticky) {
             if(err) {
                 return res.sendStatus(500);
             }
@@ -176,7 +185,7 @@ app.post('/users/:userId/stickies', jsonParser, passport.authenticate('basic', {
 /************************************USER ENDPOINTS***************************************/
 
 
-//********************************Allows users to edit their password****************************************//
+//Allows users to edit their password
 app.put("/users/:userId", jsonParser, passport.authenticate('basic', {
         session: false
     }), function(req, res) {
