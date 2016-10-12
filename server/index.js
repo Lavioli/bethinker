@@ -8,6 +8,7 @@ import bodyParser from 'body-parser';
 var bcrypt = require('bcryptjs');
 var passport = require('passport');
 var BasicStrategy = require('passport-http').BasicStrategy;
+
 //Basic strategy
 var stategy = new BasicStrategy(function(username, password, callback) {
     User.findOne({
@@ -19,7 +20,7 @@ var stategy = new BasicStrategy(function(username, password, callback) {
         }
         if (!user) {
             return callback(null, false, {
-                message: 'Incorrect username.'
+                message: 'Invalid username/password. Please try again.'
             });
         }
 
@@ -30,7 +31,7 @@ var stategy = new BasicStrategy(function(username, password, callback) {
 
             if (!isValid) {
                 return callback(null, false, {
-                    message: 'Incorrect password.'
+                    message: 'Invalid username/password. Please try again.'
                 });
             }
             return callback(null, user);
@@ -84,20 +85,22 @@ function(req, res) {
 })
 
 //Allows authorizied users to see their sticky notes
-app.get('/users/:userId/stickies', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
-    var routeId = req.params.userId;
+app.get('/users/:username/stickies', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
+
+    var routerUsername = req.params.username;
+    var authenticatedUsername = req.user.username.toString();
     var authenticatedId = req.user._id.toString();
-    if(routeId !== authenticatedId) {
+
+    if(routerUsername !== authenticatedUsername) {
          return res.status(422).json({
-            "message": "Identification error"
-         });   
-    }
+            "message": "Unauthorized"
+         })
+    }   
 
     Sticky.find({_user: authenticatedId}, function(err, stickies) {
         if(err) {
             return res.status(err);
         }
-
         return res.status(200).json(stickies);
     });
     
@@ -293,7 +296,7 @@ app.delete("/users/:userId", jsonParser, passport.authenticate('basic', {session
 });
 
 //allow a user to create a username
-app.post('/user', jsonParser, function(req, res) {
+app.post('/createuser', jsonParser, function(req, res) {
     if (!req.body) {
         return res.status(400).json({
             message: "No request body"
