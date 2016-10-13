@@ -14,8 +14,7 @@ import App from '../components/App';
 import Header from '../components/Header';
 import reducers from '../reducers/reducers';
 import Login from '../components/Login';
-import StickyListContainer from '../components/StickyListContainer';
-import NewSticky from '../components/NewSticky';
+import StickyList from '../components/StickyList';
 
 console.log(`Client running in ${process.env.NODE_ENV} mode`);
 
@@ -25,8 +24,7 @@ var routes = (
     <Router history={hashHistory}>
         <Route path="/" component={App}>
             <Route path="/login" component={Login} />
-            <Route path="/stickies" component={StickyListContainer} />
-            <Route path="/new" components={NewSticky} />
+            <Route path="/stickies" component={StickyList} />
         </Route>
     </Router>
 );

@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom';
 import {postSticky} from '../actions/actions';
 import {connect} from 'react-redux';
 
-var Login = React.createClass({
+var NewSticky = React.createClass({
     
     onSubmit: function () {
         this.props.onAddSubmit(this.refs.titleText.value, this.refs.contentText.value);
+        
     },
     
     render: function() {
@@ -34,4 +35,4 @@ function mapDispatchToProps (dispatch) {
     };
 }
 
-export default connect(null,mapDispatchToProps)(Login);
+export default connect(null,mapDispatchToProps)(NewSticky);

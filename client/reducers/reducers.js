@@ -44,7 +44,7 @@ function stickyReducer(state, action) {
                 stickies: action.payload,
                 fetchGetError: null
             });
-            console.log(newState);
+            
             return newState;
             
         case FETCH_STICKIES_ERROR:
@@ -54,14 +54,17 @@ function stickyReducer(state, action) {
             return newState;
             
         case POST_STICKY_SUCCESS:
+
+
             newState = Object.assign({}, state, {
                 stickies: state.stickies.concat({
                     stickyId: action.payloadStickyId, 
                     title: action.payloadTitle, 
                     content: action.payloadContent
                 })
-            })
-            console.log(newState);
+            }) 
+             console.log('THIS IS NEWSTATE', newState)
+
             return newState;
         
         case POST_STICKY_ERROR:

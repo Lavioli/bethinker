@@ -131,7 +131,7 @@ function postSticky(title, content) {
     .then(
       data => {
         var stickyId = data.stickyId
-        console.log(data);
+        console.log('this is data', data);
         dispatch(postStickySuccess(stickyId, title, content));
       },
       ({response, data}) => {
