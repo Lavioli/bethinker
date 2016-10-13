@@ -1,34 +1,40 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {connect} from 'react-redux';
-var Link = require('react-router').Link;
+// import React from 'react';
+// import ReactDOM from 'react-dom';
+// import {connect} from 'react-redux';
+// var Link = require('react-router').Link;
 
-import Login from './Login';
-import {loginRequest} from '../actions/actions'
+// import actions from '../actions/actions';
+// import App from './App'
+// import Login from './Login';
+// import {loginRequest} from '../actions/actions'
 
 
-var Header = function(props){
-    console.log(this.props);
-    if (!this.props.currentUser) {
-        return [
-            <li><Link to="/login">Sign In</Link></li>,
-            <li>Register</li>
-        ];
-    } 
-    else {
-        return [
-            <li>Welcome, {this.props.currentUser}!</li>,
-            <li><Link to="/stickies">Stickies</Link></li>
-        ];
-    }
-};
+// var Header = function(props){
+//     var headerArr;
+//     if (!props.currentUser) {
+//         headerArr =
+//         [
+//             <li><Link to="/login">Sign In</Link></li>,
+//             <li>Register</li>
+//         ];
+//         return <span>{headerArr}</span>
+//     } 
+//     else {
+//         headerArr = [
+//             <li>Welcome, {props.currentUser}!</li>,
+//             <li><Link to="/stickies">Stickies</Link></li>
+//         ];
+//         return <span>{headerArr}</span>
+//     }
+// };
        
 
-//     var renderLoginNav = (currentUser) => {
+// //     var renderLoginNav = (currentUser) => {
  
-function mapStateToProps(state) {
-    return {
-        currentUser: state.currentUser
-    };
-}
-export default connect(mapStateToProps)(Header);
+// // function mapStateToProps(state) {
+// //     return {
+// //         currentUser: state.currentUser
+// //     };
+// // }
+
+// export default Header;

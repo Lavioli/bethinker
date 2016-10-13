@@ -11,6 +11,7 @@ var hashHistory = router.hashHistory;
 var IndexRoute = router.IndxRoute;
 var Link = router.Link;
 import App from '../components/App';
+import Header from '../components/Header';
 import reducers from '../reducers/reducers';
 import Login from '../components/Login';
 import StickyListContainer from '../components/StickyListContainer';
