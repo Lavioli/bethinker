@@ -7,10 +7,9 @@ var StickyListContainer = React.createClass({
     
     
     renderFetchStickiesButton: function (props) {
-        var style = { display: "none" }
         if(!this.props.isAuthenticated) {
             return (
-                <input type="submit" onClick={this.onClicker} value="My Stickies" style={style}></input>
+                <input type="submit" onClick={this.onClicker} value="My Stickies" style={{display: "none"}}></input>
             )
         } else {
             return (
