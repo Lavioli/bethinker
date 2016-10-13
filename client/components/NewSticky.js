@@ -11,9 +11,8 @@ var Login = React.createClass({
     
     render: function() {
         return (
-            <div className="Login">
-                <form className="login-page">
-                    <legend>Login to your account</legend>
+            <div className="sticky">
+                <form className="sticky">
                     <span>Title:</span>
                     <input type="text" id="title" ref="titleText" />
                     <span>Content:</span>
