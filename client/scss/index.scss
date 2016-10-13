@@ -5,7 +5,6 @@ $pastel_blue : #9DBEBB;
 $cream_peach : #F4E9CD;
 *{
   color: $dark_blue;
-  background-color: $light_seafoam;
    #app {
     
     } 
@@ -33,15 +32,12 @@ body {
 }
 
 
-.sticky_list {
+.sticky_container {
   background-color:#F9EED1;
-  box-shadow: 3px 8px 5px #888888;
   margin: 1em;
-  min-width: 250px;
-  max-width: 250px;
   position: relative;
-  float: left;
   border-radius: 2px;
+  box-shadow: 3px 8px 5px #888888;
 }
 .titles {
   border-radius: 2px;
@@ -55,4 +51,42 @@ body {
   padding: 10px;
   font-family: 'Kalam', cursive;
   text-align: center;
+  background-color:#F9EED1;
+  min-height: 250px;
+}
+.container {
+  float: left;
+  padding: 1em;
+  margin: 1em;
+  min-width: 350px;
+  max-width: 350px;
+}
+li {
+  background-color: white;
+  text-align: right;
+  padding: 10px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 3em;
+  list-style-type: none;
+}
+form{
+  background-color: $teal;
+  font-family: 'Roboto', sans-serif;
+  margin: auto;
+  width: 50%;
+  text-align: center;
+}
+legend{
+  text-align: center;
+  margin: 2em;
+  padding: 2em;
+}
+span{
+  text-align: center;
+  margin: 2em;
+  padding: 2em;
+}
+
+form input {
+  
 }
