@@ -11,7 +11,7 @@ var initialState = {
     fetchGetError: null,
     isAuthenticated: false,
     hash: null,
-    username: null
+    currentUser: null
 };
 
 function stickyReducer(state, action) {
@@ -26,6 +26,7 @@ function stickyReducer(state, action) {
                 stickies: action.payload,
                 fetchGetError: null
             });
+            console.log(newState);
             return newState;
             
         case FETCH_STICKIES_ERROR:
@@ -36,10 +37,11 @@ function stickyReducer(state, action) {
             
         case LOGIN_SUCCESSFUL:
             newState = Object.assign({}, state, {
-                authenticated: true,
+                isAuthenticated: true,
                 hash: action.payloadHash,
-                user: action.payloadUsername
+                currentUser: action.payloadUsername
             });
+            console.log(newState);
             return newState;
             
         case LOGIN_FAIL:

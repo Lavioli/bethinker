@@ -7,6 +7,8 @@ import { Provider } from 'react-redux';
 import App from '../components/App'
 import reducers from '../reducers/reducers'
 import Login from '../components/Login';
+import StickyListContainer from '../components/StickyListContainer'
+var Routes = require('./Routes');
 
 var router = require('react-router');
 var Router = router.Router;
@@ -19,18 +21,10 @@ console.log(`Client running in ${process.env.NODE_ENV} mode`);
 
 let store = createStore(reducers, applyMiddleware(thunk));
 
-var routes = (
-    <Router history={hashHistory}>
-        <Route path="/" component={App}>
-            <Route path="/login" component={Login} />
-        </Route>
-    </Router>
-);
-
 document.addEventListener('DOMContentLoaded', function() {
     ReactDOM.render(
         <Provider store={store}>
-            {routes}
+            {Routes}
         </Provider>,
         document.getElementById('app')
     );
