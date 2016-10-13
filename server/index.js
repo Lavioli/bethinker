@@ -132,7 +132,7 @@ app.post('/users/:username/stickies', jsonParser, passport.authenticate('basic',
             var name = req.body.name;
             var content = req.body.content;
 
-    Sticky.create({name: name, content: content, _user: authenticatedId}, function(err, sticky) {
+    Sticky.create({title: name, content: content, _user: authenticatedId}, function(err, sticky) {
         if(err) {
             return res.status(500);
         }

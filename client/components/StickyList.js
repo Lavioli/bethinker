@@ -41,7 +41,7 @@ var StickyList = React.createClass({
 
                 return ( < div >
 
-                    < Sticky title = { sticky.name }
+                    < Sticky title = { sticky.title }
                     content = { sticky.content }
                     /> < /div >
                 )
