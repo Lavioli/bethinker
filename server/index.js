@@ -49,7 +49,7 @@ const PORT = process.env.PORT || 8080;
 console.log(`Server running in ${process.env.NODE_ENV} mode`);
 
 const app = express();
-
+ 
 app.use(express.static(process.env.CLIENT_PATH));
 
 function runServer() {
@@ -205,6 +205,29 @@ app.get('/user', function(req,res){
         res.status(200).json(user);
     });
 });
+
+
+//should list only the current user's user info
+app.get('/users/:username', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
+    var routerUsername = req.params.username;
+    var authenticatedUsername = req.user.username.toString();
+    var authenticatedId = req.user._id.toString();
+    
+    if (routerUsername !== authenticatedUsername){
+        return res.status(422).json({
+            message: "Unauthorized"
+                });
+    }
+    User.findOne({_id: authenticatedId}, function(err, user){
+       if(err) {
+           return res.status(500).json({
+               message: 'Internal Server Error'
+           });
+       } 
+       res.status(200).json({"._id": user._id, "username": user.username})
+    });
+});
+
 
 //should allow user to delete an account
 app.delete("/users/:username", jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {

@@ -26,7 +26,7 @@ var StickyList = React.createClass({
 var mapDispatchToProps = function(dispatch) {
     return{
         fetchSticky: function() {
-            dispatch(fetchStickies('admin','password'));
+            dispatch(login('admin','password'));
         }
     };
 };
