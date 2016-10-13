@@ -140,7 +140,7 @@ app.post('/users/:username/stickies', jsonParser, passport.authenticate('basic',
             return res.status(401).json({message: "Unauthorized"});
         }
 
-        return res.status(201).location("/users/" + authenticatedUsername + "/stickies/" + sticky._id).json({});
+        return res.status(201).location("/users/" + authenticatedUsername + "/stickies/" + sticky._id).json({stickyId: sticky._id});
     });
 
 });

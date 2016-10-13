@@ -1,14 +1,5 @@
 var fetch = require('isomorphic-fetch');
 
-var ADD_STICKY = 'ADD_STICKY';
-function addSticky(title, content) {
-    return {
-        type: ADD_STICKY,
-        title: title,
-        content: content
-    };
-}
-
 var EDIT_STICKY = 'EDIT_STICKY';
 function editSticky(title, content) {
     return {
@@ -41,7 +32,6 @@ var loginRequest = function (username, password) {
     })
     .then(
       data => {
-        console.log('THIS IS THE DATA:' , data)
         dispatch(loginSuccessful(hash, data.username));
       },
       (data) => dispatch(loginFail(data.error || 'Incorrect username and/or password. Please try again.'))
@@ -77,7 +67,6 @@ function fetchStickies() {
     })
     .then(response => response.json().then(json => ({ json, response })))
     .then(({json, response}) => {
-        console.log(response);
       if (response.ok === false) {
         return Promise.reject(json);
       }
@@ -91,7 +80,7 @@ function fetchStickies() {
           dispatch(fetchStickiesError(data.error));
           
           if(response.status == 401) {
-              dispatch(loginFailure(data.error))
+              dispatch(loginFail(data.error))
           }
       }
     );
@@ -116,14 +105,73 @@ function fetchStickiesError(error) {
     }
 };
 
-var POST_STICKIES = 'POST_STICKIES';
-function postStickies(title, content) {
+var POST_STICKY = 'POST_STICKY';
+function postSticky(title, content) {
   console.log("I'm in")
   return (dispatch, getState) => {
     const hash = getState().hash;
     const currentUser = getState().currentUser;
     return fetch('/users/' + currentUser + '/stickies', {
       method: 'POST',
+      headers: {
+        'Authorization': `Basic ${hash}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: title,
+        content: content
+      })
+    }).then(response => response.json().then(json => ({ json, response })))
+      .then(({json, response}) => {
+      if (response.ok === false) {
+        return Promise.reject(json);
+      }
+      return json;
+    })
+    .then(
+      data => {
+        var stickyId = data.stickyId
+        console.log(data);
+        dispatch(postStickySuccess(stickyId, title, content));
+      },
+      ({response, data}) => {
+          dispatch(postStickyError(data.error));
+          
+          if(response.status == 401) {
+              dispatch(loginFail(data.error))
+          }
+      }
+    );
+  };
+}
+
+//give us the title and content of the server side sticky
+var POST_STICKY_SUCCESS = 'FETCH_STICKY_SUCCESS';
+function postStickySuccess(stickyId, title, content) {
+    return {
+        type: POST_STICKY_SUCCESS,
+        payloadStickyId: stickyId,
+        payloadTitle: title,
+        payloadContent: content
+    };
+}
+
+var POST_STICKY_ERROR = 'FETCH_STICKY_ERROR';
+function postStickyError(error) {
+    return {
+        type: POST_STICKIES_ERROR,
+        payload: error
+    }
+};
+
+var EDIT_STICKY = 'POST_STICKY';
+function editSticky(titleOrContent) {
+  console.log("I'm in edit")
+  return (dispatch, getState) => {
+    const hash = getState().hash;
+    const currentUser = getState().currentUser;
+    return fetch('/users/' + currentUser + '/stickies', {
+      method: 'PUT',
       headers: {
         'Authorization': `Basic ${hash}`,
         'Content-Type': 'application/json'
@@ -156,25 +204,29 @@ function postStickies(title, content) {
   };
 }
 
-
 //give us the title and content of the server side sticky
-var POST_STICKIES_SUCCESS = 'FETCH_STICKIES_SUCCESS';
-function fetchStickiesSuccess(stickyArray) {
+var EDIT_STICKIES_SUCCESS = 'EDIT_STICKY_SUCCESS';
+function editStickySuccess(stickyArray) {
     return {
-        type: FETCH_STICKIES_SUCCESS,
-        payload: stickyArray
+        type: POST_STICKIES_SUCCESS,
     };
 }
 
-var POST_STICKIES_ERROR = 'FETCH_STICKIES_ERROR';
-function fetchStickiesError(error) {
+var EDIT_STICKIES_ERROR = 'EDIT_STICKY_ERROR';
+function editStickyError(error) {
     return {
-        type: FETCH_STICKIES_ERROR,
-        payload: error
+        type: POST_STICKIES_ERROR,
     }
 };
 
+exports.LOGIN_REQUEST = LOGIN_REQUEST;
+exports.loginRequest = loginRequest;
 
+exports.LOGIN_SUCCESSFUL = LOGIN_SUCCESSFUL;
+exports.loginSuccessful = loginSuccessful;
+
+exports.LOGIN_FAIL = LOGIN_FAIL;
+exports.loginFail = loginFail;
 
 exports.FETCH_STICKIES = FETCH_STICKIES;
 exports.fetchStickies = fetchStickies;
@@ -185,20 +237,14 @@ exports.fetchStickiesSuccess = fetchStickiesSuccess;
 exports.FETCH_STICKIES_ERROR = FETCH_STICKIES_ERROR;
 exports.fetchStickiesError = fetchStickiesError;
 
-exports.POST_STICKIES = POST_STICKIES;
-exports.postStickies = postStickies;
+exports.POST_STICKY = POST_STICKY;
+exports.postSticky = postSticky;
 
-exports.LOGIN_SUCCESSFUL = LOGIN_SUCCESSFUL;
-exports.loginSuccessful = loginSuccessful;
+exports.POST_STICKY_SUCCESS = POST_STICKY_SUCCESS;
+exports.postStickySuccess = postSticky;
 
-exports.LOGIN_FAIL = LOGIN_FAIL;
-exports.loginFail = loginFail;
-
-exports.LOGIN_REQUEST = LOGIN_REQUEST;
-exports.loginRequest = loginRequest;
-
-exports.ADD_STICKY = ADD_STICKY;
-exports.addSticky = addSticky;
+exports.POST_STICKY_ERROR = POST_STICKY_ERROR;
+exports.postStickyError = postSticky;
 
 exports.EDIT_STICKY = EDIT_STICKY;
 exports.editSticky = editSticky;
