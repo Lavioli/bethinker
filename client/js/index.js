@@ -14,7 +14,7 @@ import App from '../components/App';
 import reducers from '../reducers/reducers';
 import Login from '../components/Login';
 import StickyListContainer from '../components/StickyListContainer';
-
+import NewSticky from '../components/NewSticky';
 
 console.log(`Client running in ${process.env.NODE_ENV} mode`);
 
@@ -25,6 +25,7 @@ var routes = (
         <Route path="/" component={App}>
             <Route path="/login" component={Login} />
             <Route path="/stickies" component={StickyListContainer} />
+            <Route path="/new" components={NewSticky} />
         </Route>
     </Router>
 );

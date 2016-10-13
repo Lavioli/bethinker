@@ -6,7 +6,7 @@ var bcrypt = require('bcryptjs');
 var StickySchema = new Schema({
     _user: { type: String, ref: 'User'},
     name: String,
-    content: String
+    content: { type: String, required: true }
     // date: Date,
     // rating: { type: Number, min: 1, max: 3 }
 });

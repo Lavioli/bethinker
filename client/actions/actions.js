@@ -116,6 +116,66 @@ function fetchStickiesError(error) {
     }
 };
 
+var POST_STICKIES = 'POST_STICKIES';
+function postStickies(title, content) {
+  console.log("I'm in")
+  return (dispatch, getState) => {
+    const hash = getState().hash;
+    const currentUser = getState().currentUser;
+    return fetch('/users/' + currentUser + '/stickies', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Basic ${hash}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: title,
+        content: content
+      })
+    });
+    // .then(response => response.json().then(json => ({ json, response })))
+    // .then(({json, response}) => {
+    //     console.log(response);
+    //   if (response.ok === false) {
+    //     return Promise.reject(json);
+    //   }
+    //   return json;
+    // })
+    // .then(
+    //   data => {
+    //     dispatch(fetchStickiesSuccess(data));
+    //   },
+    //   ({response, data}) => {
+    //       dispatch(fetchStickiesError(data.error));
+          
+    //       if(response.status == 401) {
+    //           dispatch(loginFailure(data.error))
+    //       }
+    //   }
+    // );
+  };
+}
+
+
+//give us the title and content of the server side sticky
+var POST_STICKIES_SUCCESS = 'FETCH_STICKIES_SUCCESS';
+function fetchStickiesSuccess(stickyArray) {
+    return {
+        type: FETCH_STICKIES_SUCCESS,
+        payload: stickyArray
+    };
+}
+
+var POST_STICKIES_ERROR = 'FETCH_STICKIES_ERROR';
+function fetchStickiesError(error) {
+    return {
+        type: FETCH_STICKIES_ERROR,
+        payload: error
+    }
+};
+
+
+
 exports.FETCH_STICKIES = FETCH_STICKIES;
 exports.fetchStickies = fetchStickies;
 
@@ -124,6 +184,9 @@ exports.fetchStickiesSuccess = fetchStickiesSuccess;
 
 exports.FETCH_STICKIES_ERROR = FETCH_STICKIES_ERROR;
 exports.fetchStickiesError = fetchStickiesError;
+
+exports.POST_STICKIES = POST_STICKIES;
+exports.postStickies = postStickies;
 
 exports.LOGIN_SUCCESSFUL = LOGIN_SUCCESSFUL;
 exports.loginSuccessful = loginSuccessful;
