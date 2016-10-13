@@ -2,39 +2,28 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {fetchStickies} from '../actions/actions'
 import {connect} from 'react-redux';
+import StickyList from './stickyList';
 
 var StickyListContainer = React.createClass({
     
-    
-    renderFetchStickiesButton: function (props) {
-        if(!this.props.isAuthenticated) {
-            return (
-                <input type="submit" onClick={this.onClicker} value="My Stickies" style={{display: "none"}}></input>
-            )
-        } else {
-            return (
-                <input type="submit" onClick={this.onClicker} value="My Stickies"></input>
-            )
-        }
-    },
-    
-    onClicker: function (event) {
-        event.preventDefault();
+    // componentDidMount: function() {
+    //     this.props.fetchSticky();
+    // },
+    componentWillMount: function() {
         this.props.fetchSticky();
     },
-    
+
     render: function() {
-        return (
-            <div>
-                {this.renderFetchStickiesButton()}
-            </div>
-        );
+        var stickyArray = this.props.stickies;
+        return <StickyList stickyList={stickyArray} />
     }
 });
     
 var mapStateToProps = function(state) {
     return {
-        isAuthenticated: state.isAuthenticated
+        isAuthenticated: state.isAuthenticated,
+        stickies: state.stickies
+
     };
 };
 
