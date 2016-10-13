@@ -5,14 +5,16 @@ import {connect} from 'react-redux';
 
 var StickyListContainer = React.createClass({
     
-    renderFetchStickiesButton: function () {
-        if(!isAuthenticated) {
+    
+    renderFetchStickiesButton: function (props) {
+        var style = { display: "none" }
+        if(!this.props.isAuthenticated) {
             return (
-                <input type="submit" onClick={this.onClicker} value="My Stickies"></input>
+                <input type="submit" onClick={this.onClicker} value="My Stickies" style={style}></input>
             )
         } else {
             return (
-                <input type="submit" onClick={this.onClicker} value="My Stickies" style="display: none;"></input>
+                <input type="submit" onClick={this.onClicker} value="My Stickies"></input>
             )
         }
     },
@@ -31,9 +33,11 @@ var StickyListContainer = React.createClass({
     }
 });
     
-// let mapStateToProps = function(state) {
-//     return{cheeses: state.cheeses};
-// };
+var mapStateToProps = function(state) {
+    return {
+        isAuthenticated: state.isAuthenticated
+    };
+};
 
 var mapDispatchToProps = function(dispatch) {
     return{
@@ -43,4 +47,4 @@ var mapDispatchToProps = function(dispatch) {
     };
 };
 
-module.exports = connect(null, mapDispatchToProps)(StickyListContainer);
+module.exports = connect(mapStateToProps, mapDispatchToProps)(StickyListContainer);

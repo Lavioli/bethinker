@@ -6,7 +6,7 @@ function addSticky(title, content) {
         type: ADD_STICKY,
         title: title,
         content: content
-    }
+    };
 }
 
 var EDIT_STICKY = 'EDIT_STICKY';
@@ -15,8 +15,7 @@ function editSticky(title, content) {
         type: EDIT_STICKY,
         title: title,
         content: content
-    }
-    
+    };
 }
 
 var DELETE_STICKY = 'DELETE_STICKY';
