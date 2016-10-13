@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {postStickies} from '../actions/actions';
+import {postSticky} from '../actions/actions';
 import {connect} from 'react-redux';
 
 var Login = React.createClass({
@@ -29,7 +29,7 @@ var Login = React.createClass({
 function mapDispatchToProps (dispatch) {
     return {
         onAddSubmit: function(title, content) {
-            dispatch(postStickies(title, content));
+            dispatch(postSticky(title, content));
         }
     };
 }
