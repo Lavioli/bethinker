@@ -16,7 +16,7 @@ var renderLoginNav = (currentUser) => {
     } else {
         return [
             <li>Welcome, {currentUser}!</li>,
-            <li>Stickies</li>
+            <li><Link to="/stickies">Stickies</Link></li>
         ];
     }
 };
