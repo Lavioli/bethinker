@@ -24,9 +24,10 @@ import Header from './Header';
 var App = function (props) {
     return (
         <div className="App">
+        
             <nav>
                 <ul>
-                    <Header currentUser ={props.currentUser}/>
+                    <Header />
                 </ul>
             </nav>
             {props.children}
@@ -34,10 +35,6 @@ var App = function (props) {
     );
 };
 
-function mapStateToProps(state) {
-    return {
-        currentUser: state.currentUser
-    };
-}
 
-export default connect(mapStateToProps)(App);
+
+export default App;
