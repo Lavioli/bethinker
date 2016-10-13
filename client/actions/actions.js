@@ -24,19 +24,11 @@ function deleteSticky() {
     type: DELETE_STICKY
 }
 
-//
-var FETCH_STICKIES_REQUEST = 'FETCH_STICKIES_REQUEST';
-var fetchStickiesRequest = function() {
-    return {
-        type: FETCH_STICKIES_REQUEST
-    }
-};
-
-var FETCH_STICKIES = 'FETCH_STICKIES';
-function fetchStickies(username, password) {
+var LOGIN_REQUEST = 'LOGIN_REQUEST';
+var loginRequest = function (username, password) {
   return (dispatch) => {
     const hash = new Buffer(`${username}:${password}`).toString('base64')
-    return fetch('/stickies', {
+    return fetch('/users/' + username, {
       headers: {
         'Authorization': `Basic ${hash}`
       }
@@ -44,39 +36,68 @@ function fetchStickies(username, password) {
     .then(response => response.json().then(json => ({ json, response })))
     .then(({json, response}) => {
       if (response.ok === false) {
-        return Promise.reject(json)
+        return Promise.reject(json);
       }
-      return json
+      return json;
     })
     .then(
       data => {
-        dispatch(fetchStickiesSuccess(data))
+        console.log('THIS IS THE DATA:' , data)
+        dispatch(loginSuccessful(hash, data.username));
       },
-      (data) => dispatch(fetchStickiesError(data))
-    )
-  }
-}
-    // console.log('fetching')
-    // return function(dispatch) {
-    //     console.log('dispatch')
-    //     var endpoint = '/stickies';
-    //     return fetch(endpoint, {method:'GET'})
-    //         .then(function(response) {
-    //             if(response.status < 200 || response.status >= 300) {
-    //                 var error = new Error(response.statusText);
-    //                 error.response = response;
-    //                 throw error;
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(function(data) {
-    //             dispatch(fetchStickiesSuccess(data));
-    //         })
-    //         .catch(function(error) {
-    //             dispatch(fetchStickiesError(error));
-    //         })
-    // }
+      (data) => dispatch(loginFail(data.error || 'Incorrect username and/or password. Please try again.'))
+    );
+  };
+};
 
+var LOGIN_SUCCESSFUL = 'LOGIN_SUCCESSFUL';
+function loginSuccessful(hash, username) {
+    return {
+    type: LOGIN_SUCCESSFUL,
+    payloadHash: hash,
+    payloadUsername: username
+    };
+}
+
+var LOGIN_FAIL = 'LOGIN_FAIL';
+var loginFail = function(error) {
+    return {
+    type: LOGIN_FAIL,
+    payload: error
+    };
+};
+
+var FETCH_STICKIES = 'FETCH_STICKIES';
+function fetchStickies() {
+  return (dispatch, getState) => {
+    const hash = getState().hash;
+    return fetch('/stickies', {
+      headers: {
+        'Authorization': `Basic ${hash}`
+      }
+    })
+    .then(response => response.json().then(json => ({ json, response })))
+    .then(({json, response}) => {
+        console.log(response);
+      if (response.ok === false) {
+        return Promise.reject(json);
+      }
+      return json;
+    })
+    .then(
+      data => {
+        dispatch(fetchStickiesSuccess(data));
+      },
+      ({response, data}) => {
+          dispatch(fetchStickiesError(data.error));
+          
+          if(response.status == 401) {
+              dispatch(loginFailure(data.error))
+          }
+      }
+    );
+  };
+}
 
 
 //give us the title and content of the server side sticky
@@ -104,6 +125,15 @@ exports.fetchStickiesSuccess = fetchStickiesSuccess;
 
 exports.FETCH_STICKIES_ERROR = FETCH_STICKIES_ERROR;
 exports.fetchStickiesError = fetchStickiesError;
+
+exports.LOGIN_SUCCESSFUL = LOGIN_SUCCESSFUL;
+exports.loginSuccessful = loginSuccessful;
+
+exports.LOGIN_FAIL = LOGIN_FAIL;
+exports.loginFail = loginFail;
+
+exports.LOGIN_REQUEST = LOGIN_REQUEST;
+exports.loginRequest = loginRequest;
 
 exports.ADD_STICKY = ADD_STICKY;
 exports.addSticky = addSticky;

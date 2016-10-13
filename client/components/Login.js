@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {fetchStickies} from '../actions/actions'
+import {loginRequest} from '../actions/actions'
 import {connect} from 'react-redux';
 
 var Login = React.createClass({
     
-    onClicker: function (event) {
+    onSubmit: function (event) {
         event.preventDefault();
-        this.props.fetchSticky();
+        this.props.onAddSubmit(this.refs.usernameText.value, this.refs.passwordText.value);
+        this.refs.usernameText.value = "";
+        this.refs.passwordText.value = "";
     },
     
     render: function() {
@@ -16,15 +18,24 @@ var Login = React.createClass({
                 <form className="login-page">
                     <legend>Login to your account</legend>
                     <span>Username:</span>
-                    <input type="text" id="username" placeholder="Enter username" required />
+                    <input type="text" id="username" ref="usernameText" required />
                     
                     <span>Password:</span>
-                    <input type="password" name="password" placeholder="Enter password" required />
-                    <input type="submit" onClick={this.onClicker} value="Submit"></input>
+                    <input type="password" name="password" ref="passwordText" required />
+                    <input type="submit" onClick={this.onSubmit} value="Submit"></input>
                 </form>
             </div>
         );
     }
 });
 
-export default Login;
+
+function mapDispatchToProps (dispatch) {
+    return {
+        onAddSubmit: function(username, password) {
+            dispatch(loginRequest(username, password));
+        }
+    };
+}
+
+export default connect(null,mapDispatchToProps)(Login);
