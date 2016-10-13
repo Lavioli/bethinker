@@ -39,16 +39,37 @@ var StickyList = React.createClass({
             var stickyList = this.props.stickies.map(function(sticky, index) {
             	console.log('THIS IS STICKY', sticky)
 
-                return ( < div >
+                return ( 
+                	< div >
 
-                    < Sticky title = { sticky.title }
-                    content = { sticky.content }
-                    /> < /div >
+	                    < Sticky title = { sticky.title }
+	                    content = { sticky.content }
+	                    /> 
+                    < /div >
                 )
             });
-            return ( < div >
-                < div > < NewSticky / > < /div> < div className = "sticky_list" > { stickyList } < /div> < /div>
+            return ( 
+
+            	<div>
+
+            		<button onClick={this.stickyInputDisappear()}></button>
+
+            		< div >
+
+
+
+                	< div className="hidden" > < NewSticky /> < /div> 
+
+                	< div className = "sticky_list" > { stickyList } < /div> 
+
+
+                	< /div>
+            	</div>
             );
+        },
+        stickyInputDisappear: function(){
+        	document.getElementsByClassName('hidden').className = "";
+
         }
 });
 
