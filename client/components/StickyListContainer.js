@@ -21,17 +21,15 @@ var StickyListContainer = React.createClass({
     componentWillReceiveProps: function (newProps) {
         console.log('componentWillReceiveProps');
     }, 
-    shouldComponentUpdate: function (newProps, newState) {
-        console.log('shouldComponentUpdate');
-    }, 
-
+   // shouldComponentUpdate: function (newProps, newState) {
+      //  console.log('shouldComponentUpdate');
+  // }, 
     componentWillUpdate: function (nextProps, nextState) {
         console.log('componentWillUpdate');
     }, 
     componentDidUpdate: function (prevProps, prevState) {
         console.log('componentDidUpdate');
     }, 
-
     componentWillUnmount: function () {
         console.log('componentWillUnmount');
     }, 

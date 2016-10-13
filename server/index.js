@@ -175,7 +175,6 @@ app.put("/users/:username/stickies/:stickyId", jsonParser, passport.authenticate
                         }
                 );
             }
-
             if (content && !name){
                 Sticky.findOneAndUpdate(
                     {_user: authenticatedId, _id: stickyId}, 
