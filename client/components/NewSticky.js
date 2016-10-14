@@ -9,17 +9,22 @@ var Login = React.createClass({
     
     onSubmit: function (event) {
         event.preventDefault();
-        this.props.onAddSubmit();
+        
+        var form = event.target;
+        var content = form.querySelector('[name="content"]').value;
+        console.log(content);
+        
+        // this.props.onAddSubmit();
     },
     // this.refs.titleText.value, this.refs.contentText.value
     render: function() {
         return (
-            <div className="sticky">
+            <div className="sticky" onClick={this.onSubmit} ref="gogogo">
                 <form className="sticky">
                     <span>Title:</span>
-                    <input type="text" id="title" ref="titleText" />
+                    <textarea className="title" />
                     <span>Content:</span>
-                    <input type="text" name="content" ref="contentText" onBlur={this.onSubmit} required />
+                    <textarea className="content" onBlur={this.onSubmit} required />
                     <input type="submit" value="Submit" onClick={this.onSubmit} />
                 </form>
             </div>
@@ -32,7 +37,7 @@ var Login = React.createClass({
 function mapDispatchToProps (dispatch) {
     return {
         onAddSubmit: function() {
-            dispatch(deleteSticky('57ff2800ec0a9f07e539f5a8'));
+            dispatch(deleteSticky('57ff274bec0a9f07e539f5a6'));
         }
     };
 }

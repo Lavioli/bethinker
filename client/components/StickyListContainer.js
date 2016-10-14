@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {fetchStickies} from '../actions/actions'
 import {connect} from 'react-redux';
 import StickyList from './StickyList';
+import NewSticky from './NewSticky';
 
 var StickyListContainer = React.createClass({
 
