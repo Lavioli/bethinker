@@ -22,15 +22,33 @@ var Sticky = React.createClass({
 		e.preventDefault();
 		this.props.deleteSticky(this.props.stickyId);
 	},
-
+	
+	doneEditing: function() {
+		
+		var stickyTitle = this.props.title;
+		var stickyContent = this.props.content;
+		
+		this.stickyDisplayMode = [
+			<div className="title" rows="2" cols="49" onFocus="" key="0" >{stickyTitle}</div>,
+			<div className="content"rows="5" cols="47" onClick="" key="1" >{stickyContent}</div>
+		]
+		
+		this.forceUpdate();
+	},
+	
 	onEditSticky: function(e) {
 		e.preventDefault();
 		var titleText = e.target[3].value;
 		var contentText = e.target[4].value;
 		this.props.editSticky(this.props.stickyId, titleText, contentText);
+		
+		this.refs.doneButton.className = "hidden";
+		this.refs.editButton.className = "";
+		this.doneEditing();
 	},
 
 	makeEditable: function () {
+		
 		var stickyTitle = this.props.title;
 		var stickyContent = this.props.content;
 
@@ -44,14 +62,28 @@ var Sticky = React.createClass({
 	},
 
 	componentWillMount: function() {
-		var stickyTitle = this.props.title;
-		var stickyContent = this.props.content;
 
-		this.stickyDisplayMode = [
-			<div className="title" rows="2" cols="49" onFocus="" key="0" >{stickyTitle}</div>,
-			<div className="content"rows="5" cols="47" onClick="" key="1" >{stickyContent}</div>
-		]
+		this.doneEditing();
+
+		this.props.fetchStickies(this.props.currentUser);
+		
 	},
+	// componentWillMount: function() {
+ //       this.props.fetchStickies(this.props.currentUser);
+ //   },
+    componentDidMount: function() {
+        this.props.fetchStickies(this.props.currentUser);
+    },
+    
+      componentWillReceiveProps: function(newProps) {
+    },
+    shouldComponentUpdate: function(newProps, newState) {
+        return true;
+    },
+    componentWillUpdate: function(nextProps, nextState) {
+    },
+    componentDidUpdate: function(prevProps, prevState) {
+    },
 
 
 
@@ -67,13 +99,13 @@ var Sticky = React.createClass({
 		return (
 			<div className = "container">
 				<form className="sticky_container" onSubmit={this.onEditSticky}>
-
-					<input id="delete_button" type="button" value="Delete" onClick={this.onClickDelete} />
-					<input id="edit_button" type="button" value="Edit" ref="editButton" onClick={this.makeEditable}/>
-					<input id="done_button" className="hidden" type="submit" value="Done" ref="doneButton" />
-					
-					{this.stickyDisplayMode}
-					
+					<div id="delete_button_container">
+						<input id="delete_button" type="button" value="x" onClick={this.onClickDelete} />
+						<input id="edit_button" type="button" value="/" ref="editButton" onClick={this.makeEditable}/>
+						<input id="done_button" className="hidden" type="submit" value="o" ref="doneButton" />
+						
+						{this.stickyDisplayMode}
+					</div>
 				</form>
 				
 			</div>	

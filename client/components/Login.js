@@ -17,12 +17,12 @@ var Login = React.createClass({
             <div className="Login">
                 <form className="login-page">
                     <legend>Login to your account</legend>
-                    <span>Username:</span>
-                    <input type="text" id="username" ref="usernameText" required />
+                    <span className="username">Username:</span>
+                    <input type="text" id="username" className="input" ref="usernameText" required />
                     
-                    <span>Password:</span>
-                    <input type="password" name="password" ref="passwordText" required />
-                    <input type="submit" onClick={this.onSubmit} value="Submit" className="submit-button"></input>
+                    <span className="password">Password:</span>
+                    <input type="password" className="input" name="password" ref="passwordText" required />
+                    <input type="submit" id="submit" onClick={this.onSubmit} value="Submit" className="submit-button"></input>
                 </form>
             </div>
         );

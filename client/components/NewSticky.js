@@ -29,9 +29,9 @@ var NewSticky = React.createClass({
         return (
             <div className="sticky">
                 <form className="sticky" >
-                    <span>Title:</span>
+                    <span id="title">Title:</span>
                         <input type="text" id="title" ref="titleText" />
-                    <span>Content:</span>
+                    <span id="content">Content:</span>
                         <input type="text" name="content" ref="contentText" onBlur={this.onBlurSubmit} required />
                 </form>
             </div>
@@ -43,8 +43,8 @@ var NewSticky = React.createClass({
         return (
             <div>
 
-                <div className="add_sticky_button">
-                    <button type="button" onClick={this.changeState}>Add Sticky</button>
+                <div className="add_sticky_button_container">
+                    <button type="button" className="add_sticky_button" onClick={this.changeState}>+</button>
                 </div>
                 {(this.state.show == true)? this.onAddSticky(): ''}
                 

@@ -3,39 +3,131 @@ $teal : #468189;
 $light_seafoam : #77ACA2;
 $pastel_blue : #9DBEBB;
 $cream_peach : #F4E9CD;
-*{
-  color: $dark_blue;
-  #app {
-    
-    } 
-}
 
-.login {
-    color: $dark_blue;
-  background-color: $teal;
-}
+/*****************ELEMENTS********************/
 
-body {
-  background-color: #E0FFF9;
+li{
+  list-style-type: none;
+  float: left;
+  font-size: 20px;
 }
-#navbar {
-  background-color: white;
-  text-align: left;
-  padding: 100px;
+ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #468189;
+  position: fixed;
+  top: 0;
+  width: 100%;
   font-family: 'Roboto', sans-serif;
-  font-size: 3em;
-  background-image: url("http://i.imgur.com/6UEHZzS.png");
-  background-repeat: no-repeat;
-  background-position: center;
+}
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+legend {
+    font-size: 3em;
+    text-align:center;
+    margin: auto;
+    margin-bottom: 60px;
+    margin-top: 30px;
+    font-family: 'Walter Turncoat', cursive;
+  }
+
+/*****************ID**************************/
+#delete_button {
+  background-color: red;
+  float: right;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    border-radius: 1px;
+}
+#done_button {
+  background-color: green;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    border-radius: 1px;
+}
+.hidden {
+  display: none;
+}
+#edit_button {
+  background-color: yellow;
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    border-radius: 1px;
+    margin-right: 2px;
+}
+#delete_button_container {
+  background-color: #F7E2AD;
+}
+#welcome_user {
+  color: white;
+  font-size: 2em;
+  margin: 10px;
+}
+.sticky{
+  font-family: 'Walter Turncoat', cursive;
+  #content{
+    font-size: 2em;
+    margin: 10px;
+  }
+  #title {
+    font-size: 2em;
+    margin: 10px;
+  }
+}
+/*****************CLASSES*********************/
+.Login {
+  padding:20px;
+  margin-top:40px;
+  background-color:#EDFFFD;
+  height:523px;
+  text-align:center;
+  font-family: 'Roboto', sans-serif;
+}
+.Register {
+  padding:20px;
+  margin-top:40px;
+  background-color:#EDFFFD;
+  height:523px;
+  text-align:center;
+  font-family: 'Roboto', sans-serif;
 }
 
 
 .sticky_container {
   background-color:#F9EED1;
-  margin: 1em;
-  position: relative;
-  border-radius: 2px;
   box-shadow: 3px 8px 5px #888888;
+  margin: 1em;
+  min-width: 250px;
+  max-width: 250px;
+  position: relative;
+  float: left;
+  border-radius: 2px;
 }
 .titles {
   border-radius: 2px;
@@ -44,60 +136,81 @@ body {
   text-align: center; 
   margin: auto;
   font-family: 'Kalam', cursive;
+  color: #042133;
 }
 .content {
   padding: 10px;
   font-family: 'Kalam', cursive;
-  text-align: center;
-  background-color:#F9EED1;
-  min-height: 250px;
+  min-height: 150px;
+  color: #042133;
 }
-.container {
-  float: left;
-  padding: 1em;
-  margin: 1em;
-  min-width: 350px;
-  max-width: 350px;
-}
-li {
-  background-color: white;
-  text-align: right;
+
+ .input {
+  height: 25px;
+  font-size: 14pt;
+  border-radius: 8px;
+  display: block;
+  min-width: 250px;
+  max-width: 250px;
+  margin: auto;
+  margin-top: 25px;
+  margin-bottom: 25px;
   padding: 10px;
-  font-family: 'Roboto', sans-serif;
-  font-size: 3em;
-  list-style-type: none;
-}
-form.login-page{
-  background-color: $teal;
-  font-family: 'Roboto', sans-serif;
-  margin: auto;
-  width: 50%;
-  text-align: center;
-}
-
-form.div{
-  background-color: $teal;
-  font-family: 'Roboto', sans-serif;
-  margin: auto;
-  width: 50%;
-  text-align: center;
-}
-
-legend{
-  text-align: center;
-  margin: 2em;
-  padding: 2em;
-}
-span{
-  text-align: center;
-  margin: 2em;
-  padding: 2em;
-}
-
-form input {
+  font-family: 'Rock Salt', cursive;
   
+ }
+ .login-page{
+   text-align:center;
+ }
+ .submit-button {
+   background-color: #468189; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    border-radius: 8px;
+ }
+
+span.username {
+  font-size: 2em;
+  font-family: 'Walter Turncoat', cursive;
+}
+span.password{
+   font-size: 2em;
+   font-family: 'Walter Turncoat', cursive;
 }
 
-.hidden {
-  display: none;
+.add_sticky_button {
+  background-color: #44A362; 
+    border: none;
+    color: white;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 2em;
+    margin: 57px 2px 2px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    border-radius: 8px;
+}
+
+
+
+
+.Logout{
+  margin: 10px;
+  font-size: 5em;
+  p{
+     text-align: center;
+     font-family: 'Walter Turncoat', cursive;
+  }
 }

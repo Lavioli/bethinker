@@ -14,6 +14,9 @@ var Link = router.Link;
 import App from '../components/App';
 import Header from '../components/Header';
 import Register from '../components/Register';
+import MyAccount from '../components/MyAccount';
+import ChangePassword from '../components/ChangePassword';
+import DeleteAccount from '../components/DeleteAccount';
 import Login from '../components/Login';
 import Logout from '../components/Logout';
 import StickyList from '../components/StickyList';
@@ -27,6 +30,9 @@ var routes = (
     <Router history={browserHistory}>
         <Route path="/" component={App}>
             <Route path="/login" component={Login} />
+            <Route path="/myaccount" component={MyAccount} />
+            <Route path="/myaccount/changepassword" component={ChangePassword} />
+            <Route path="/myaccount/deleteaccount" component={DeleteAccount} />
             <Route path="/stickies" component={StickyList} />
             <Route path="/register" components={Register} />
             <Route path="/logout" components={Logout} />

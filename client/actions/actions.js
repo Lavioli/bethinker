@@ -210,32 +210,27 @@ function editSticky(stickyId, title, content) {
         title: title,
         content: content
       })
-    }).then(response => response.json())
-    .then(json => ({ json }))
-    .then(({json, response}) => {
-        console.log(response);
-      if (response.ok === false) {
-        return Promise.reject(json);
-      }
-      return json;
+    }).then(function(response) {
+      
+       if (response.ok ) {
+        return Promise.resolve(response.json());
+       }
+    
     })
     .then(
       data => 
       {
         dispatch(fetchStickies(currentUser));
         // dispatch(editStickySuccess(data));
-      },
-      ({response, data}) => {
-          dispatch(editStickyError(data.error));
-          
-          if(response.status == 401) {
-              dispatch(loginFail(data.error));
-          }
       }
-    )
-    .catch(function(error) {
-      debugger;
-    }); 
+      // ({response, data}) => {
+      //     dispatch(editStickyError(data.error));
+          
+      //     if(response.status == 401) {
+      //         dispatch(loginFail(data.error));
+      //     }
+      // }
+    );
   };
 }
 
