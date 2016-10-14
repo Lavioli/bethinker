@@ -23,7 +23,9 @@ var NewSticky = React.createClass({
        this.props.onAddSubmit(this.refs.titleText.value, this.refs.contentText.value);
        this.changeState();
     },
+
     onAddSticky: function() {
+
         return (
             <div className="sticky">
                 <form className="sticky" >
@@ -35,6 +37,7 @@ var NewSticky = React.createClass({
             </div>
         )
     },
+    
     render: function() {
         console.log(this.state.show);
         return (

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { fetchStickies } from '../actions/actions'
 import { deleteSticky } from '../actions/actions'
+import { editSticky } from '../actions/actions'
 import { connect } from 'react-redux';
 // import StickyList from './StickyList';
 import NewSticky from './NewSticky';
@@ -35,20 +36,19 @@ var StickyList = React.createClass({
 
         //bind allows us to bind the function to this(StickyList) component specifically, so child(Sticky) can easily grab this prop
         var deleteSticky = this.props.deleteSticky.bind(this);
+        var editSticky = this.props.editSticky.bind(this);
 
          var stickyList = this.props.stickies.reverse().map(function(sticky, index) {
-                return ( 
-                	<div>
+                return (
 	                    <Sticky title = {sticky.title}
 	                    content = {sticky.content}
 	                    key={index}
 	                    stickyId={sticky._id}
-                        deleteSticky={deleteSticky}
+                        // deleteSticky={deleteSticky}
+                        // editSticky={editSticky}
 	                    /> 
-                    </div>
-                )
+                        )
         });
-
 
         return (
         	<div>
@@ -56,7 +56,6 @@ var StickyList = React.createClass({
 	        		<NewSticky />
 	        	</div>
 	            <div className="sticky_list"> 
-
 	            	{ stickyList } 
 	            </div>
 	        </div>
@@ -81,6 +80,10 @@ var mapDispatchToProps = function(dispatch) {
 
         deleteSticky: function(stickyId) {
             dispatch(deleteSticky(stickyId));
+        },
+
+        editSticky: function(stickyId, title, content) {
+            dispatch(editSticky(stickyId, title, content));
         }
     };
 };
