@@ -30,21 +30,31 @@ var StickyList = React.createClass({
 
     render: function(props) {
 
-         var stickyList = this.props.stickies.map(function(sticky, index) {
+
+
+         var stickyList = this.props.stickies.reverse().map(function(sticky, index) {
             	console.log('THIS IS STICKY', sticky)
 
                 return ( 
                 	<div>
 	                    <Sticky title = {sticky.title}
 	                    content = {sticky.content}
+	                    key={index}
+	                    stickyId={sticky.stickyId}
 	                    /> 
                     </div>
                 )
         });
+
+
         return (
         	<div>
-	        	<div ><NewSticky /></div>
-	            <div className="sticky_list"> { stickyList } </div>
+	        	<div>
+	        		<NewSticky />
+	        	</div>
+	            <div className="sticky_list"> 
+	            	{ stickyList } 
+	            </div>
 	        </div>
         );
     },
