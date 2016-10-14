@@ -13,7 +13,7 @@ var StickyListContainer = React.createClass({
 
 //React life cycle 
     componentWillMount: function() {
-        this.props.fetchSticky();
+        this.props.fetchSticky(this.props.currentUser);
     },
     componentDidMount: function() {
         console.log('componentDidMount');
@@ -37,16 +37,16 @@ var StickyListContainer = React.createClass({
     
 var mapStateToProps = function(state) {
     return {
+        currentUser: state.currentUser,
         isAuthenticated: state.isAuthenticated,
         stickies: state.stickies
-
     };
 };
 
 var mapDispatchToProps = function(dispatch) {
     return{
-        fetchSticky: function() {
-            dispatch(fetchStickies());
+        fetchSticky: function(currentUser) {
+            dispatch(fetchStickies(currentUser));
         }
     };
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {postSticky} from '../actions/actions';
+import {editSticky} from '../actions/actions';
 import {connect} from 'react-redux';
 
 var Login = React.createClass({
@@ -29,7 +30,7 @@ var Login = React.createClass({
 function mapDispatchToProps (dispatch) {
     return {
         onAddSubmit: function(title, content) {
-            dispatch(postSticky(title, content));
+            dispatch(editSticky('57ff2800ec0a9f07e539f5a8', title, content));
         }
     };
 }

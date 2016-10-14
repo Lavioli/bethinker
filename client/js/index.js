@@ -12,10 +12,12 @@ var IndexRoute = router.IndxRoute;
 var Link = router.Link;
 import App from '../components/App';
 import Header from '../components/Header';
-import reducers from '../reducers/reducers';
+import Register from '../components/Register';
 import Login from '../components/Login';
+import Logout from '../components/Logout';
 import StickyListContainer from '../components/StickyListContainer';
 import NewSticky from '../components/NewSticky';
+import reducers from '../reducers/reducers';
 
 console.log(`Client running in ${process.env.NODE_ENV} mode`);
 
@@ -27,6 +29,8 @@ var routes = (
             <Route path="/login" component={Login} />
             <Route path="/stickies" component={StickyListContainer} />
             <Route path="/new" components={NewSticky} />
+            <Route path="/register" components={Register} />
+            <Route path="/logout" components={Logout} />
         </Route>
     </Router>
 );
