@@ -160,26 +160,24 @@ function postSticky(title, content) {
       }
       return json;
     })
-    // .then(
-    //   data => {
-    //     var stickyId = data.stickyId;
-    //     console.log(data);
-    //     dispatch(postStickySuccess(stickyId, title, content));
-    //   },
-    //   ({response, data}) => {
-    //       dispatch(postStickyError(data.error));
+    .then(
+      data => {
+        var stickyId = data.stickyId;
+        console.log(data);
+        dispatch(postStickySuccess(stickyId, title, content));
+      },
+      ({response, data}) => {
+          dispatch(postStickyError(data.error));
           
-    //       if(response.status == 401) {
-    //           dispatch(loginFail(data.error));
-    //       }
-    //   }
-    // );
+          if(response.status == 401) {
+              dispatch(loginFail(data.error));
+          }
+      }
+    );
   };
 }
 
 //give us the title and content of the server side sticky
-
-
 var POST_STICKY_SUCCESS = 'FETCH_STICKY_SUCCESS';
 function postStickySuccess(stickyId, title, content) {
     return {

@@ -10,10 +10,10 @@ var clickToDisplay = false;
 
 var StickyList = React.createClass({
     componentWillMount: function() {
-        this.props.fetchSticky();
+        this.props.fetchStickies(this.props.currentUser);
     },
     componentDidMount: function() {
-        this.props.fetchSticky();
+        this.props.fetchStickies(this.props.currentUser);
     },
     //components
     componentWillReceiveProps: function(newProps) {
@@ -63,7 +63,7 @@ var StickyList = React.createClass({
 
 var mapStateToProps = function(state) {
     return {
-        isAuthenticated: state.isAuthenticated,
+        currentUser: state.currentUser,
         stickies: state.stickies
 
     };
@@ -71,8 +71,8 @@ var mapStateToProps = function(state) {
 
 var mapDispatchToProps = function(dispatch) {
     return {
-        fetchSticky: function() {
-            dispatch(fetchStickies());
+        fetchStickies: function(currentUser) {
+            dispatch(fetchStickies(currentUser));
         }
     };
 };
