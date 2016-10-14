@@ -22,7 +22,7 @@ var Login = React.createClass({
                     
                     <span>Password:</span>
                     <input type="password" name="password" ref="passwordText" required />
-                    <input type="submit" onClick={this.onSubmit} value="Submit"></input>
+                    <input type="submit" onClick={this.onSubmit} value="Submit" className="submit-button"></input>
                 </form>
             </div>
         );

@@ -101,5 +101,16 @@
     "react-router": "^2.8.1",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lavioli/bethinker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Lavioli/bethinker/issues"
+  },
+  "homepage": "https://github.com/Lavioli/bethinker#readme"
 }
