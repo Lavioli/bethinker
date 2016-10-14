@@ -196,7 +196,7 @@ function postStickyError(error) {
 
 var EDIT_STICKY = 'EDIT_STICKY';
 function editSticky(stickyId, title, content) {
-  console.log("I'm in edit")
+  console.log("I'm in edit");
   return (dispatch, getState) => {
     const hash = getState().hash;
     const currentUser = getState().currentUser;
@@ -210,7 +210,8 @@ function editSticky(stickyId, title, content) {
         title: title,
         content: content
       })
-    }).then(response => response.json().then(json => ({ json, response })))
+    }).then(response => response.json())
+    .then(json => ({ json }))
     .then(({json, response}) => {
         console.log(response);
       if (response.ok === false) {
@@ -231,7 +232,10 @@ function editSticky(stickyId, title, content) {
               dispatch(loginFail(data.error));
           }
       }
-    );
+    )
+    .catch(function(error) {
+      debugger;
+    }); 
   };
 }
 
