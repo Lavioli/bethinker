@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 // import StickyList from './StickyList';
 import NewSticky from './NewSticky';
 import Sticky from './Sticky';
-var FontAwesome = require('react-fontawesome');
+// var FontAwesome = require('react-fontawesome');
 
 var clickToDisplay = false;
 

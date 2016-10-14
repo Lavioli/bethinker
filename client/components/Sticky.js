@@ -7,9 +7,9 @@ var Sticky = React.createClass({
 	onClickDelete: function(e) {
 		e.preventDefault();
 		this.props.deleteSticky(this.props.stickyId);
-
-
 	},
+
+
 
 	render: function() {
 		
@@ -24,8 +24,8 @@ var Sticky = React.createClass({
 					<div>
 						<input type="submit" value="Delete" onClick={this.onClickDelete} />
 					</div>
-					<div className="titles">{stickyTitle}</div>
-					<div className="content">{stickyContent}</div>
+					<textarea className="title" rows="2" cols="49" onFocus="" value={stickyTitle} />
+					<textarea className="content"rows="5" cols="47" onClick="" value={stickyContent} />
 				</div>
 			</div>	
 	);
