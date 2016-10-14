@@ -73,16 +73,16 @@ if (require.main === module) {
 //************************************STICKIE ENDPOINTS*****************************************/
 
 //get all the stickies for now, this is for testing purposes atm
-app.get('/stickies', passport.authenticate('basic', {session: false}), 
-function(req, res) {
-    Sticky.find(function(err, sticky) {
-        if (err) {
-            return res.status(500).json({message: 'Internal Server Error'});
-        }
+// app.get('/stickies', passport.authenticate('basic', {session: false}), 
+// function(req, res) {
+//     Sticky.find(function(err, sticky) {
+//         if (err) {
+//             return res.status(500).json({message: 'Internal Server Error'});
+//         }
 
-        return res.status(200).json(sticky);
-    });
-});
+//         return res.status(200).json(sticky);
+//     });
+// });
 //Allows authorizied users to see their sticky notes
 app.get('/users/:username/stickies', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
 
@@ -129,10 +129,10 @@ app.post('/users/:username/stickies', jsonParser, passport.authenticate('basic',
             var stickyId = req.params.stickyId;
             var authenticatedUsername = req.user.username.toString();
             var authenticatedId = req.user._id.toString();
-            var name = req.body.name;
+            var title = req.body.title;
             var content = req.body.content;
 
-    Sticky.create({title: name, content: content, _user: authenticatedId}, function(err, sticky) {
+    Sticky.create({title: title, content: content, _user: authenticatedId}, function(err, sticky) {
         if(err) {
             return res.status(500);
         }
@@ -150,7 +150,7 @@ app.put("/users/:username/stickies/:stickyId", jsonParser, passport.authenticate
     //putting all requests in variables
             var routerUsername = req.params.username;
             var stickyId = req.params.stickyId;
-            var name = req.body.name;
+            var title = req.body.title;
             var content = req.body.content;
             var authenticatedUsername = req.user.username.toString();
             var authenticatedId = req.user._id.toString();
@@ -162,11 +162,11 @@ app.put("/users/:username/stickies/:stickyId", jsonParser, passport.authenticate
                 return res.status(401).json({message: "Unauthorized"});
             }   
             
-            //check to see if name or content was changed
-            if (name && !content){
+            //check to see if title or content was changed
+            if (title && !content){
                 Sticky.findOneAndUpdate(
                     {_user: authenticatedId, _id: stickyId}, 
-                    {content: sticky.content, name: name}, 
+                    {content: sticky.content, title: title}, 
                     function(err, sticky) {
                         if(err) {
                             return res.status(500);
@@ -175,10 +175,10 @@ app.put("/users/:username/stickies/:stickyId", jsonParser, passport.authenticate
                         }
                 );
             }
-            if (content && !name){
+            if (content && !title){
                 Sticky.findOneAndUpdate(
                     {_user: authenticatedId, _id: stickyId}, 
-                    {name: sticky.name, content: content}, 
+                    {title: sticky.title, content: content}, 
                     function(err, sticky) {
                         if(err) {
                             return res.status(500);
