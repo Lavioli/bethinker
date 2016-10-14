@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 var router = require('react-router');
 var Router = router.Router;
 var Route = router.Route;
+var browserHistory = router.browserHistory;
 var hashHistory = router.hashHistory;
 var IndexRoute = router.IndxRoute;
 var Link = router.Link;
@@ -24,7 +25,7 @@ console.log(`Client running in ${process.env.NODE_ENV} mode`);
 let store = createStore(reducers, applyMiddleware(thunk));
 
 var routes = (
-    <Router history={hashHistory}>
+    <Router history={browserHistory}>
         <Route path="/" component={App}>
             <Route path="/login" component={Login} />
             <Route path="/stickies" component={StickyListContainer} />

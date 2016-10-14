@@ -6,7 +6,7 @@ var Logout = React.createClass({
     render: function (props){
         return (
             <div className="Logout">
-                        <p>Thanks for stopping by, {this.props.currentUser}!</p>
+                        <p>Thanks for stopping by, {this.props.previousUser}!</p>
                         <p>Remember, Stick It so you can Forget It.</p>
             </div>
         );
@@ -19,7 +19,7 @@ var Logout = React.createClass({
 
 var mapStateToProps = function(state) {
         return {
-            currentUser: state.currentUser
+            previousUser: state.previousUser
         };
 };
     

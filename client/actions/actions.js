@@ -1,9 +1,5 @@
 var fetch = require('isomorphic-fetch');
-
-var DELETE_STICKY = 'DELETE_STICKY';
-function deleteSticky() {
-    type: DELETE_STICKY
-}
+var browserHistory = require('react-router').browserHistory;
 
 var REGISTER_REQUEST = 'REGISTER_REQUEST';
 function registerRequest(username, password) {
@@ -41,14 +37,6 @@ function registerRequest(username, password) {
   };
 }
 
-//give us the title and content of the server side sticky
-var REGISTER_SUCCESS = 'REGISTER_SUCCESS';
-function registerSuccess() {
-    return {
-        type: REGISTER_SUCCESS,
-    };
-}
-
 var REGISTER_ERROR = 'FETCH_STICKY_ERROR';
 function registerError(error) {
     return {
@@ -60,7 +48,7 @@ function registerError(error) {
 var LOGIN_REQUEST = 'LOGIN_REQUEST';
 var loginRequest = function (username, password) {
   return (dispatch) => {
-    const hash = new Buffer(`${username}:${password}`).toString('base64')
+    const hash = new Buffer(`${username}:${password}`).toString('base64');
     return fetch('/users/' + username, {
       headers: {
         'Authorization': `Basic ${hash}`
@@ -76,6 +64,7 @@ var loginRequest = function (username, password) {
     .then(
       data => {
         dispatch(loginSuccessful(hash, data.username));
+        browserHistory.push('/stickies');
       },
       (data) => dispatch(loginFail(data.error || 'Incorrect username and/or password. Please try again.'))
     );
@@ -173,7 +162,7 @@ function postSticky(title, content) {
     })
     .then(
       data => {
-        var stickyId = data.stickyId
+        var stickyId = data.stickyId;
         console.log(data);
         dispatch(postStickySuccess(stickyId, title, content));
       },
@@ -181,7 +170,7 @@ function postSticky(title, content) {
           dispatch(postStickyError(data.error));
           
           if(response.status == 401) {
-              dispatch(loginFail(data.error))
+              dispatch(loginFail(data.error));
           }
       }
     );
@@ -207,7 +196,7 @@ function postStickyError(error) {
     };
 }
 
-var EDIT_STICKY = 'POST_STICKY';
+var EDIT_STICKY = 'EDIT_STICKY';
 function editSticky(stickyId, title, content) {
   console.log("I'm in edit")
   return (dispatch, getState) => {
@@ -260,21 +249,89 @@ function editStickyError(error) {
     return {
         type: POST_STICKY_ERROR,
         paylod: error
-    }
-};
+    };
+}
+
+var DELETE_STICKY = 'DELETE_STICKY';
+function deleteSticky(stickyId) {
+  console.log("I'm in delete");
+  return (dispatch, getState) => {
+    const hash = getState().hash;
+    const currentUser = getState().currentUser;
+    return fetch('/users/' + currentUser + '/stickies/' + stickyId, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Basic ${hash}`,
+        'Content-Type': 'application/json'
+      },
+    }).then(response => response.json().then(json => ({ json, response })))
+    .then(({json, response}) => {
+        console.log(response);
+      if (response.ok === false) {
+        return Promise.reject(json);
+      }
+      return json;
+    })
+    // .then(
+    //   data => 
+    //   {
+    //     dispatch(deleteStickySuccess(data));
+    //   },
+    //   ({response, data}) => {
+    //       dispatch(deleteStickyError(data.error));
+          
+    //       if(response.status == 401) {
+    //           dispatch(loginFail(data.error));
+    //       }
+    //   }
+    // );
+  };
+}
+
+var DELETE_STICKY_SUCCESS = 'DELETE_STICKY_SUCCESS';
+function deleteStickySuccess(stickyArray) {
+    return {
+        type: DELETE_STICKY_SUCCESS,
+    };
+}
+
+var DELETE_STICKY_ERROR = 'DELETE_STICKY_ERROR';
+function deleteStickyError(error) {
+    return {
+        type: DELETE_STICKY_ERROR,
+        paylod: error
+    };
+}
 
 var LOGOUT_USER = 'LOGOUT_USER';
 function logoutUser() {
-    return {
-        type: LOGOUT_USER
+    return function (dispatch, getState) {
+        if(!getState().isAuthenticated) {
+          dispatch(logoutUserFail());
+        } else {
+          dispatch(logoutUserNow(getState().currentUser));
+        }
     };
+}
+
+var LOGOUT_USER_NOW = 'LOGOUT_USER_NOW';
+function logoutUserNow(previousUser) {
+  return {
+      type: LOGOUT_USER_NOW,
+      payload: previousUser
+  };
+}
+
+var LOGOUT_USER_FAIL = 'LOGOUT_USER_FAIL';
+function logoutUserFail() {
+  return {
+      type: LOGOUT_USER_FAIL,
+      payload: 'Sorry, you\'re no longer not logged in'
+  };
 }
 
 exports.REGISTER_REQUEST = REGISTER_REQUEST;
 exports.registerRequest = registerRequest;
-
-exports.REGISTER_SUCCESS = REGISTER_SUCCESS;
-exports.registerSuccess = registerSuccess;
 
 exports.REGISTER_ERROR = REGISTER_ERROR;
 exports.registerError = registerError;
@@ -318,5 +375,17 @@ exports.editStickyError = editStickyError;
 exports.DELETE_STICKY = DELETE_STICKY;
 exports.deleteSticky = deleteSticky;
 
+exports.DELETE_STICKY_SUCCESS = DELETE_STICKY_SUCCESS;
+exports.deleteStickySuccess = deleteStickySuccess;
+
+exports.DELETE_STICKY_ERROR = DELETE_STICKY_ERROR;
+exports.deleteStickyError = deleteStickyError;
+
 exports.LOGOUT_USER = LOGOUT_USER;
 exports.logoutUser = logoutUser;
+
+exports.LOGOUT_USER_NOW = LOGOUT_USER_NOW;
+exports.logoutUserNow = logoutUserNow;
+
+exports.LOGOUT_USER_FAIL = LOGOUT_USER_FAIL;
+exports.logoutUserFail = logoutUserFail;

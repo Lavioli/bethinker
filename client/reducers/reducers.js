@@ -10,13 +10,18 @@ var POST_STICKY_SUCCESS = actions.POST_STICKY_SUCCESS;
 var POST_STICKY_ERROR = actions.POST_STICKY_ERROR;
 var EDIT_STICKY_SUCCESS = actions.EDIT_STICKY_SUCCESS;
 var EDIT_STICKY_ERROR = actions.EDIT_STICKY_ERROR;
-var LOGOUT_USER = actions.LOGOUT_USER;
+var DELETE_STICKY_SUCCESS = actions.EDIT_STICKY_ERROR;
+var DELETE_STICKY_ERROR = actions.EDIT_STICKY_ERROR;
+var LOGOUT_USER_NOW = actions.LOGOUT_USER_NOW;
+var LOGOUT_USER_ERROR = actions.LOGOUT_USER_ERROR;
 
 var initialState = {
     stickies: [],
     loginError: null,
     fetchGetError: null,
     fetchPostError: null,
+    editPostError: null,
+    deletePostError: null,
     isAuthenticated: false,
     registerError: null,
     hash: null,
@@ -52,12 +57,32 @@ function stickyReducer(state, action) {
             });
             return newState;
         
+        case LOGOUT_USER_NOW:
+            newState = Object.assign({}, state, {
+                    stickies: [],
+                    loginError: null,
+                    logoutError: null,
+                    fetchGetError: null,
+                    fetchPostError: null,
+                    isAuthenticated: false,
+                    registerError: null,
+                    hash: null,
+                    currentUser: null,
+                    previousUser: action.payload
+            });
+            return newState;
+            
+        case LOGOUT_USER_ERROR:
+            newState = Object.assign({}, state, {
+                    logoutError: null
+            })
+            return newState;
+            
         case FETCH_STICKIES_SUCCESS:
             newState = Object.assign({}, state, {
                 stickies: action.payload,
                 fetchGetError: null
             });
-            console.log(newState);
             return newState;
             
         case FETCH_STICKIES_ERROR:
@@ -74,7 +99,6 @@ function stickyReducer(state, action) {
                     content: action.payloadContent
                 })
             })
-            console.log(newState);
             return newState;
         
         case POST_STICKY_ERROR:
@@ -84,21 +108,20 @@ function stickyReducer(state, action) {
             return newState;
         
         case EDIT_STICKY_SUCCESS:
-            newState = Object.assign({}, state, {
-                stickes: 'yes'
-            })
             return newState;
             
-        case LOGOUT_USER:
+        case EDIT_STICKY_ERROR:
             newState = Object.assign({}, state, {
-                    stickies: [],
-                    loginError: null,
-                    fetchGetError: null,
-                    fetchPostError: null,
-                    isAuthenticated: false,
-                    registerError: null,
-                    hash: null,
-                    currentUser: null
+                editPostError: action.payload
+            });
+            return newState;
+        
+        case DELETE_STICKY_SUCCESS:
+            return newState;
+        
+        case DELETE_STICKY_ERROR:
+            newState = Object.assign({}, state, {
+                deletePostError: action.payload
             });
             return newState;
             

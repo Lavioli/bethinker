@@ -118,7 +118,7 @@ app.delete("/users/:username/stickies/:stickyId", jsonParser, passport.authentic
             }
             if(username !== authenticatedUsername) {
                 return res.status(401).json({message: "Unauthorized"});
-            }e
+            }
         return res.status(200).json({});
 
     });

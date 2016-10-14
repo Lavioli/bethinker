@@ -11,16 +11,16 @@ var Header = function(props) {
     if (!props.currentUser) {
         headerArr =
         [
-            <li><Link to="/login">Sign In</Link></li>,
-            <li><Link to="/register">Register</Link></li>
+            <li key="1"><Link to="/login">Sign In</Link></li>,
+            <li key="2"><Link to="/register">Register</Link></li>
         ];
         return <span>{headerArr}</span>
     } 
     else {
         headerArr = [
-            <li>Welcome, {props.currentUser}!</li>,
-            <li><Link to="/stickies">Stickies</Link></li>,
-            <li><Link to="/logout">Logout</Link></li>
+            <li key="1">Welcome, {props.currentUser}!</li>,
+            <li key="2"><Link to="/stickies">Stickies</Link></li>,
+            <li key="3"><Link to="/logout">Logout</Link></li>
         ];
         return <span>{headerArr}</span>
     }
