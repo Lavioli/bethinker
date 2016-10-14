@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {postSticky} from '../actions/actions';
 import {connect} from 'react-redux';
+import FontAwesome from 'react-fontawesome';
 
 
 var checkDisplay = false;

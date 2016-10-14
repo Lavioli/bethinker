@@ -370,22 +370,3 @@ exports.EDIT_STICKY_SUCCESS = EDIT_STICKY_SUCCESS;
 exports.editStickySuccess = editStickySuccess;
 
 exports.EDIT_STICKY_ERROR = EDIT_STICKY_ERROR;
-exports.editStickyError = editStickyError;
-
-exports.DELETE_STICKY = DELETE_STICKY;
-exports.deleteSticky = deleteSticky;
-
-exports.DELETE_STICKY_SUCCESS = DELETE_STICKY_SUCCESS;
-exports.deleteStickySuccess = deleteStickySuccess;
-
-exports.DELETE_STICKY_ERROR = DELETE_STICKY_ERROR;
-exports.deleteStickyError = deleteStickyError;
-
-exports.LOGOUT_USER = LOGOUT_USER;
-exports.logoutUser = logoutUser;
-
-exports.LOGOUT_USER_NOW = LOGOUT_USER_NOW;
-exports.logoutUserNow = logoutUserNow;
-
-exports.LOGOUT_USER_FAIL = LOGOUT_USER_FAIL;
-exports.logoutUserFail = logoutUserFail;
