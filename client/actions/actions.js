@@ -3,10 +3,8 @@ var browserHistory = require('react-router').browserHistory;
 
 var REGISTER_REQUEST = 'REGISTER_REQUEST';
 function registerRequest(username, password) {
-  console.log("I'm in register")
   return (dispatch, getState) => {
     const hash = getState().hash;
-    const currentUser = getState().currentUser;
     return fetch('/createuser', {
       method: 'POST',
       headers: {
@@ -125,7 +123,7 @@ var FETCH_STICKIES_SUCCESS = 'FETCH_STICKIES_SUCCESS';
 function fetchStickiesSuccess(stickyArray) {
     return {
         type: FETCH_STICKIES_SUCCESS,
-        payload: stickyArray
+        payload: stickyArray.reverse()
     };
 }
 
@@ -162,9 +160,10 @@ function postSticky(title, content) {
     })
     .then(
       data => {
-        var stickyId = data.stickyId;
-        console.log(data);
-        dispatch(postStickySuccess(stickyId, title, content));
+        dispatch(fetchStickies(currentUser));
+        // var stickyId = data.stickyId;
+        // console.log(data);
+        // dispatch(postStickySuccess(stickyId, title, content));
       },
       ({response, data}) => {
           dispatch(postStickyError(data.error));
@@ -177,16 +176,15 @@ function postSticky(title, content) {
   };
 }
 
-//give us the title and content of the server side sticky
-var POST_STICKY_SUCCESS = 'FETCH_STICKY_SUCCESS';
-function postStickySuccess(stickyId, title, content) {
-    return {
-        type: POST_STICKY_SUCCESS,
-        payloadStickyId: stickyId,
-        payloadTitle: title,
-        payloadContent: content
-    };
-}
+// var POST_STICKY_SUCCESS = 'FETCH_STICKY_SUCCESS';
+// function postStickySuccess(stickyId, title, content) {
+//     return {
+//         type: POST_STICKY_SUCCESS,
+//         payloadStickyId: stickyId,
+//         payloadTitle: title,
+//         payloadContent: content
+//     };
+// }
 
 var POST_STICKY_ERROR = 'FETCH_STICKY_ERROR';
 function postStickyError(error) {
@@ -220,29 +218,29 @@ function editSticky(stickyId, title, content) {
       }
       return json;
     })
-    // .then(
-    //   data => 
-    //   {
-    //     dispatch(editStickySuccess(data));
-    //   },
-    //   ({response, data}) => {
-    //       dispatch(editStickyError(data.error));
+    .then(
+      data => 
+      {
+        dispatch(fetchStickies(currentUser));
+        // dispatch(editStickySuccess(data));
+      },
+      ({response, data}) => {
+          dispatch(editStickyError(data.error));
           
-    //       if(response.status == 401) {
-    //           dispatch(loginFail(data.error));
-    //       }
-    //   }
-    // );
+          if(response.status == 401) {
+              dispatch(loginFail(data.error));
+          }
+      }
+    );
   };
 }
 
-//give us the title and content of the server side sticky
-var EDIT_STICKY_SUCCESS = 'EDIT_STICKY_SUCCESS';
-function editStickySuccess(stickyArray) {
-    return {
-        type: POST_STICKY_SUCCESS,
-    };
-}
+// var EDIT_STICKY_SUCCESS = 'EDIT_STICKY_SUCCESS';
+// function editStickySuccess(stickyArray) {
+//     return {
+//         type: POST_STICKY_SUCCESS,
+//     };
+// }
 
 var EDIT_STICKY_ERROR = 'EDIT_STICKY_ERROR';
 function editStickyError(error) {
@@ -266,25 +264,25 @@ function deleteSticky(stickyId) {
       },
     }).then(response => response.json().then(json => ({ json, response })))
     .then(({json, response}) => {
-        console.log(response);
+        console.log('this is response delete', response);
       if (response.ok === false) {
         return Promise.reject(json);
       }
       return json;
     })
-    // .then(
-    //   data => 
-    //   {
-    //     dispatch(deleteStickySuccess(data));
-    //   },
-    //   ({response, data}) => {
-    //       dispatch(deleteStickyError(data.error));
+    .then(
+      data => 
+      {
+        dispatch(fetchStickies(currentUser));
+      },
+      ({response, data}) => {
+          dispatch(deleteStickyError(data.error));
           
-    //       if(response.status == 401) {
-    //           dispatch(loginFail(data.error));
-    //       }
-    //   }
-    // );
+          if(response.status == 401) {
+              dispatch(loginFail(data.error));
+          }
+      }
+    );
   };
 }
 
@@ -357,8 +355,8 @@ exports.fetchStickiesError = fetchStickiesError;
 exports.POST_STICKY = POST_STICKY;
 exports.postSticky = postSticky;
 
-exports.POST_STICKY_SUCCESS = POST_STICKY_SUCCESS;
-exports.postStickySuccess = postSticky;
+// exports.POST_STICKY_SUCCESS = POST_STICKY_SUCCESS;
+// exports.postStickySuccess = postSticky;
 
 exports.POST_STICKY_ERROR = POST_STICKY_ERROR;
 exports.postStickyError = postSticky;
@@ -366,7 +364,26 @@ exports.postStickyError = postSticky;
 exports.EDIT_STICKY = EDIT_STICKY;
 exports.editSticky = editSticky;
 
-exports.EDIT_STICKY_SUCCESS = EDIT_STICKY_SUCCESS;
-exports.editStickySuccess = editStickySuccess;
+// exports.EDIT_STICKY_SUCCESS = EDIT_STICKY_SUCCESS;
+// exports.editStickySuccess = editStickySuccess;
 
 exports.EDIT_STICKY_ERROR = EDIT_STICKY_ERROR;
+exports.editStickyError = editStickyError;
+
+exports.DELETE_STICKY = DELETE_STICKY;
+exports.deleteSticky = deleteSticky;
+
+// exports.DELETE_STICKY_SUCCESS = DELETE_STICKY_SUCCESS;
+// exports.deleteStickySuccess = deleteStickySuccess;
+
+exports.DELETE_STICKY_ERROR = DELETE_STICKY_ERROR;
+exports.deleteStickyError = deleteStickyError;
+
+exports.LOGOUT_USER = LOGOUT_USER;
+exports.logoutUser = logoutUser;
+
+exports.LOGOUT_USER_NOW = LOGOUT_USER_NOW;
+exports.logoutUserNow = logoutUserNow;
+
+exports.LOGOUT_USER_FAIL = LOGOUT_USER_FAIL;
+exports.logoutUserFail = logoutUserFail;
