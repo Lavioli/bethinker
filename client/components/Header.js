@@ -5,23 +5,22 @@ var Link = require('react-router').Link;
 
 import actions from '../actions/actions';
 import App from './App'
-import Login from './Login';
-import {loginRequest} from '../actions/actions'
 
 var Header = function(props) {
     var headerArr;
     if (!props.currentUser) {
         headerArr =
         [
-            <li><Link to="/login">Sign In</Link></li>,
-            <li>Register</li>
+            <li key="1"><Link to="/login">Sign In</Link></li>,
+            <li key="2"><Link to="/register">Register</Link></li>
         ];
         return <span>{headerArr}</span>
     } 
     else {
         headerArr = [
-            <li>Welcome, {props.currentUser}!</li>,
-            <li><Link to="/stickies">Stickies</Link></li>
+            <li key="1">Welcome, {props.currentUser}!</li>,
+            <li key="2"><Link to="/stickies">Stickies</Link></li>,
+            <li key="3"><Link to="/logout">Logout</Link></li>
         ];
         return <span>{headerArr}</span>
     }
