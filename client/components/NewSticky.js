@@ -3,22 +3,47 @@ import ReactDOM from 'react-dom';
 import {postSticky} from '../actions/actions';
 import {connect} from 'react-redux';
 
-var Login = React.createClass({
-    
-    onSubmit: function () {
-        this.props.onAddSubmit(this.refs.titleText.value, this.refs.contentText.value);
+
+var checkDisplay = false;
+
+var NewSticky = React.createClass({
+    getInitialState: function() {
+        return {
+            show: false
+        };
     },
-    
-    render: function() {
+    changeState: function () {
+        this.setState({
+            show: !this.state.show
+        });
+    },
+
+    onBlurSubmit: function() {
+       this.props.onAddSubmit(this.refs.titleText.value, this.refs.contentText.value);
+       this.changeState();
+    },
+    onAddSticky: function() {
         return (
             <div className="sticky">
-                <form className="sticky">
+                <form className="sticky" >
                     <span>Title:</span>
-                    <input type="text" id="title" ref="titleText" />
+                        <input type="text" id="title" ref="titleText" />
                     <span>Content:</span>
-                    <input type="text" name="content" ref="contentText" onBlur={this.onSubmit} required />
-
+                        <input type="text" name="content" ref="contentText" onBlur={this.onBlurSubmit} required />
                 </form>
+            </div>
+        )
+    },
+    render: function() {
+        console.log(this.state.show);
+        return (
+            <div>
+
+                <div className="add_sticky_button">
+                    <button type="button" onClick={this.changeState}>Add Sticky</button>
+                </div>
+                {(this.state.show == true)? this.onAddSticky(): ''}
+                
             </div>
         );
     }
@@ -34,4 +59,4 @@ function mapDispatchToProps (dispatch) {
     };
 }
 
-export default connect(null,mapDispatchToProps)(Login);
+export default connect(null,mapDispatchToProps)(NewSticky);

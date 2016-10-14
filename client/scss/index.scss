@@ -69,13 +69,22 @@ li {
   font-size: 3em;
   list-style-type: none;
 }
-form{
+form.login-page{
   background-color: $teal;
   font-family: 'Roboto', sans-serif;
   margin: auto;
   width: 50%;
   text-align: center;
 }
+
+form.div{
+  background-color: $teal;
+  font-family: 'Roboto', sans-serif;
+  margin: auto;
+  width: 50%;
+  text-align: center;
+}
+
 legend{
   text-align: center;
   margin: 2em;
@@ -89,4 +98,15 @@ span{
 
 form input {
   
+}
+
+
+#hidden {
+    display: none;
+
+}
+
+#show {
+    display: block;
+
 }
