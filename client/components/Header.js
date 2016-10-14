@@ -18,9 +18,10 @@ var Header = function(props) {
     } 
     else {
         headerArr = [
-            <li key="1">Welcome, {props.currentUser}!</li>,
-            <li key="2"><Link to="/stickies">Stickies</Link></li>,
-            <li key="3"><Link to="/logout">Logout</Link></li>
+            <li id="welcome_user" key="1">Welcome, {props.currentUser}!</li>,
+            <li className="stickies_logout" key="2"><Link to="/myaccount">My Account</Link></li>,
+            <li className="stickies_logout" key="3"><Link to="/stickies">My Stickies</Link></li>,
+            <li className="stickies_logout" key="4"><Link to="/logout">Logout</Link></li>
         ];
         return <span>{headerArr}</span>
     }

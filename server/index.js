@@ -114,11 +114,11 @@ app.delete("/users/:username/stickies/:stickyId", jsonParser, passport.authentic
     //finds to allow user to delete sticky by stick:id
     Sticky.findByIdAndRemove({_id: stickyId}, function(err, sticky) {
             if(err) {
-                return res.status(500);
+                return res.sendStatus(500);
             }
             if(username !== authenticatedUsername) {
                 return res.status(401).json({message: "Unauthorized"});
-            }e
+            }
         return res.status(200).json({});
 
     });
@@ -134,7 +134,7 @@ app.post('/users/:username/stickies', jsonParser, passport.authenticate('basic',
 
     Sticky.create({title: title, content: content, _user: authenticatedId}, function(err, sticky) {
         if(err) {
-            return res.status(500);
+            return res.sendStatus(500);
         }
         if(routeUsername !== authenticatedUsername) {
             return res.status(401).json({message: "Unauthorized"});
@@ -154,38 +154,43 @@ app.put("/users/:username/stickies/:stickyId", jsonParser, passport.authenticate
             var content = req.body.content;
             var authenticatedUsername = req.user.username.toString();
             var authenticatedId = req.user._id.toString();
-
+    
     //finds stick-id and then allow user to edit sticky
     Sticky.findOne({_user: authenticatedId, _id: stickyId}, function(err, sticky) {
-            
+          
             if(routerUsername !== authenticatedUsername) {
+            
                 return res.status(401).json({message: "Unauthorized"});
             }   
             
             //check to see if title or content was changed
-            if (title && !content){
+            if (title && content){
+             
                 Sticky.findOneAndUpdate(
                     {_user: authenticatedId, _id: stickyId}, 
-                    {content: sticky.content, title: title}, 
+                    {content: content, title: title}, 
                     function(err, sticky) {
+                        
                         if(err) {
-                            return res.status(500);
+                         
+                            return res.sendStatus(500);
                         }
-                        return res.status(201).json({message: "Succesfully saved"});
+                    
+                        return res.status(200).json({message: "Succesfully saved"});
                         }
                 );
             }
-            if (content && !title){
-                Sticky.findOneAndUpdate(
-                    {_user: authenticatedId, _id: stickyId}, 
-                    {title: sticky.title, content: content}, 
-                    function(err, sticky) {
-                        if(err) {
-                            return res.status(500);
-                        }
-                    return res.status(201).json({message: "Succesfully saved"});
-                });
-            }
+            // if (content && !title){
+            //     Sticky.findOneAndUpdate(
+            //         {_user: authenticatedId, _id: stickyId}, 
+            //         {title: sticky.title, content: content}, 
+            //         function(err, sticky) {
+            //             if(err) {
+            //                 return res.sendStatus(500);
+            //             }
+            //         return res.status(201).json({message: "Succesfully saved"});
+            //     });
+            // }
 
     });
 
