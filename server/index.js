@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import express from 'express';
 import mongoose from 'mongoose';
-mongoose.connect('mongodb://localhost:27017/stickies'); // connect to our database
+mongoose.connect(process.env.DATABASE_URI || global.databaseUri || 'mongodb://localhost:27017/stickies'); // connect to our database
 import User from './models/user';
 import Sticky from './models/sticky';
 import bodyParser from 'body-parser';
