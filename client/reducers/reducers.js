@@ -1,5 +1,4 @@
 var actions = require('../actions/actions');
-var update = require('react-addons-update');
 var REGISTER_SUCCESS = actions.REGISTER_SUCCESS;
 var REGISTER_ERROR = actions.REGISTER_ERROR;
 var LOGIN_SUCCESSFUL = actions.LOGIN_SUCCESSFUL;
