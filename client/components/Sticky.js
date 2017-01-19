@@ -24,6 +24,7 @@ var Sticky = React.createClass({
 	},
 	
 	doneEditing: function() {
+		console.log(6)
 		
 		var stickyTitle = this.props.title;
 		var stickyContent = this.props.content;
@@ -32,11 +33,11 @@ var Sticky = React.createClass({
 			<div className="title" rows="2" cols="49" onFocus="" key="0" >{stickyTitle}</div>,
 			<div className="content"rows="5" cols="47" onClick="" key="1" >{stickyContent}</div>
 		]
-		
 		this.forceUpdate();
 	},
 	
 	onEditSticky: function(e) {
+		console.log(5)
 		e.preventDefault();
 		var titleText = e.target[3].value;
 		var contentText = e.target[4].value;
@@ -48,6 +49,7 @@ var Sticky = React.createClass({
 	},
 
 	makeEditable: function () {
+		console.log(4)
 		
 		var stickyTitle = this.props.title;
 		var stickyContent = this.props.content;
@@ -62,6 +64,7 @@ var Sticky = React.createClass({
 	},
 
 	componentWillMount: function() {
+		console.log(1)
 
 		this.doneEditing();
 
@@ -72,17 +75,8 @@ var Sticky = React.createClass({
  //       this.props.fetchStickies(this.props.currentUser);
  //   },
     componentDidMount: function() {
+    	console.log(3)
         this.props.fetchStickies(this.props.currentUser);
-    },
-    
-      componentWillReceiveProps: function(newProps) {
-    },
-    shouldComponentUpdate: function(newProps, newState) {
-        return true;
-    },
-    componentWillUpdate: function(nextProps, nextState) {
-    },
-    componentDidUpdate: function(prevProps, prevState) {
     },
 
 

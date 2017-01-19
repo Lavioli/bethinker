@@ -18,19 +18,6 @@ var StickyList = React.createClass({
     componentDidMount: function() {
         this.props.fetchStickies(this.props.currentUser);
     },
-    //components
-    componentWillReceiveProps: function(newProps) {
-    },
-    shouldComponentUpdate: function(newProps, newState) {
-        return true;
-    },
-    componentWillUpdate: function(nextProps, nextState) {
-    },
-    componentDidUpdate: function(prevProps, prevState) {
-    },
-    componentWillUnmount: function() {
-    },
-
 
     render: function(props) {
 
@@ -44,12 +31,9 @@ var StickyList = React.createClass({
 	                    content = {sticky.content}
 	                    key={index}
 	                    stickyId={sticky._id}
-                        // deleteSticky={deleteSticky}
-                        // editSticky={editSticky}
 	                    /> 
                         )
         });
-
         return (
         	<div>
 	        	<div>
