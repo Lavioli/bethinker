@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { BasicStrategy } from 'passport-http';
 
 import User from '../models/user';
