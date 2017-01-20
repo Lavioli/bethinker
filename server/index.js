@@ -8,28 +8,19 @@ import passport from 'passport';
 import strategy from './endpoints/strategy';
 import userRouter from './endpoints/userRouter';
 import stickyRouter from './endpoints/stickyRouter';
-// import User from './models/user';
-// import Sticky from './models/sticky';
 
 const app = express();
-// const jsonParser = bodyParser.json();
 const HOST = process.env.HOST;
 const PORT = process.env.PORT || 8080;
 
 mongoose.connect(process.env.DATABASE_URI || global.databaseUri || 'mongodb://localhost:27017/stickies');
-
 app.use(express.static(process.env.CLIENT_PATH));
 app.use(bodyParser.json());
 app.use('/', userRouter);
 app.use('/', stickyRouter);
 passport.use(strategy);
 
-//app.use(passport.initialize());
-
-
 console.log(`Server running in ${process.env.NODE_ENV} mode`);
-
-
 
 function runServer() {
     return new Promise((resolve, reject) => {
@@ -49,5 +40,4 @@ if (require.main === module) {
     runServer();
 }
 
-exports.app = app;
-exports.runServer = runServer;
+export default app;
