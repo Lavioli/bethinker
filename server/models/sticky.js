@@ -8,7 +8,6 @@ var StickySchema = new Schema({
     title: String,
     content: { type: String, required: true },
     time : { type : Date, default: Date.now }
-    // rating: { type: Number, min: 1, max: 3 }
 });
 
 
