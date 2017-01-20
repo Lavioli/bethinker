@@ -4,6 +4,7 @@ import passport from 'passport';
 import Sticky from '../models/sticky';
 
 const stickyRouter = express.Router();
+
 //************************************STICKIE ENDPOINTS*****************************************/
 
 //get all the stickies for now, this is for testing purposes atm
