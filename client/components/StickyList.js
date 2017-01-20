@@ -12,23 +12,18 @@ import Sticky from './Sticky';
 var clickToDisplay = false;
 
 var StickyList = React.createClass({
-    componentWillMount: function() {
-        this.props.fetchStickies(this.props.currentUser);
-    },
     componentDidMount: function() {
         this.props.fetchStickies(this.props.currentUser);
     },
-
     render: function(props) {
-
         //bind allows us to bind the function to this(StickyList) component specifically, so child(Sticky) can easily grab this prop
         var deleteSticky = this.props.deleteSticky.bind(this);
         var editSticky = this.props.editSticky.bind(this);
 
-         var stickyList = this.props.stickies.reverse().map(function(sticky, index) {
+         var stickyList = this.props.stickies.map(function(sticky, index) {
                 return (
-	                    <Sticky title = {sticky.title}
-	                    content = {sticky.content}
+	                    <Sticky title={sticky.title}
+	                    content={sticky.content}
 	                    key={index}
 	                    stickyId={sticky._id}
 	                    /> 
@@ -52,7 +47,6 @@ var mapStateToProps = function(state) {
     return {
         currentUser: state.currentUser,
         stickies: state.stickies
-
     };
 };
 

@@ -17,7 +17,8 @@ var NewSticky = React.createClass({
 
     onSubmitAddSticky: function(e) {
         e.preventDefault();
-        this.props.onAddSubmit(this.refs.titleText.value, this.refs.contentText.value);
+        console.log(this.refs.contentText.value === "")
+        (this.refs.contentText.value.length !== 0) ? this.props.onAddSubmit(this.refs.titleText.value, this.refs.contentText.value) : "";
         this.changeState();
     },
 
