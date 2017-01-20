@@ -4,10 +4,8 @@ import { fetchStickies } from '../actions/actions'
 import { deleteSticky } from '../actions/actions'
 import { editSticky } from '../actions/actions'
 import { connect } from 'react-redux';
-// import StickyList from './StickyList';
 import NewSticky from './NewSticky';
 import Sticky from './Sticky';
-// var FontAwesome = require('react-fontawesome');
 
 var clickToDisplay = false;
 
@@ -26,7 +24,7 @@ var StickyList = React.createClass({
 	                    content={sticky.content}
 	                    key={index}
 	                    stickyId={sticky._id}
-	                    /> 
+	                    />
                         )
         });
         return (
@@ -34,8 +32,8 @@ var StickyList = React.createClass({
 	        	<div>
 	        		<NewSticky />
 	        	</div>
-	            <div className="sticky_list"> 
-	            	{ stickyList } 
+	            <div className="sticky_list">
+	            	{ stickyList }
 	            </div>
 	        </div>
         );
@@ -66,4 +64,4 @@ var mapDispatchToProps = function(dispatch) {
     };
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(StickyList);
+export default connect(mapStateToProps, mapDispatchToProps)(StickyList);

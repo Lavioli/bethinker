@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {registerRequest} from '../actions/actions';
-import {connect} from 'react-redux';
-var Link = require('react-router').Link;
+import { registerRequest } from '../actions/actions';
+import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 var MyAccountChoices = (currentUser) => {
     if (!currentUser) {

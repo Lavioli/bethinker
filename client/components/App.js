@@ -1,5 +1,5 @@
-var React = require('react');
-var connect = require('react-redux').connect;
+import React from 'react';
+import { connect } from 'react-redux';
 
 
 var Link = require('react-router').Link;
