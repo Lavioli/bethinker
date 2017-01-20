@@ -1,47 +1,17 @@
-import 'babel-polyfill';
+import 'babel-polyfill'; 
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import bcrypt from 'bcryptjs';
 import passport from 'passport';
-import { BasicStrategy } from 'passport-http';
+import strategy from './endpoints/strategy';
 
 import User from './models/user';
 import Sticky from './models/sticky';
 
 mongoose.connect(process.env.DATABASE_URI || global.databaseUri || 'mongodb://localhost:27017/stickies');
 
-//Basic strategy
-var stategy = new BasicStrategy(function(username, password, callback) {
-    User.findOne({
-        username: username
-    }, function(err, user) {
-        if (err) {
-            callback(err);
-            return;
-        }
-        if (!user) {
-            return callback(null, false, {
-                message: 'Invalid username/password. Please try again.'
-            });
-        }
-
-        user.validatePassword(password, function(err, isValid) {
-            if (err) {
-                return callback(err);
-            }
-
-            if (!isValid) {
-                return callback(null, false, {
-                    message: 'Invalid username/password. Please try again.'
-                });
-            }
-            return callback(null, user);
-        });
-    });
-});
-
-passport.use(stategy);
+passport.use(strategy);
 
 //app.use(passport.initialize());
 const jsonParser = bodyParser.json();
