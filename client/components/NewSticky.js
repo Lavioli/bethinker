@@ -17,7 +17,6 @@ var NewSticky = React.createClass({
 
     onSubmitAddSticky: function(e) {
         e.preventDefault();
-        console.log(this.refs.contentText.value === "")
         (this.refs.contentText.value.length !== 0) ? this.props.onAddSubmit(this.refs.titleText.value, this.refs.contentText.value) : "";
         this.changeState();
     },
@@ -29,13 +28,13 @@ var NewSticky = React.createClass({
                     <span id="title">Title:</span>
                         <input type="text" id="title" ref="titleText" />
                     <span id="content">Content:</span>
-                        <input type="text" name="content" ref="contentText" onBlur={this.onSubmitAddSticky} required autoFocus/>
+                        <input type="text" name="content" ref="contentText" onBlur={this.onSubmitAddSticky} />
                         <input type="submit" value="Add Sticky" onClick={this.onSubmitAddSticky}/>
                 </form>
             </div>
         )
     },
-    
+
     render: function() {
         return (
             <div>
@@ -43,7 +42,7 @@ var NewSticky = React.createClass({
                     <button type="button" className="add_sticky_button" onClick={this.changeState}>+</button>
                 </div>
                 { (this.state.show == true)? this.onAddSticky(): '' }
-                
+
             </div>
         );
     }

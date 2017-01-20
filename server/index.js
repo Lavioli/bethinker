@@ -1,13 +1,15 @@
 import 'babel-polyfill';
 import express from 'express';
 import mongoose from 'mongoose';
-mongoose.connect(process.env.DATABASE_URI || global.databaseUri || 'mongodb://localhost:27017/stickies'); // connect to our database
+import bodyParser from 'body-parser';
+import bcrypt from 'bcryptjs';
+import passport from 'passport';
+import { BasicStrategy } from 'passport-http';
+
 import User from './models/user';
 import Sticky from './models/sticky';
-import bodyParser from 'body-parser';
-var bcrypt = require('bcryptjs');
-var passport = require('passport');
-var BasicStrategy = require('passport-http').BasicStrategy;
+
+mongoose.connect(process.env.DATABASE_URI || global.databaseUri || 'mongodb://localhost:27017/stickies');
 
 //Basic strategy
 var stategy = new BasicStrategy(function(username, password, callback) {
@@ -49,7 +51,7 @@ const PORT = process.env.PORT || 8080;
 console.log(`Server running in ${process.env.NODE_ENV} mode`);
 
 const app = express();
- 
+
 app.use(express.static(process.env.CLIENT_PATH));
 
 function runServer() {
@@ -73,7 +75,7 @@ if (require.main === module) {
 //************************************STICKIE ENDPOINTS*****************************************/
 
 //get all the stickies for now, this is for testing purposes atm
-// app.get('/stickies', passport.authenticate('basic', {session: false}), 
+// app.get('/stickies', passport.authenticate('basic', {session: false}),
 // function(req, res) {
 //     Sticky.find(function(err, sticky) {
 //         if (err) {
@@ -94,7 +96,7 @@ app.get('/users/:username/stickies', jsonParser, passport.authenticate('basic', 
          return res.status(422).json({
             "message": "Unauthorized"
          });
-    }   
+    }
 
     Sticky.find({_user: authenticatedId}, function(err, stickies) {
         if(err) {
@@ -102,7 +104,7 @@ app.get('/users/:username/stickies', jsonParser, passport.authenticate('basic', 
         }
         return res.status(200).json(stickies);
     });
-    
+
 });
 //should allow authorized users to delete their sticky
 app.delete("/users/:username/stickies/:stickyId", jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
@@ -154,36 +156,36 @@ app.put("/users/:username/stickies/:stickyId", jsonParser, passport.authenticate
             var content = req.body.content;
             var authenticatedUsername = req.user.username.toString();
             var authenticatedId = req.user._id.toString();
-    
+
     //finds stick-id and then allow user to edit sticky
     Sticky.findOne({_user: authenticatedId, _id: stickyId}, function(err, sticky) {
-          
+
             if(routerUsername !== authenticatedUsername) {
-            
+
                 return res.status(401).json({message: "Unauthorized"});
-            }   
-            
+            }
+
             //check to see if title or content was changed
             if (title && content){
-             
+
                 Sticky.findOneAndUpdate(
-                    {_user: authenticatedId, _id: stickyId}, 
-                    {content: content, title: title}, 
+                    {_user: authenticatedId, _id: stickyId},
+                    {content: content, title: title},
                     function(err, sticky) {
-                        
+
                         if(err) {
-                         
+
                             return res.sendStatus(500);
                         }
-                    
+
                         return res.status(200).json({message: "Succesfully saved"});
                         }
                 );
             }
             // if (content && !title){
             //     Sticky.findOneAndUpdate(
-            //         {_user: authenticatedId, _id: stickyId}, 
-            //         {title: sticky.title, content: content}, 
+            //         {_user: authenticatedId, _id: stickyId},
+            //         {title: sticky.title, content: content},
             //         function(err, sticky) {
             //             if(err) {
             //                 return res.sendStatus(500);
@@ -216,7 +218,7 @@ app.get('/users/:username', jsonParser, passport.authenticate('basic', {session:
     var routerUsername = req.params.username;
     var authenticatedUsername = req.user.username.toString();
     var authenticatedId = req.user._id.toString();
-    
+
     if (routerUsername !== authenticatedUsername){
         return res.status(422).json({
             message: "Unauthorized"
@@ -227,7 +229,7 @@ app.get('/users/:username', jsonParser, passport.authenticate('basic', {session:
            return res.status(500).json({
                message: 'Internal Server Error'
            });
-       } 
+       }
        res.status(200).json({"._id": user._id, "username": user.username})
     });
 });
@@ -237,14 +239,14 @@ app.get('/users/:username', jsonParser, passport.authenticate('basic', {session:
 app.delete("/users/:username", jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
     var routerUsername = req.params.username;
     var authenticatedUsername = req.user.username.toString();
-    
+
     if (routerUsername !== authenticatedUsername){
         return res.status(422).json({
             message: "Unauthorized"
                 });
             }
-            
-    User.findOneAndRemove({username: routerUsername}, function(user) { 
+
+    User.findOneAndRemove({username: routerUsername}, function(user) {
             res.status(200).json({message: "User deleted"});
     });
 });
@@ -357,8 +359,8 @@ app.put("/users/:username", jsonParser, passport.authenticate('basic', {
                     }
                  User.findByIdAndUpdate(
                     id,
-                    {username: newName.toString(), password: hash.toString()}, 
-                    {upsert: true}, 
+                    {username: newName.toString(), password: hash.toString()},
+                    {upsert: true},
                     function(err, user) {
                         res.status(200).json({});
                         });
@@ -375,8 +377,8 @@ app.put("/users/:username", jsonParser, passport.authenticate('basic', {
             }
             User.findByIdAndUpdate(
                 id,
-                    {username: newName.toString()}, 
-                        {upsert: true}, 
+                    {username: newName.toString()},
+                        {upsert: true},
                         function(err, user) {
                             res.status(200).json({})
                         }
@@ -397,8 +399,8 @@ app.put("/users/:username", jsonParser, passport.authenticate('basic', {
                     }
                  User.findByIdAndUpdate(
                     id,
-                    {password: hash.toString()}, 
-                    {upsert: true}, 
+                    {password: hash.toString()},
+                    {upsert: true},
                     function(err, user) {
                         res.status(200).json({message: "Okay"});
                         });

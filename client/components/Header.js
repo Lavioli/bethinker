@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {connect} from 'react-redux';
-var Link = require('react-router').Link;
+import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 import actions from '../actions/actions';
 import App from './App'
@@ -15,7 +15,7 @@ var Header = function(props) {
             <li key="2"><Link to="/register">Register</Link></li>
         ];
         return <span>{headerArr}</span>
-    } 
+    }
     else {
         headerArr = [
             <li id="welcome_user" key="1">Welcome, {props.currentUser}!</li>,

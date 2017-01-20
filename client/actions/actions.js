@@ -1,5 +1,5 @@
-var fetch = require('isomorphic-fetch');
-var browserHistory = require('react-router').browserHistory;
+import fetch from 'isomorphic-fetch';
+import { browserHistory } from 'react-router';
 
 var REGISTER_REQUEST = 'REGISTER_REQUEST';
 function registerRequest(username, password) {
@@ -108,7 +108,7 @@ function fetchStickies(currentUser) {
       },
       ({response, data}) => {
           dispatch(fetchStickiesError(data.error));
-          
+
           if(response.status == 401) {
               dispatch(loginFail(data.error))
           }
@@ -167,7 +167,7 @@ function postSticky(title, content) {
       },
       ({response, data}) => {
           dispatch(postStickyError(data.error));
-          
+
           if(response.status == 401) {
               dispatch(loginFail(data.error));
           }
@@ -211,21 +211,21 @@ function editSticky(stickyId, title, content) {
         content: content
       })
     }).then(function(response) {
-      
+
        if (response.ok ) {
         return Promise.resolve(response.json());
        }
-    
+
     })
     .then(
-      data => 
+      data =>
       {
         dispatch(fetchStickies(currentUser));
         // dispatch(editStickySuccess(data));
       }
       // ({response, data}) => {
       //     dispatch(editStickyError(data.error));
-          
+
       //     if(response.status == 401) {
       //         dispatch(loginFail(data.error));
       //     }
@@ -270,13 +270,13 @@ function deleteSticky(stickyId) {
       return json;
     })
     .then(
-      data => 
+      data =>
       {
         dispatch(fetchStickies(currentUser));
       },
       ({response, data}) => {
           dispatch(deleteStickyError(data.error));
-          
+
           if(response.status == 401) {
               dispatch(loginFail(data.error));
           }
