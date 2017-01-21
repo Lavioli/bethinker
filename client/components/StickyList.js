@@ -7,6 +7,9 @@ import { connect } from 'react-redux';
 import NewSticky from './NewSticky';
 import Sticky from './Sticky';
 
+//google material UI theme provider 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 var clickToDisplay = false;
 
 var StickyList = React.createClass({
@@ -20,22 +23,23 @@ var StickyList = React.createClass({
 
          var stickyList = this.props.stickies.map(function(sticky, index) {
                 return (
-	                    <Sticky title={sticky.title}
-	                    content={sticky.content}
+	                    <Sticky sticky={sticky}
 	                    key={index}
-	                    stickyId={sticky._id}
 	                    />
                         )
         });
+         console.log(this.props)
         return (
-        	<div>
-	        	<div>
-	        		<NewSticky />
-	        	</div>
-	            <div className="sticky_list">
-	            	{ stickyList }
-	            </div>
-	        </div>
+            <MuiThemeProvider>
+            	<div>
+    	        	<div>
+    	        		<NewSticky />
+    	        	</div>
+    	            <div className="sticky_list">
+    	            	{ stickyList }
+    	            </div>
+    	        </div>
+            </MuiThemeProvider>
         );
     },
 
