@@ -1,7 +1,9 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose'),
+    bcrypt = require('bcryptjs');
+
 var Sticky = require('./sticky');
-var bcrypt = require('bcryptjs');
+
+var Schema = mongoose.Schema;
 
 var UserSchema = new mongoose.Schema({
     username: {
@@ -14,8 +16,8 @@ var UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    stickies: [{ 
-        type: Schema.Types.ObjectId, 
+    stickies: [{
+        type: Schema.Types.ObjectId,
         ref:'Sticky'
     }]
 });

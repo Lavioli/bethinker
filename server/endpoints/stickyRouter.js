@@ -1,9 +1,9 @@
-import express from 'express';
-import passport from 'passport';
+var express = require('express'),
+    passport = require('passport');
 
-import Sticky from '../models/sticky';
+var Sticky = require('../models/sticky');
 
-const stickyRouter = express.Router();
+var stickyRouter = express.Router();
 
 //************************************STICKIE ENDPOINTS*****************************************/
 
@@ -131,4 +131,4 @@ stickyRouter.put("/users/:username/stickies/:stickyId", passport.authenticate('b
 
 });
 
-export default stickyRouter;
+module.exports = stickyRouter;

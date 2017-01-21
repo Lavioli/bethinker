@@ -1,9 +1,9 @@
-import express from 'express';
-import passport from 'passport';
+var express = require('express'),
+    passport = require('passport');
 
-import User from '../models/user';
+var User = require('../models/user');
 
-const userRouter = express.Router();
+var userRouter = express.Router();
 
 /************************************USER ENDPOINTS***************************************/
 
@@ -215,4 +215,4 @@ userRouter.put("/users/:username", passport.authenticate('basic', {
         }
 });
 
-export default userRouter;
+module.exports = userRouter;

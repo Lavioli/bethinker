@@ -1,8 +1,8 @@
-import { BasicStrategy } from 'passport-http';
+var BasicStrategy = require('passport-http').BasicStrategy;
 
-import User from '../models/user';
+var User = require('../models/user');
 
-export default new BasicStrategy(function(username, password, callback) {
+module.exports = new BasicStrategy(function(username, password, callback) {
     User.findOne({
         username: username
     }, function(err, user) {
