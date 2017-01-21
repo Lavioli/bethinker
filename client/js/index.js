@@ -17,6 +17,10 @@ import Logout from '../components/Logout';
 import StickyList from '../components/StickyList';
 import reducers from '../reducers/reducers';
 
+import injectTapEventPlugin from 'react-tap-event-plugin';
+//use with material-ui to prevent "Unknown prop 'onTouchTap' on <label> tag error"
+injectTapEventPlugin();
+
 console.log(`Client running in ${process.env.NODE_ENV} mode`);
 
 export let store = createStore(reducers, applyMiddleware(thunk));
