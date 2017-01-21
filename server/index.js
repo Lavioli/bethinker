@@ -1,17 +1,17 @@
-import 'babel-polyfill';
-import express from 'express';
-import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
-import bcrypt from 'bcryptjs';
-import passport from 'passport';
+var express = require('express'),
+    mongoose = require('mongoose'),
+    bodyParser = require('body-parser'),
+    bcrypt = require('bcryptjs'),
+    passport = require('passport');
 
-import strategy from './endpoints/strategy';
-import userRouter from './endpoints/userRouter';
-import stickyRouter from './endpoints/stickyRouter';
+var strategy = require('./endpoints/strategy'),
+    userRouter = require('./endpoints/userRouter'),
+    stickyRouter = require('./endpoints/stickyRouter');
 
-const app = express();
-const HOST = process.env.HOST;
-const PORT = process.env.PORT || 8080;
+var app = express();
+
+var HOST = process.env.HOST,
+    PORT = process.env.PORT || 8080;
 
 mongoose.connect(process.env.DATABASE_URI || global.databaseUri || 'mongodb://localhost:27017/stickies');
 app.use(express.static(process.env.CLIENT_PATH));
@@ -40,4 +40,4 @@ if (require.main === module) {
     runServer();
 }
 
-export default app;
+module.exports = app;

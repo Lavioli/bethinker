@@ -1,7 +1,9 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    bcrypt = require('bcryptjs');
+
 var User = require('./user');
+
 var Schema = mongoose.Schema;
-var bcrypt = require('bcryptjs');
 
 var StickySchema = new Schema({
     _user: { type: String, ref: 'User'},
