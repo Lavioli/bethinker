@@ -17,7 +17,7 @@ import Logout from '../components/Logout';
 import StickyList from '../components/StickyList';
 import reducers from '../reducers/reducers';
 
-import injectTapEventPlugin from 'react-tap-event-plugin';
+var injectTapEventPlugin = require('react-tap-event-plugin');
 //use with material-ui to prevent "Unknown prop 'onTouchTap' on <label> tag error"
 injectTapEventPlugin();
 
