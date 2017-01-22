@@ -39,6 +39,7 @@ var Sticky = React.createClass({
 						<div className="title" rows="2" cols="49" onFocus="" key="0" >{this.props.sticky.title}</div>
 						<div className="content"rows="5" cols="47" onClick="" key="1" >{this.props.sticky.content}</div>
 					</div>
+				</form>
 				</Paper>
 			</div>	
 		);
