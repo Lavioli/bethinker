@@ -2,6 +2,8 @@ import React from 'react';
 import { postSticky } from '../actions/actions';
 import { connect } from 'react-redux';
 
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+
 var NewSticky = React.createClass({
     getInitialState: function() {
         return {
@@ -39,7 +41,7 @@ var NewSticky = React.createClass({
         return (
             <div>
                 <div className="add_sticky_button_container">
-                    <button type="button" className="add_sticky_button" onClick={this.changeState}>+</button>
+                    <FloatingActionButton type="button" className="add_sticky_button" onClick={this.changeState}>+</FloatingActionButton>
                 </div>
                 { (this.state.show == true)? this.onAddSticky(): '' }
 
