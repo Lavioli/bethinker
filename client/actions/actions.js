@@ -196,7 +196,6 @@ function postStickyError(error) {
 
 var EDIT_STICKY = 'EDIT_STICKY';
 function editSticky(stickyId, title, content) {
-  console.log("I'm in edit");
   return (dispatch, getState) => {
     const hash = getState().hash;
     const currentUser = getState().currentUser;
@@ -211,17 +210,15 @@ function editSticky(stickyId, title, content) {
         content: content
       })
     }).then(function(response) {
-
-       if (response.ok ) {
+       if (response.ok === false) {
         return Promise.resolve(response.json());
        }
-
+       return response;
     })
     .then(
       data =>
       {
         dispatch(fetchStickies(currentUser));
-        // dispatch(editStickySuccess(data));
       }
       // ({response, data}) => {
       //     dispatch(editStickyError(data.error));
@@ -233,13 +230,6 @@ function editSticky(stickyId, title, content) {
     );
   };
 }
-
-// var EDIT_STICKY_SUCCESS = 'EDIT_STICKY_SUCCESS';
-// function editStickySuccess(stickyArray) {
-//     return {
-//         type: POST_STICKY_SUCCESS,
-//     };
-// }
 
 var EDIT_STICKY_ERROR = 'EDIT_STICKY_ERROR';
 function editStickyError(error) {
