@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 var Link = require('react-router').Link;
 
@@ -11,14 +12,16 @@ import Login from './Login';
 
 var App = function (props) {
     return (
-        <div className="App">
-            <nav>
-                <ul>
-                    <Header currentUser={props.currentUser} />
-                </ul>
-            </nav>
-            {props.children}
-        </div>
+        <MuiThemeProvider>
+            <div className="App">
+                <nav>
+                    <ul>
+                        <Header currentUser={props.currentUser} />
+                    </ul>
+                </nav>
+                {props.children}
+            </div>
+        </MuiThemeProvider>
     );
 };
 

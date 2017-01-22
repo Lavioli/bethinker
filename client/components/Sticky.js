@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { fetchStickies } from '../actions/actions'
 import { deleteSticky } from '../actions/actions'
 import { editSticky } from '../actions/actions'
+import Paper from 'material-ui/Paper'
 
 
 var Sticky = React.createClass({
@@ -30,7 +31,7 @@ var Sticky = React.createClass({
 
 		return (
 			<div className = "container">
-				<form className="sticky_container" onSubmit={this.onEditSticky}>
+				<Paper zDepth={3} className="sticky_container" onSubmit={this.onEditSticky}>
 					<div id="delete_button_container">
 						<input id="delete_button" type="button" value="x" onClick={this.onClickDelete} />
 						<input id="edit_button" type="button" value="/" ref="editButton" onClick={this.makeEditable}/>
@@ -38,8 +39,7 @@ var Sticky = React.createClass({
 						<div className="title" rows="2" cols="49" onFocus="" key="0" >{stickyTitle}</div>
 						<div className="content"rows="5" cols="47" onClick="" key="1" >{stickyContent}</div>
 					</div>
-				</form>
-				
+				</Paper>
 			</div>	
 		);
 	}
