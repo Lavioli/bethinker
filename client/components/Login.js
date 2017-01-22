@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {loginRequest} from '../actions/actions'
 import {connect} from 'react-redux';
 
-// import TextField from 'material-ui/TextField'
+import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 
 var Login = React.createClass({
