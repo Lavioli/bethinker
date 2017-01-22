@@ -82,7 +82,7 @@ legend {
     border-radius: 1px;
     margin-right: 2px;
 }
-#delete_button_container {
+#sticky_container {
   background-color: #F7E2AD;
 }
 #welcome_user {
@@ -118,12 +118,12 @@ legend {
 }
 
 
-.sticky_container {
+.edit_sticky_container {
   background-color:#F9EED1;
-  margin: 1em;
   min-width: 250px;
   max-width: 250px;
-  position: fixed;
+  display: inline;
+  margin: 22px;
   float: left;
   border-radius: 2px;
 }
