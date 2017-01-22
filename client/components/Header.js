@@ -25,7 +25,7 @@ var Header = function(props) {
             <li className="stickies_logout" key="3"><Link to="/stickies">My Stickies</Link></li>,
             <li className="stickies_logout" key="4"><Link to="/logout">Logout</Link></li>
         ];
-        return <span>{headerArr}</span>
+        return <span><AppBar showMenuIconButton={false}>{headerArr}</AppBar></span>
     }
 }
 

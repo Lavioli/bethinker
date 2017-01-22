@@ -54,7 +54,7 @@ export default class EditStickyModal extends Component {
         </IconButton>
         <div className="diaglog-box">
         <Dialog
-          title="Dialog With Actions"
+          title="Title"
           actions={actions}
           modal={false}
           open={this.state.open}
@@ -73,7 +73,7 @@ export default class EditStickyModal extends Component {
             />
             <TextField
               hintText="Message Field"
-              floatingLabelText="MultiLine and FloatingLabel"
+              floatingLabelText="Content"
               defaultValue={this.props.sticky.content}
               multiLine={true}
               rows={3}

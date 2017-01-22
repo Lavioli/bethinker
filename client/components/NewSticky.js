@@ -28,7 +28,7 @@ var NewSticky = React.createClass({
             <div className="sticky">
                 <form className="sticky" onSubmit={this.onSubmitAddSticky}>
                     <span id="title">Title:</span>
-                        <input type="text" id="title" ref="titleText" />
+                        <input type="text" id="titletext" ref="titleText" />
                     <span id="content">Content:</span>
                         <input type="text" name="content" ref="contentText" onBlur={this.onSubmitAddSticky} />
                         <input type="submit" value="Add Sticky" onClick={this.onSubmitAddSticky}/>
