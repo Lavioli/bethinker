@@ -48,8 +48,10 @@ export default class EditStickyModal extends Component {
 
     return (
       <div className="edit-sticky-modal">
-        <IconButton tooltip="edit"
-      tooltipPosition="bottom-right" onTouchTap={this.handleOpen}>
+        <IconButton 
+          tooltip="edit"
+          tooltipPosition="bottom-right" 
+          onTouchTap={this.handleOpen}>
           <ModeEdit />
         </IconButton>
         <div className="diaglog-box">

@@ -6,6 +6,8 @@ import { editSticky } from '../../actions/actions'
 import Paper from 'material-ui/Paper'
 
 import EditStickyModal from './EditStickyModal';
+import IconButton from 'material-ui/IconButton';
+import Delete from 'material-ui/svg-icons/action/delete';
 
 
 var Sticky = React.createClass({
@@ -31,7 +33,13 @@ var Sticky = React.createClass({
 				<div className="edit_sticky_container" onSubmit={this.onEditSticky}>
 					<Paper zDepth={3} className="sticky_container">
 						<div id="sticky_container">
-							<input id="delete_button" type="button" value="x" onClick={this.onClickDelete} />
+							<IconButton 
+								id="delete_button"
+								tooltip="delete"
+        						tooltipPosition="bottom-right"
+								onClick={this.onClickDelete} >
+								<Delete/>
+							</IconButton>
 							<EditStickyModal editSticky={this.props.editSticky.bind(this)} sticky={this.props.sticky}/>
 							<div className="title" rows="2" cols="49" onFocus="" key="0" >{this.props.sticky.title}</div>
 							<div className="content"rows="5" cols="47" onClick="" key="1" >{this.props.sticky.content}</div>
