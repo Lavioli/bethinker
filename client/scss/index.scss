@@ -91,7 +91,6 @@ legend {
   margin: 10px;
 }
 .sticky{
-  font-family: 'Walter Turncoat', cursive;
   #content{
     font-size: 2em;
     margin: 10px;
@@ -108,7 +107,7 @@ legend {
   position: relative;
 }
 
-#card-header > div {
+.card_header > div {
   padding-right: 0 !important;
 }
 /*****************CLASSES*********************/
@@ -143,12 +142,10 @@ legend {
   padding: 3px;
   text-align: center; 
   margin: auto;
-  font-family: 'Kalam', cursive;
   color: #042133;
 }
 .content {
   padding: 10px;
-  font-family: 'Kalam', cursive;
   min-height: 150px;
   color: #042133;
 }
@@ -164,7 +161,6 @@ legend {
   margin-top: 25px;
   margin-bottom: 25px;
   padding: 10px;
-  font-family: 'Rock Salt', cursive;
   
  }
  .login-page{
@@ -191,9 +187,6 @@ span.password{
 .add_sticky_button {
  color: white;
 }
-
-
-
 
 .Logout{
   margin: 10px;

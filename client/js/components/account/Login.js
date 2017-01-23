@@ -3,30 +3,67 @@ import ReactDOM from 'react-dom';
 import {loginRequest} from '../../actions/actions'
 import {connect} from 'react-redux';
 
-import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton'
+import TextField from 'material-ui/TextField';
+import Paper from 'material-ui/Paper';
+import {Card, CardActions, CardHeader} from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
 
 var Login = React.createClass({
     
-    onSubmit: function (event) {
-        event.preventDefault();
-        this.props.onAddSubmit(this.refs.usernameText.value, this.refs.passwordText.value);
-        this.refs.usernameText.value = "";
-        this.refs.passwordText.value = "";
+    onSubmit: function (e) {
+        e.preventDefault();
+        this.props.onAddSubmit(this.refs.usernameText.getValue(), this.refs.passwordText.getValue());
+        e.target.reset();
     },
     
     render: function() {
+        var styles = {
+            cardContainerStyle: {
+                display: 'inline-block',
+                width: '25em',
+                marginTop: '5em'
+            },
+            textColor: {
+                color: 'white'
+            }
+        }
         return (
-            <div className="Login">
-                <form className="login-page">
-                    <legend>Login to your account</legend>
-                    <span className="username">Username:</span>
-                    <input type="text" id="username" className="input" ref="usernameText" required />
-                    <span className="password">Password:</span>
-                    <input type="password" className="input" name="password" ref="passwordText" required />
-                    <RaisedButton label="Submit" type="submit" id="submit" onClick={this.onSubmit} value="Submit" className="submit-button"></RaisedButton>
-                </form>
-            </div>
+                <div className="Login">
+                    <Card 
+                        style={styles.cardContainerStyle} 
+                        className="login-page"
+                    >
+                        <CardHeader
+                            title="Login"
+                            className="card_header"
+                        />
+                        <form onSubmit={this.onSubmit}>
+                            <TextField 
+                                floatingLabelText="Username" 
+                                id="username" 
+                                ref="usernameText" 
+                                required= {true}
+                            />
+                            <TextField 
+                                floatingLabelText="Password" 
+                                name="password" 
+                                type="password"
+                                ref="passwordText" 
+                                required= {true}
+                            />
+                            <CardActions>
+                                <FlatButton 
+                                    label="Submit"
+                                    type="submit"
+                                    backgroundColor="#00BCD4"
+                                    hoverColor="#00ACC1" 
+                                    onSubmit={this.onSubmit}
+                                    style={styles.textColor}
+                                />
+                            </CardActions>
+                       </form>
+                    </Card>
+                </div>
         );
     }
 });
