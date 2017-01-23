@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-
 var Link = require('react-router').Link;
 
 var actions = require('../actions/actions');

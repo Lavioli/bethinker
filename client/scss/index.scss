@@ -100,6 +100,16 @@ legend {
     margin: 10px;
   }
 }
+#new-sticky-wrapper {
+  width: 100%;
+  display: block;
+  text-align: center;
+  position: relative;
+}
+
+#card-header > div {
+  padding-right: 0 !important;
+}
 /*****************CLASSES*********************/
 .Login {
   padding:20px;
