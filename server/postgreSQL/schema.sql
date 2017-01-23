@@ -1,5 +1,5 @@
 create table if not exists users {
     id serial primary key,
-    name text not null,
-    password 
+    username text unique not null,
+    password varchar not null
 }

@@ -19,7 +19,7 @@ var Header = function(props) {
         ];
         return <span className="navBar">
         <AppBar
-        showMenuIconButton={true} 
+        showMenuIconButton={false} 
         title="Bethinker">
         {headerArr}
         </AppBar>
@@ -34,7 +34,9 @@ var Header = function(props) {
         ];
         return <span className="navBar">
         <AppBar 
-        showMenuIconButton={true}>
+        showMenuIconButton={false}
+        title="Bethinker"
+        >
         {headerArr}
         </AppBar>
         </span>
