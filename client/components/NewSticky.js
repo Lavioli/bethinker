@@ -6,6 +6,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {orange500} from 'material-ui/styles/colors';
 
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+
 var NewSticky = React.createClass({
     onSubmitAddSticky: function(e) {
         e.preventDefault();
@@ -66,6 +68,7 @@ var NewSticky = React.createClass({
                     </CardActions>
                 </form>
             </Card>
+
         );
     }
 });
