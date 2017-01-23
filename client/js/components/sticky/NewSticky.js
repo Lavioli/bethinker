@@ -27,10 +27,7 @@ var NewSticky = React.createClass({
             cardStyle: {
                 display: 'inline-block',
                 width: '50em',
-                marginTop: '10em'
-            },
-            cardHeaderStyle: {
-                paddingRight: 0
+                marginTop: '5em'
             }
         }
         return (
@@ -39,7 +36,7 @@ var NewSticky = React.createClass({
             >
                 <CardHeader
                   title="Add Sticky"
-                  id="card-header"
+                  className="card_header"
                   style={styles.cardHeaderStyle}
                 />
                 <form onSubmit={this.onSubmitAddSticky}>

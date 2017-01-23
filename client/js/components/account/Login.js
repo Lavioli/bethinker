@@ -25,9 +25,6 @@ var Login = React.createClass({
             },
             textColor: {
                 color: 'white'
-            },
-            cardHeaderStyle: {
-                paddingRight: 0
             }
         }
         return (
@@ -38,7 +35,7 @@ var Login = React.createClass({
                     >
                         <CardHeader
                             title="Login"
-                            style={styles.cardHeaderStyle}
+                            className="card_header"
                         />
                         <form onSubmit={this.onSubmit}>
                             <TextField 
