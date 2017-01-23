@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import {loginRequest} from '../../actions/actions'
 import {connect} from 'react-redux';
 
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
+
 var Login = React.createClass({
     
     onSubmit: function (event) {
@@ -19,10 +22,9 @@ var Login = React.createClass({
                     <legend>Login to your account</legend>
                     <span className="username">Username:</span>
                     <input type="text" id="username" className="input" ref="usernameText" required />
-                    
                     <span className="password">Password:</span>
                     <input type="password" className="input" name="password" ref="passwordText" required />
-                    <input type="submit" id="submit" onClick={this.onSubmit} value="Submit" className="submit-button"></input>
+                    <RaisedButton label="Submit" type="submit" id="submit" onClick={this.onSubmit} value="Submit" className="submit-button"></RaisedButton>
                 </form>
             </div>
         );

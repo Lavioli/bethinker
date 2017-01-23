@@ -5,33 +5,35 @@ $pastel_blue : #9DBEBB;
 $cream_peach : #F4E9CD;
 
 /*****************ELEMENTS********************/
-
+* {
+  font-family: 'Roboto', sans-serif;
+}
 li{
   list-style-type: none;
   float: left;
   font-size: 20px;
+  color: white;
 }
 ul{
   list-style-type: none;
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  background-color: #468189;
-  position: fixed;
   top: 0;
   width: 100%;
   font-family: 'Roboto', sans-serif;
+  color: white;
 }
 li a {
     display: block;
-    color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    color: white;
+    font-size: 24px;
 }
 
 li a:hover:not(.active) {
-    background-color: #111;
+  color: white;
 }
 legend {
     font-size: 3em;
@@ -39,7 +41,6 @@ legend {
     margin: auto;
     margin-bottom: 60px;
     margin-top: 30px;
-    font-family: 'Walter Turncoat', cursive;
   }
 
 /*****************ID**************************/
@@ -81,7 +82,7 @@ legend {
     border-radius: 1px;
     margin-right: 2px;
 }
-#delete_button_container {
+#sticky_container {
   background-color: #F7E2AD;
 }
 #welcome_user {
@@ -114,7 +115,6 @@ legend {
 .Login {
   padding:20px;
   margin-top:40px;
-  background-color:#EDFFFD;
   height:523px;
   text-align:center;
   font-family: 'Roboto', sans-serif;
@@ -122,20 +122,18 @@ legend {
 .Register {
   padding:20px;
   margin-top:40px;
-  background-color:#EDFFFD;
   height:523px;
   text-align:center;
   font-family: 'Roboto', sans-serif;
 }
 
 
-.sticky_container {
+.edit_sticky_container {
   background-color:#F9EED1;
-  box-shadow: 3px 8px 5px #888888;
-  margin: 1em;
   min-width: 250px;
   max-width: 250px;
-  position: relative;
+  display: inline;
+  margin: 22px;
   float: left;
   border-radius: 2px;
 }
@@ -173,44 +171,25 @@ legend {
    text-align:center;
  }
  .submit-button {
-   background-color: #468189; 
-    border: none;
-    color: white;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    border-radius: 8px;
  }
 
 span.username {
   font-size: 2em;
-  font-family: 'Walter Turncoat', cursive;
+
 }
 span.password{
    font-size: 2em;
-   font-family: 'Walter Turncoat', cursive;
+
 }
 
 .add_sticky_button {
-  background-color: #44A362; 
-    border: none;
-    color: white;
-    padding: 10px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 2em;
-    margin: 57px 2px 2px 2px;
-    cursor: pointer;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    border-radius: 8px;
+ color: white;
 }
 
 
@@ -221,6 +200,6 @@ span.password{
   font-size: 5em;
   p{
      text-align: center;
-     font-family: 'Walter Turncoat', cursive;
+
   }
 }
