@@ -24,8 +24,13 @@ var Login = React.createClass({
                 marginTop: '5em'
             },
             textColor: {
-                color: 'white'
+                color: 'white',
+                margin: '40px 0px'
+            },
+            containerheight: {
+                height: '125px'
             }
+
         }
         return (
                 <div className="Login">
@@ -51,7 +56,7 @@ var Login = React.createClass({
                                 ref="passwordText" 
                                 required= {true}
                             />
-                            <CardActions>
+                            <CardActions style={styles.containerheight}>
                                 <FlatButton 
                                     label="Submit"
                                     type="submit"

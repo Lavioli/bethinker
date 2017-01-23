@@ -47,7 +47,7 @@ export default class EditStickyModal extends Component {
     ];
 
     return (
-      <div className="edit-sticky-modal">
+      <div className="edit_sticky_modal">
         <IconButton 
           tooltip="edit"
           tooltipPosition="bottom-right" 
