@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {loginRequest} from '../actions/actions'
+import {loginRequest} from '../../actions/actions'
 import {connect} from 'react-redux';
 
 import TextField from 'material-ui/TextField'
