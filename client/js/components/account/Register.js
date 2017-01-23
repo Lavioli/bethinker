@@ -22,7 +22,11 @@ var Register = React.createClass({
                 marginTop: '5em'
             },
             textColor: {
-                color: 'white'
+                color: 'white',
+                margin: '40px 0px'
+            },
+            containerheight: {
+                height: '135px'
             }
         }
         return (
@@ -57,7 +61,7 @@ var Register = React.createClass({
                           type="password"
                           required={true}
                         />
-                        <CardActions>
+                        <CardActions style={styles.containerheight}>
                           <FlatButton 
                             type="submit" 
                             label="submit"

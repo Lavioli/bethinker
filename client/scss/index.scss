@@ -107,26 +107,29 @@ legend {
   position: relative;
 }
 
+
 .card_header > div {
   padding-right: 0 !important;
 }
 /*****************CLASSES*********************/
+
+.edit_sticky_modal{
+  background-color: #FFE082;
+}
 .Login {
   padding:20px;
-  margin-top:40px;
+
   height:523px;
   text-align:center;
   font-family: 'Roboto', sans-serif;
 }
 .Register {
   padding:20px;
-  margin-top:40px;
+
   height:523px;
   text-align:center;
   font-family: 'Roboto', sans-serif;
 }
-
-
 .edit_sticky_container {
   background-color:#F9EED1;
   min-width: 250px;
@@ -191,8 +194,8 @@ span.password{
 .Logout{
   margin: 10px;
   font-size: 5em;
-  p{
+  p.logoutMessage{
      text-align: center;
-
+ 
   }
 }
