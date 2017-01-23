@@ -32,7 +32,7 @@ var StickyList = React.createClass({
         return (
             <MuiThemeProvider>
             	<div>
-    	        	<div>
+    	        	<div id="new-sticky-wrapper">
     	        		<NewSticky />
     	        	</div>
     	            <div className="sticky_list">

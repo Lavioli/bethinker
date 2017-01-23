@@ -1,51 +1,74 @@
 import React from 'react';
 import { postSticky } from '../actions/actions';
 import { connect } from 'react-redux';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+import {orange500} from 'material-ui/styles/colors';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 
 var NewSticky = React.createClass({
-    getInitialState: function() {
-        return {
-            show: false
-        };
-    },
-
-    changeState: function () {
-        this.setState({
-            show: !this.state.show //toggle the add "+" button display
-        });
-    },
-
     onSubmitAddSticky: function(e) {
         e.preventDefault();
-        (this.refs.contentText.value.length !== 0) ? this.props.onAddSubmit(this.refs.titleText.value, this.refs.contentText.value) : "";
-        this.changeState();
+        (this.refs.contentText.getValue().length !== 0) ? this.props.onAddSubmit(this.refs.titleText.getValue(), this.refs.contentText.getValue()) : "";
+        e.target.reset(); // clears form values
     },
-
-    onAddSticky: function() {
-        return (
-            <div className="sticky">
-                <form className="sticky" onSubmit={this.onSubmitAddSticky}>
-                    <span id="title">Title:</span>
-                        <input type="text" id="titletext" ref="titleText" />
-                    <span id="content">Content:</span>
-                        <input type="text" name="content" ref="contentText" onBlur={this.onSubmitAddSticky} />
-                        <input type="submit" value="Add Sticky" onClick={this.onSubmitAddSticky}/>
-                </form>
-            </div>
-        )
-    },
-
     render: function() {
+        var styles = {
+            textBoxStyle: {
+                width: '40em'
+            },
+            textBoxUnderlineStyle: {
+                borderColor: orange500,
+                display: 'block',
+                width: '40em'
+            },
+            cardStyle: {
+                display: 'inline-block',
+                width: '50em',
+                marginTop: '10em'
+            },
+            cardHeaderStyle: {
+                paddingRight: 0
+            }
+        }
         return (
-            <div>
-                <div className="add_sticky_button_container">
-                    <FloatingActionButton type="button" className="add_sticky_button" onClick={this.changeState}>+</FloatingActionButton>
-                </div>
-                { (this.state.show == true)? this.onAddSticky(): '' }
+            <Card
+                style={styles.cardStyle}
+            >
+                <CardHeader
+                  title="Add Sticky"
+                  id="card-header"
+                  style={styles.cardHeaderStyle}
+                />
+                <form onSubmit={this.onSubmitAddSticky}>
+                    <TextField
+                      hintText="Title"
+                      ref="titleText"
+                      underlineFocusStyle={styles.textBoxUnderlineStyle}
+                      style={styles.textBoxStyle}
+                    />
+                    <TextField
+                      hintText="Add a sticky"
+                      ref="contentText"
+                      underlineFocusStyle={styles.textBoxUnderlineStyle}
+                      multiLine={true}
+                      rows={2}
+                      required={true}
+                      style={styles.textBoxStyle}
+                    />
+                    <CardActions>
+                      <RaisedButton 
+                        label="Submit" 
+                        type="submit" 
+                        onSubmit={this.onSubmitAddSticky}
+                        primary={true}
+                      />
+                    </CardActions>
+                </form>
+            </Card>
 
-            </div>
         );
     }
 });

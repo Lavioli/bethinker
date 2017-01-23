@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
 var Link = require('react-router').Link;
 
 var actions = require('../actions/actions');
