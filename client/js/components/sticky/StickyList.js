@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { fetchStickies } from '../actions/actions'
-import { deleteSticky } from '../actions/actions'
-import { editSticky } from '../actions/actions'
+import { fetchStickies } from '../../actions/actions'
+import { deleteSticky } from '../../actions/actions'
+import { editSticky } from '../../actions/actions'
 import { connect } from 'react-redux';
 import NewSticky from './NewSticky';
 import Sticky from './Sticky';
@@ -23,12 +23,11 @@ var StickyList = React.createClass({
 
          var stickyList = this.props.stickies.map(function(sticky, index) {
                 return (
-	                    <Sticky sticky={sticky}
-	                    key={index}
-	                    />
-                        )
+                    <Sticky sticky={sticky}
+                    key={index}
+                    />
+                )
         });
-         console.log(this.props)
         return (
             <MuiThemeProvider>
             	<div>

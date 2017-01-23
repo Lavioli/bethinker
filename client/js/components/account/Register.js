@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { registerRequest } from '../actions/actions';
+import { registerRequest } from '../../actions/actions';
 import { connect } from 'react-redux';
 
 var Register = React.createClass({

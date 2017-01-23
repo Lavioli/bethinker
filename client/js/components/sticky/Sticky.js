@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchStickies } from '../actions/actions'
-import { deleteSticky } from '../actions/actions'
-import { editSticky } from '../actions/actions'
+import { fetchStickies } from '../../actions/actions'
+import { deleteSticky } from '../../actions/actions'
+import { editSticky } from '../../actions/actions'
 import EditStickyModal from './EditStickyModal';
 
 var Sticky = React.createClass({

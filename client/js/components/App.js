@@ -6,7 +6,7 @@ var Link = require('react-router').Link;
 var actions = require('../actions/actions');
 
 import Header from './Header';
-import Login from './Login';
+import Login from './account/Login';
 
 var App = function (props) {
     return (

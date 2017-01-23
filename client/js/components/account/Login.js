@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {loginRequest} from '../actions/actions'
+import {loginRequest} from '../../actions/actions'
 import {connect} from 'react-redux';
 
 var Login = React.createClass({

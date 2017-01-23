@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {logoutUser} from '../actions/actions';
+import {logoutUser} from '../../actions/actions';
 
 var Logout = React.createClass({
     render: function (props){

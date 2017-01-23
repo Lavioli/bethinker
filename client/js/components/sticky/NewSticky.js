@@ -1,5 +1,5 @@
 import React from 'react';
-import { postSticky } from '../actions/actions';
+import { postSticky } from '../../actions/actions';
 import { connect } from 'react-redux';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
