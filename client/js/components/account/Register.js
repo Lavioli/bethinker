@@ -32,6 +32,7 @@ var Register = React.createClass({
                 >
                     <CardHeader
                       title="Register for an account"
+                      className="card_header"
                     />
                     <form 
                         onSubmit={this.onLinkClick}
