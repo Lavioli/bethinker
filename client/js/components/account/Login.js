@@ -8,13 +8,12 @@ import {Card, CardActions, CardHeader} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
 var Login = React.createClass({
-
     onSubmit: function (e) {
         e.preventDefault();
         this.props.onAddSubmit(this.refs.usernameText.getValue(), this.refs.passwordText.getValue());
         e.target.reset();
     },
-
+    
     render: function() {
         var styles = {
             cardContainerStyle: {
@@ -32,42 +31,42 @@ var Login = React.createClass({
 
         }
         return (
-                <div className="Login">
-                    <Card
-                        style={styles.cardContainerStyle}
-                        className="login-page"
-                    >
-                        <CardHeader
-                            title="Login"
-                            className="card_header"
+            <div className="Login">
+                <Card 
+                    style={styles.cardContainerStyle} 
+                    className="login-page"
+                >
+                    <CardHeader
+                        title="Login"
+                        className="card_header"
+                    />
+                    <form onSubmit={this.onSubmit}>
+                        <TextField 
+                            floatingLabelText="Username" 
+                            id="username" 
+                            ref="usernameText" 
+                            required= {true}
                         />
-                        <form onSubmit={this.onSubmit}>
-                            <TextField
-                                floatingLabelText="Username"
-                                id="username"
-                                ref="usernameText"
-                                required= {true}
+                        <TextField 
+                            floatingLabelText="Password" 
+                            name="password" 
+                            type="password"
+                            ref="passwordText" 
+                            required= {true}
+                        />
+                        <CardActions style={styles.containerheight}>
+                            <FlatButton 
+                                label="Submit"
+                                type="submit"
+                                backgroundColor="#00BCD4"
+                                hoverColor="#00ACC1" 
+                                onSubmit={this.onSubmit}
+                                style={styles.textColor}
                             />
-                            <TextField
-                                floatingLabelText="Password"
-                                name="password"
-                                type="password"
-                                ref="passwordText"
-                                required= {true}
-                            />
-                            <CardActions style={styles.containerheight}>
-                                <FlatButton
-                                    label="Submit"
-                                    type="submit"
-                                    backgroundColor="#00BCD4"
-                                    hoverColor="#00ACC1"
-                                    onSubmit={this.onSubmit}
-                                    style={styles.textColor}
-                                />
-                            </CardActions>
-                       </form>
-                    </Card>
-                </div>
+                        </CardActions>
+                   </form>
+                </Card>
+            </div>
         );
     }
 });

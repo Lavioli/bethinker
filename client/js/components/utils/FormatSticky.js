@@ -4,6 +4,6 @@ module.exports = function (input) {
       //replace new lines
       .replace(/(\r\n|\r|\n)/g, '<br/>')
       //replace tabs
-      .replace(/\t/g, '&nbsp;&nbsp;&nbsp;')
+      .replace(/\t/g, '&nbsp;&nbsp;&nbsp;');
   return output;
- }
+ };

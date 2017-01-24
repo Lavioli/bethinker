@@ -1,6 +1,6 @@
 var React = require('react');
-var registerRequest = require('../../actions/actions').registerRequest;
 var connect = require('react-redux').connect;
+var registerRequest = require('../../actions/actions').registerRequest;
 import TextField from 'material-ui/TextField';
 import {Card, CardActions, CardHeader} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
@@ -27,7 +27,7 @@ var Register = React.createClass({
             containerheight: {
                 height: '135px'
             }
-        }
+        };
         return (
             <div className="Register">
                 <Card
@@ -37,7 +37,7 @@ var Register = React.createClass({
                       title="Register for an account"
                       className="card_header"
                     />
-                    <form
+                    <form 
                         onSubmit={this.onLinkClick}
                     >
                        <TextField
@@ -61,8 +61,8 @@ var Register = React.createClass({
                           required={true}
                         />
                         <CardActions style={styles.containerheight}>
-                          <FlatButton
-                            type="submit"
+                          <FlatButton 
+                            type="submit" 
                             label="submit"
                             onSubmit={this.onLinkClick}
                             backgroundColor="#00BCD4"
