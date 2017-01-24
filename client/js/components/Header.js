@@ -3,41 +3,68 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
-import AppBar from 'material-ui/AppBar';
-
 import actions from '../actions/actions';
 import App from './App'
 
+import AppBar from 'material-ui/AppBar';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import Menu from 'material-ui/svg-icons/navigation/menu';
+
 var Header = function(props) {
-    
-    var headerArr;
+    var styles ={
+        iconcolor: {
+            color:'white'
+        }
+    }
     if (!props.currentUser) {
-        headerArr =
-        [
-            <li key="1"><Link to="/login">Sign In</Link></li>,
-            <li key="2"><Link to="/register">Register</Link></li>
-        ];
         return <span className="navBar">
         <AppBar
         showMenuIconButton={false} 
         title="Bethinker">
-        {headerArr}
+            <IconMenu
+                iconButtonElement={
+                    <IconButton>
+                        <Menu style={styles.iconcolor} />
+                    </IconButton>
+                }
+                anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                targetOrigin={{horizontal: 'right', vertical: 'top'}}
+            >   
+                <Link to="/login">
+                    <MenuItem primaryText="Login"/>
+                </Link>
+                <Link to="/register">
+                    <MenuItem primaryText="Register"/>
+                </Link>
+            </IconMenu>
         </AppBar>
         </span>
     }
     else {
-        headerArr = [
-            <li id="welcome_user" key="1">Welcome, {props.currentUser}!</li>,
-            <li className="stickies_logout" key="2"><Link to="/myaccount">My Account</Link></li>,
-            <li className="stickies_logout" key="3"><Link to="/stickies">My Stickies</Link></li>,
-            <li className="stickies_logout" key="4"><Link to="/logout">Logout</Link></li>
-        ];
         return <span className="navBar">
         <AppBar 
         showMenuIconButton={false}
         title="Bethinker"
         >
-        {headerArr}
+            <IconMenu
+                    iconButtonElement={
+                        <IconButton>
+                            <Menu style={styles.iconcolor} />
+                        </IconButton>
+                    }
+                    anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                    targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                >   
+                <Link to="/">
+                    <MenuItem primaryText="Home"/>
+                </Link>
+                <Link to="/logout">
+                    <MenuItem primaryText="Logout"/>
+                </Link>
+
+            </IconMenu>
         </AppBar>
         </span>
     }

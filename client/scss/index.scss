@@ -44,12 +44,19 @@ legend {
   }
 
 /*****************ID**************************/
+.homepage {
+  background: url("http://i.imgur.com/QcazHkS.png");
+  background-size: cover;
+  background-repeat:no-repeat;
+  background-position: center;
+  width: 100%;
+  height: calc(100vh - 30vh);
+}
+
 #delete_button {
-  background-color: red;
   float: right;
     border: none;
     color: white;
-    text-align: center;
     text-decoration: none;
     cursor: pointer;
     -webkit-transition-duration: 0.4s; /* Safari */
@@ -201,4 +208,10 @@ span.password{
      text-align: center;
  
   }
+}
+
+  
+
+@media screen and (max-width:680px) {
+  
 }
