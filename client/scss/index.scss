@@ -48,11 +48,25 @@ legend {
   background: url("http://i.imgur.com/QcazHkS.png");
   background-size: cover;
   background-repeat:no-repeat;
-  background-position: center;
+  background-position: top;
   width: 100%;
   height: calc(100vh - 30vh);
 }
-
+#app_title {
+  text-align: center;
+  font-size: 5em;
+  top: 10%;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+#app_subline{
+  font-size: 4em;
+  text-align: center;
+  position: fixed;
+  top: 80%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
 #delete_button {
   float: right;
     border: none;
@@ -91,7 +105,17 @@ legend {
 }
 #sticky_container {
   background-color: #F7E2AD;
+  
+  .title {
+    word-wrap: break-word;
+  }
+  .content {
+    word-wrap: break-word;
+  }
 }
+
+
+  
 #welcome_user {
   color: white;
   font-size: 2em;
@@ -213,5 +237,16 @@ span.password{
   
 
 @media screen and (max-width:680px) {
-  
+  #app_title {
+  text-align: center;
+  font-size: 3.5em;
+  top: 10%
+}
+  #app_subline{
+    font-size: 2.5em;
+    text-align: center;
+    position: fixed;
+    top: 80%;
+    left: 50%;
+  }
 }

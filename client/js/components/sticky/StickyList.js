@@ -1,13 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { fetchStickies } from '../../actions/actions'
-import { deleteSticky } from '../../actions/actions'
-import { editSticky } from '../../actions/actions'
-import { connect } from 'react-redux';
-import NewSticky from './NewSticky';
-import Sticky from './Sticky';
+var React = require('react');
+var connect = require('react-redux').connect;
 
-//google material UI theme provider 
+var NewSticky = require('./NewSticky');
+var Sticky = require('./Sticky');
+var fetchStickies = require('../../actions/actions').fetchStickies;
+var deleteSticky = require('../../actions/actions').deleteSticky;
+var editSticky = require('../../actions/actions').editSticky;
+
+//google material UI theme provider
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 var clickToDisplay = false;
@@ -16,18 +16,20 @@ var StickyList = React.createClass({
     componentDidMount: function() {
         this.props.fetchStickies(this.props.currentUser);
     },
+    
     render: function(props) {
         //bind allows us to bind the function to this(StickyList) component specifically, so child(Sticky) can easily grab this prop
         var deleteSticky = this.props.deleteSticky.bind(this);
         var editSticky = this.props.editSticky.bind(this);
-
-         var stickyList = this.props.stickies.map(function(sticky, index) {
+        var stickyList = this.props.stickies.map(
+            function(sticky, index) {
                 return (
                     <Sticky sticky={sticky}
                     key={index}
                     />
                 )
-        });
+            }
+        );
         return (
             <MuiThemeProvider>
             	<div>
@@ -40,7 +42,7 @@ var StickyList = React.createClass({
     	        </div>
             </MuiThemeProvider>
         );
-    },
+    }
 
 });
 
@@ -50,6 +52,8 @@ var mapStateToProps = function(state) {
         stickies: state.stickies
     };
 };
+
+import 'babel-polyfill';
 
 var mapDispatchToProps = function(dispatch) {
     return {
@@ -67,4 +71,4 @@ var mapDispatchToProps = function(dispatch) {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(StickyList);
+module.exports = connect(mapStateToProps, mapDispatchToProps)(StickyList);

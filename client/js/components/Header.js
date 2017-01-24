@@ -1,10 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+var React = require('react'); 
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
-import actions from '../actions/actions';
-import App from './App'
+var actions = require('../actions/actions');
+var App = require('./App')
 
 import AppBar from 'material-ui/AppBar';
 import IconMenu from 'material-ui/IconMenu';
@@ -12,7 +11,7 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import Menu from 'material-ui/svg-icons/navigation/menu';
 
-var Header = function(props) {
+module.exports = function(props) {
     var styles ={
         iconcolor: {
             color:'white'
@@ -25,8 +24,11 @@ var Header = function(props) {
         title="Bethinker">
             <IconMenu
                 iconButtonElement={
-                    <IconButton>
-                        <Menu style={styles.iconcolor} />
+                    <IconButton
+                        style={styles.iconcolor}
+                        id="icon-button"
+                    >
+                        <Menu/>
                     </IconButton>
                 }
                 anchorOrigin={{horizontal: 'right', vertical: 'top'}}
@@ -50,8 +52,10 @@ var Header = function(props) {
         >
             <IconMenu
                     iconButtonElement={
-                        <IconButton>
-                            <Menu style={styles.iconcolor} />
+                        <IconButton  
+                            style={styles.iconcolor}
+                        >
+                            <Menu/>
                         </IconButton>
                     }
                     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
@@ -69,5 +73,3 @@ var Header = function(props) {
         </span>
     }
 }
-
-export default Header;

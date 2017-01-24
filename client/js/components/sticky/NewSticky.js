@@ -1,12 +1,13 @@
-import React from 'react';
-import { postSticky } from '../../actions/actions';
-import { connect } from 'react-redux';
+var React = require('react');
+var connect = require('react-redux').connect;
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {orange500} from 'material-ui/styles/colors';
-
 import FloatingActionButton from 'material-ui/FloatingActionButton'
+
+
+var postSticky = require('../../actions/actions').postSticky;
 
 var NewSticky = React.createClass({
     onSubmitAddSticky: function(e) {
@@ -14,6 +15,7 @@ var NewSticky = React.createClass({
         (this.refs.contentText.getValue().length !== 0) ? this.props.onAddSubmit(this.refs.titleText.getValue(), this.refs.contentText.getValue()) : "";
         e.target.reset(); // clears form values
     },
+    
     render: function() {
         var styles = {
             textBoxStyle: {
@@ -78,4 +80,4 @@ function mapDispatchToProps (dispatch) {
     };
 }
 
-export default connect(null, mapDispatchToProps)(NewSticky);
+module.exports = connect(null, mapDispatchToProps)(NewSticky);
