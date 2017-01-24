@@ -13,14 +13,4 @@ var StickySchema = new Schema({
 });
 
 
-StickySchema.methods.validatePassword = function(password, callback) {
-	bcrypt.compare(password, user.password, function(err, isValid) {
-		if(err) {
-			callback(err);
-			return;
-		}
-		callback(null, isValid);
-	});
-};
-
 module.exports = mongoose.model('Sticky', StickySchema);
