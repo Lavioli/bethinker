@@ -6,8 +6,8 @@ var User = require('../models/user');
 
 var userRouter = express.Router();
 
-/************************************USER ENDPOINTS***************************************/
 
+/************************************USER ENDPOINTS***************************************/
 //should list all users along with their passwords
 userRouter.get('/user', function(req,res){
     User.find(function(err, user){
@@ -129,6 +129,7 @@ userRouter.post('/createuser', function(req, res) {
         });
     });
 });
+
 
 //Allows users to edit their password
 userRouter.put("/users/:username", passport.authenticate('basic', {

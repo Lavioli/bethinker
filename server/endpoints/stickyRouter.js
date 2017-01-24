@@ -5,20 +5,7 @@ var Sticky = require('../models/sticky');
 
 var stickyRouter = express.Router();
 
-//************************************STICKIE ENDPOINTS*****************************************/
 
-//get all the stickies for now, this is for testing purposes atm
-// app.get('/stickies', passport.authenticate('basic', {session: false}),
-// function(req, res) {
-//     Sticky.find(function(err, sticky) {
-//         if (err) {
-//             return res.status(500).json({message: 'Internal Server Error'});
-//         }
-
-//         return res.status(200).json(sticky);
-//     });
-// });
-//Allows authorizied users to see their sticky notes
 stickyRouter.get('/users/:username/stickies', passport.authenticate('basic', {session: false}), function(req, res) {
 
     var routerUsername = req.params.username;
@@ -39,6 +26,7 @@ stickyRouter.get('/users/:username/stickies', passport.authenticate('basic', {se
     });
 
 });
+
 //should allow authorized users to delete their sticky
 stickyRouter.delete("/users/:username/stickies/:stickyId", passport.authenticate('basic', {session: false}), function(req, res) {
     //putting all requests in variables
@@ -58,6 +46,7 @@ stickyRouter.delete("/users/:username/stickies/:stickyId", passport.authenticate
 
     });
 });
+
 //Allows users to create the title for their sticky notes
 stickyRouter.post('/users/:username/stickies', passport.authenticate('basic', {session: false}), function(req, res) {
             var routeUsername = req.params.username;
