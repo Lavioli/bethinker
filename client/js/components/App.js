@@ -1,12 +1,11 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+var React = require('react');
+var connect = require('react-redux').connect;
 var Link = require('react-router').Link;
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 var actions = require('../actions/actions');
-
-import Header from './Header';
-import Login from './account/Login';
+var Header = require('./Header');
+var Login = require('./account/Login');
 
 var App = function (props) {
     return (
@@ -29,4 +28,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(App);
+module.exports = connect(mapStateToProps)(App);

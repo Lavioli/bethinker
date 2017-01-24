@@ -1,8 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { registerRequest } from '../../actions/actions';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
+var React = require('react');
+var registerRequest = require('../../actions/actions').registerRequest;
+var connect = require('react-redux').connect;
+var Link = require('react-router').Link;
 
 var MyAccountChoices = (currentUser) => {
     if (!currentUser) {
@@ -41,4 +40,4 @@ function mapDispatchToProps (dispatch) {
     };
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(MyAccount);
+module.exports = connect(mapStateToProps,mapDispatchToProps)(MyAccount);
