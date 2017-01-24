@@ -9,6 +9,8 @@ import EditStickyModal from './EditStickyModal';
 import IconButton from 'material-ui/IconButton';
 import Delete from 'material-ui/svg-icons/action/delete';
 
+import formatSticky from '../utils/FormatSticky';
+
 
 var Sticky = React.createClass({
 	getInitialState: function() {
@@ -27,8 +29,13 @@ var Sticky = React.createClass({
 		e.preventDefault();
 		this.props.deleteSticky(this.props.sticky._id);
 	},
-	
+	formatStickyDynamicHtml: function(text) {
+		return {
+			__html: text
+		}
+	},
 	render: function() {
+		var formattedContent = formatSticky(this.props.sticky.content);
 		return (
 				<div className="edit_sticky_container" onSubmit={this.onEditSticky}>
 					<Paper zDepth={3} className="sticky_container">
@@ -45,7 +52,7 @@ var Sticky = React.createClass({
 								sticky={this.props.sticky}
 							/>
 							<div className="title" rows="2" cols="49" onFocus="" key="0" >{this.props.sticky.title}</div>
-							<div className="content"rows="5" cols="47" onClick="" key="1" >{this.props.sticky.content}</div>
+							<div className="content"rows="5" cols="47" onClick="" key="1" dangerouslySetInnerHTML={this.formatStickyDynamicHtml(formattedContent)}></div>
 						</div>
 					</Paper>
 				</div>

@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { browserHistory, hashHistory, IndexRoute, Link, Route, Router } from 'react-router';
 
 import App from './components/App';
+import Homepage from './components/Homepage';
 import Header from './components/Header';
 import Register from './components/account/Register';
 import MyAccount from './components/account/MyAccount';
@@ -29,6 +30,7 @@ export let store = createStore(reducers, applyMiddleware(thunk));
 var routes = (
     <Router history={browserHistory}>
         <Route path="/" component={App}>
+            <IndexRoute component={Homepage}/>
             <Route path="/login" component={Login} />
             <Route path="/myaccount" component={MyAccount} />
             <Route path="/stickies" component={StickyList} />
