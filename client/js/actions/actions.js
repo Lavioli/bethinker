@@ -1,10 +1,10 @@
-import fetch from 'isomorphic-fetch';
-import { browserHistory } from 'react-router';
+var fetch = require('isomorphic-fetch');
+var browserHistory = require('react-router').browserHistory;
 
 var REGISTER_REQUEST = 'REGISTER_REQUEST';
 function registerRequest(username, password) {
   return (dispatch, getState) => {
-    const hash = getState().hash;
+    var hash = getState().hash;
     return fetch('/createuser', {
       method: 'POST',
       headers: {
@@ -24,8 +24,7 @@ function registerRequest(username, password) {
     })
     .then(
       data => {
-        var stickyId = data.stickyId
-        console.log(data);
+        // var stickyId = data.stickyId
         dispatch(loginRequest(username, password));
       },
       ({response, data}) => {
@@ -46,25 +45,29 @@ function registerError(error) {
 var LOGIN_REQUEST = 'LOGIN_REQUEST';
 var loginRequest = function (username, password) {
   return (dispatch) => {
-    const hash = new Buffer(`${username}:${password}`).toString('base64');
+    var hash = new Buffer(`${username}:${password}`).toString('base64');
     return fetch('/users/' + username, {
       headers: {
         'Authorization': `Basic ${hash}`
       }
-    })
-    .then(response => response.json().then(json => ({ json, response })))
-    .then(({json, response}) => {
+    }).then((function (response) {
+      return response.json()
+      .then(function (json) {
+        return { json: json, response: response };
+      });
+    })).then(function({json, response}) {
       if (response.ok === false) {
         return Promise.reject(json);
       }
       return json;
-    })
-    .then(
-      data => {
+    }).then(
+      function(data) {
         dispatch(loginSuccessful(hash, data.username));
         browserHistory.push('/stickies');
       },
-      (data) => dispatch(loginFail(data.error || 'Incorrect username and/or password. Please try again.'))
+      function(data) {
+        dispatch(loginFail(data.error || 'Incorrect username and/or password. Please try again.'));
+      }
     );
   };
 };
@@ -72,24 +75,24 @@ var loginRequest = function (username, password) {
 var LOGIN_SUCCESSFUL = 'LOGIN_SUCCESSFUL';
 function loginSuccessful(hash, username) {
     return {
-    type: LOGIN_SUCCESSFUL,
-    payloadHash: hash,
-    payloadUsername: username
+      type: LOGIN_SUCCESSFUL,
+      payloadHash: hash,
+      payloadUsername: username
     };
 }
 
 var LOGIN_FAIL = 'LOGIN_FAIL';
 var loginFail = function(error) {
     return {
-    type: LOGIN_FAIL,
-    payload: error
+      type: LOGIN_FAIL,
+      payload: error
     };
 };
 
 var FETCH_STICKIES = 'FETCH_STICKIES';
 function fetchStickies(currentUser) {
   return (dispatch, getState) => {
-    const hash = getState().hash;
+    var hash = getState().hash;
     return fetch('/users/' + currentUser + '/stickies', {
       headers: {
         'Authorization': `Basic ${hash}`
@@ -117,7 +120,6 @@ function fetchStickies(currentUser) {
   };
 }
 
-
 //give us the title and content of the server side sticky
 var FETCH_STICKIES_SUCCESS = 'FETCH_STICKIES_SUCCESS';
 function fetchStickiesSuccess(stickyArray) {
@@ -132,15 +134,14 @@ function fetchStickiesError(error) {
     return {
         type: FETCH_STICKIES_ERROR,
         payload: error
-    }
-};
+    };
+}
 
 var POST_STICKY = 'POST_STICKY';
 function postSticky(title, content) {
-  console.log("I'm in")
   return (dispatch, getState) => {
-    const hash = getState().hash;
-    const currentUser = getState().currentUser;
+    var hash = getState().hash;
+    var currentUser = getState().currentUser;
     return fetch('/users/' + currentUser + '/stickies', {
       method: 'POST',
       headers: {
@@ -161,9 +162,6 @@ function postSticky(title, content) {
     .then(
       data => {
         dispatch(fetchStickies(currentUser));
-        // var stickyId = data.stickyId;
-        // console.log(data);
-        // dispatch(postStickySuccess(stickyId, title, content));
       },
       ({response, data}) => {
           dispatch(postStickyError(data.error));
@@ -176,16 +174,6 @@ function postSticky(title, content) {
   };
 }
 
-// var POST_STICKY_SUCCESS = 'FETCH_STICKY_SUCCESS';
-// function postStickySuccess(stickyId, title, content) {
-//     return {
-//         type: POST_STICKY_SUCCESS,
-//         payloadStickyId: stickyId,
-//         payloadTitle: title,
-//         payloadContent: content
-//     };
-// }
-
 var POST_STICKY_ERROR = 'FETCH_STICKY_ERROR';
 function postStickyError(error) {
     return {
@@ -197,8 +185,8 @@ function postStickyError(error) {
 var EDIT_STICKY = 'EDIT_STICKY';
 function editSticky(stickyId, title, content) {
   return (dispatch, getState) => {
-    const hash = getState().hash;
-    const currentUser = getState().currentUser;
+    var hash = getState().hash;
+    var currentUser = getState().currentUser;
     return fetch('/users/' + currentUser + '/stickies/' + stickyId, {
       method: 'PUT',
       headers: {
@@ -220,13 +208,6 @@ function editSticky(stickyId, title, content) {
       {
         dispatch(fetchStickies(currentUser));
       }
-      // ({response, data}) => {
-      //     dispatch(editStickyError(data.error));
-
-      //     if(response.status == 401) {
-      //         dispatch(loginFail(data.error));
-      //     }
-      // }
     );
   };
 }
@@ -241,10 +222,9 @@ function editStickyError(error) {
 
 var DELETE_STICKY = 'DELETE_STICKY';
 function deleteSticky(stickyId) {
-  console.log("I'm in delete");
   return (dispatch, getState) => {
-    const hash = getState().hash;
-    const currentUser = getState().currentUser;
+    var hash = getState().hash;
+    var currentUser = getState().currentUser;
     return fetch('/users/' + currentUser + '/stickies/' + stickyId, {
       method: 'DELETE',
       headers: {
@@ -253,7 +233,6 @@ function deleteSticky(stickyId) {
       },
     }).then(response => response.json().then(json => ({ json, response })))
     .then(({json, response}) => {
-        console.log('this is response delete', response);
       if (response.ok === false) {
         return Promise.reject(json);
       }
@@ -275,12 +254,12 @@ function deleteSticky(stickyId) {
   };
 }
 
-var DELETE_STICKY_SUCCESS = 'DELETE_STICKY_SUCCESS';
-function deleteStickySuccess(stickyArray) {
-    return {
-        type: DELETE_STICKY_SUCCESS,
-    };
-}
+// var DELETE_STICKY_SUCCESS = 'DELETE_STICKY_SUCCESS';
+// function deleteStickySuccess(stickyArray) {
+//     return {
+//         type: DELETE_STICKY_SUCCESS,
+//     };
+// }
 
 var DELETE_STICKY_ERROR = 'DELETE_STICKY_ERROR';
 function deleteStickyError(error) {
@@ -344,26 +323,17 @@ exports.fetchStickiesError = fetchStickiesError;
 exports.POST_STICKY = POST_STICKY;
 exports.postSticky = postSticky;
 
-// exports.POST_STICKY_SUCCESS = POST_STICKY_SUCCESS;
-// exports.postStickySuccess = postSticky;
-
 exports.POST_STICKY_ERROR = POST_STICKY_ERROR;
 exports.postStickyError = postSticky;
 
 exports.EDIT_STICKY = EDIT_STICKY;
 exports.editSticky = editSticky;
 
-// exports.EDIT_STICKY_SUCCESS = EDIT_STICKY_SUCCESS;
-// exports.editStickySuccess = editStickySuccess;
-
 exports.EDIT_STICKY_ERROR = EDIT_STICKY_ERROR;
 exports.editStickyError = editStickyError;
 
 exports.DELETE_STICKY = DELETE_STICKY;
 exports.deleteSticky = deleteSticky;
-
-// exports.DELETE_STICKY_SUCCESS = DELETE_STICKY_SUCCESS;
-// exports.deleteStickySuccess = deleteStickySuccess;
 
 exports.DELETE_STICKY_ERROR = DELETE_STICKY_ERROR;
 exports.deleteStickyError = deleteStickyError;
