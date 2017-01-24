@@ -15,8 +15,7 @@ module.exports = React.createClass ({
   },
 
   render: function() {
-    console.log(this.props)
-    const actions = [
+    var actions = [
       <FlatButton
         label="Cancel"
         primary={true}

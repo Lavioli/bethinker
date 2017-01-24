@@ -1,9 +1,5 @@
 var React = require('react'); 
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
-
-var actions = require('../actions/actions');
-var App = require('./App')
+var Link = require('react-router').Link;
 
 import AppBar from 'material-ui/AppBar';
 import IconMenu from 'material-ui/IconMenu';
@@ -16,7 +12,7 @@ module.exports = function(props) {
         iconcolor: {
             color:'white'
         }
-    }
+    };
     if (!props.currentUser) {
         return <span className="navBar">
         <AppBar
