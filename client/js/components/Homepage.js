@@ -1,10 +1,8 @@
-import React from 'react';
+var React = require('react');
+var Link = require('react-router').Link;
 
-var Homepage = function () {
+module.exports = function () {
     return (
         <div className="homepage"></div>
     );
 };
-
-
-export default Homepage;
