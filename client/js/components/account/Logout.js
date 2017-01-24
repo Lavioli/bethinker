@@ -1,6 +1,6 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import {logoutUser} from '../../actions/actions';
+var React = require('react');
+var connect = require('react-redux').connect;
+var logoutUser = require('../../actions/actions').logoutUser;
 
 var Logout = React.createClass({
     render: function (props){
@@ -31,4 +31,4 @@ var mapDispatchToProps = function(dispatch) {
         };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Logout);
+module.exports = connect(mapStateToProps, mapDispatchToProps)(Logout);

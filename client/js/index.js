@@ -1,32 +1,33 @@
-import 'babel-polyfill';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import { Provider } from 'react-redux';
-import { browserHistory, hashHistory, IndexRoute, Link, Route, Router } from 'react-router';
-
-import App from './components/App';
-import Homepage from './components/Homepage';
-import Header from './components/Header';
-import Register from './components/account/Register';
-import MyAccount from './components/account/MyAccount';
-import ChangePassword from './components/account/ChangePassword';
-import DeleteAccount from './components/account/DeleteAccount';
-import Login from './components/account/Login';
-import Logout from './components/account/Logout';
-import StickyList from './components/sticky/StickyList';
-import reducers from './reducers/reducers';
-
+var React = require('react');
+var ReactDOM = require('react-dom');
+var redux = require('redux');
+var createStore = redux.createStore;
+var applyMiddleware = redux.applyMiddleware;
+var thunk = require('redux-thunk').default;
+var Provider = require('react-redux').Provider;
+var router = require('react-router');
+var Router = router.Router;
+var Route = router.Route;
+var IndexRoute = router.IndexRoute;
+var browserHistory = router.browserHistory;
 var injectTapEventPlugin = require('react-tap-event-plugin');
+
+var App = require('./components/App');
+var Homepage = require('./components/Homepage');
+var Register = require ('./components/account/Register');
+var MyAccount = require('./components/account/MyAccount');
+var Login = require('./components/account/Login');
+var Logout = require('./components/account/Logout');
+var StickyList = require('./components/sticky/StickyList');
+var reducers = require('./reducers/reducers').stickyReducer;
+
 //use with material-ui to prevent "Unknown prop 'onTouchTap' on <label> tag error"
 injectTapEventPlugin();
 
 console.log(`Client running in ${process.env.NODE_ENV} mode`);
 
-export let store = createStore(reducers, applyMiddleware(thunk));
-// <Route path="/myaccount/changepassword" component={ChangePassword} />
-// <Route path="/myaccount/deleteaccount" component={DeleteAccount} />
+var store = createStore(reducers, applyMiddleware(thunk));
+
 var routes = (
     <Router history={browserHistory}>
         <Route path="/" component={App}>
@@ -48,3 +49,5 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('app')
     );
 });
+
+exports.store = store;

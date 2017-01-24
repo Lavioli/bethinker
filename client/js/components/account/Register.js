@@ -1,7 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { registerRequest } from '../../actions/actions';
-import { connect } from 'react-redux';
+var React = require('react');
+var registerRequest = require('../../actions/actions').registerRequest;
+var connect = require('react-redux').connect;
 import TextField from 'material-ui/TextField';
 import {Card, CardActions, CardHeader} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
@@ -38,7 +37,7 @@ var Register = React.createClass({
                       title="Register for an account"
                       className="card_header"
                     />
-                    <form 
+                    <form
                         onSubmit={this.onLinkClick}
                     >
                        <TextField
@@ -62,8 +61,8 @@ var Register = React.createClass({
                           required={true}
                         />
                         <CardActions style={styles.containerheight}>
-                          <FlatButton 
-                            type="submit" 
+                          <FlatButton
+                            type="submit"
                             label="submit"
                             onSubmit={this.onLinkClick}
                             backgroundColor="#00BCD4"
@@ -87,4 +86,4 @@ function mapDispatchToProps (dispatch) {
     };
 }
 
-export default connect(null,mapDispatchToProps)(Register);
+module.exports = connect(null,mapDispatchToProps)(Register);
