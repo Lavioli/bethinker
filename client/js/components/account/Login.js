@@ -14,7 +14,7 @@ var Login = React.createClass({
         e.target.reset();
     },
     
-    render: function() {
+    render: function(props) {
         var styles = {
             cardContainerStyle: {
                 display: 'inline-block',
@@ -32,6 +32,7 @@ var Login = React.createClass({
         }
         return (
             <div className="Login">
+                <div>{this.props.loginError}</div>
                 <Card 
                     style={styles.cardContainerStyle} 
                     className="login-page"
@@ -71,6 +72,11 @@ var Login = React.createClass({
     }
 });
 
+function mapStateToProps(state) {
+    return {
+        loginError: state.loginError
+    };
+}
 
 function mapDispatchToProps (dispatch) {
     return {
@@ -80,4 +86,4 @@ function mapDispatchToProps (dispatch) {
     };
 }
 
-module.exports = connect(null,mapDispatchToProps)(Login);
+module.exports = connect(mapStateToProps,mapDispatchToProps)(Login);

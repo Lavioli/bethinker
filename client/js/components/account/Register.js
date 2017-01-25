@@ -1,15 +1,32 @@
 var React = require('react');
 var connect = require('react-redux').connect;
-var registerRequest = require('../../actions/actions').registerRequest;
 import TextField from 'material-ui/TextField';
 import {Card, CardActions, CardHeader} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+
+var registerRequest = require('../../actions/actions').registerRequest;
+var registerError = require('../../actions/actions').registerError;
 
 var Register = React.createClass({
 
     onLinkClick: function (e) {
         e.preventDefault();
-        this.props.onRegisterSubmit(this.refs.usernameText.getValue(), this.refs.passwordText.getValue());
+        var username = this.refs.usernameText.getValue(),
+            password = this.refs.passwordText.getValue(),
+            reenteredPassword = this.refs.reenterPasswordText.getValue();
+        if(username.length < 4) {
+            this.props.submitRegisterError('Please enter a username longer than 3 characters.');
+            return e.target.reset();
+        }
+        else if (password.length < 4) {
+            this.props.submitRegisterError('Please enter a password longer than 3 characters.');
+            return e.target.reset();
+        }
+        else if (password !== reenteredPassword) {
+            this.props.submitRegisterError('Password does not match. Please re-enter your password.');
+            return e.target.reset();
+        }
+        this.props.onRegisterSubmit(username, password);
         e.target.reset();
     },
 
@@ -30,6 +47,7 @@ var Register = React.createClass({
         };
         return (
             <div className="Register">
+                <div>{this.props.registerError}</div>
                 <Card
                     style={styles.cardStyle}
                 >
@@ -77,13 +95,23 @@ var Register = React.createClass({
     }
 });
 
+var mapStateToProps = function(state) {
+    return {
+        currentUser: state.currentUser,
+        stickies: state.stickies,
+        registerError: state.registerError
+    };
+};
 
 function mapDispatchToProps (dispatch) {
     return {
         onRegisterSubmit: function(username, password) {
             dispatch(registerRequest(username, password));
+        },
+        submitRegisterError: function(errorMsg) {
+            dispatch(registerError(errorMsg));
         }
     };
 }
 
-module.exports = connect(null,mapDispatchToProps)(Register);
+module.exports = connect(mapStateToProps, mapDispatchToProps)(Register);
