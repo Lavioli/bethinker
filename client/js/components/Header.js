@@ -21,7 +21,6 @@ module.exports = function(props) {
             <IconMenu
                 iconButtonElement={
                     <IconButton
-                        style={styles.iconcolor}
                         id="icon-button"
                     >
                         <Menu/>
