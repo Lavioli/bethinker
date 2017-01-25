@@ -105,12 +105,18 @@ legend {
 }
 #sticky_container {
   background-color: #F7E2AD;
-  
   .title {
     word-wrap: break-word;
+    font-weight: 400;
+    font-size: 1.3em;
+    padding: 0.5em;
   }
   .content {
     word-wrap: break-word;
+  }
+  #sticky_buttons {
+    text-align: end;
+    background-color: rgba(255, 193, 7, 0.24);
   }
 }
 
@@ -163,8 +169,8 @@ legend {
 }
 .edit_sticky_container {
   background-color:#F9EED1;
-  min-width: 250px;
-  max-width: 250px;
+  min-width: 25em;
+  max-width: 25em;
   display: inline;
   margin: 22px;
   float: left;
@@ -184,7 +190,7 @@ legend {
   color: #042133;
 }
 
- .input {
+.input {
   height: 25px;
   font-size: 14pt;
   border-radius: 8px;
@@ -195,19 +201,19 @@ legend {
   margin-top: 25px;
   margin-bottom: 25px;
   padding: 10px;
-  
- }
- .login-page{
-   text-align:center;
- }
- .submit-button {
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    margin: 4px 2px;
-    cursor: pointer;
- }
+
+}
+.login-page{
+  text-align:center;
+}
+.submit-button {
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+}
 
 span.username {
   font-size: 2em;
@@ -233,8 +239,6 @@ span.password{
  
   }
 }
-
-  
 
 @media screen and (max-width:680px) {
   #app_title {
