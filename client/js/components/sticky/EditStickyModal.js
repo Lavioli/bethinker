@@ -1,19 +1,15 @@
 var React = require('react');
 import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import IconButton from 'material-ui/IconButton';
-import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
+import FlatButton from 'material-ui/FlatButton'; 
 import TextField from 'material-ui/TextField';
-
 
 module.exports = React.createClass ({
   submitEditedSticky: function(e) {
     e.preventDefault();
     this.props.editSticky(this.props.sticky._id, this.refs.title.getValue(), this.refs.content.getValue());
-    this.handleClose();
+    this.props.handleClose();
 
   },
-
   render: function() {
     var actions = [
       <FlatButton
