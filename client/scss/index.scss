@@ -148,6 +148,12 @@ legend {
 .card_header > div {
   padding-right: 0 !important;
 }
+
+#icon-button div svg{
+  height: 36px !important;
+  color: white !important;
+  width: inherit !important;
+}
 /*****************CLASSES*********************/
 
 .edit_sticky_modal{
