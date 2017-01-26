@@ -25,7 +25,16 @@ module.exports = React.createClass({
             return <span className="navBar">
             <AppBar
             showMenuIconButton={false} 
-            title="Bethinker">
+            title={
+                <Link 
+                    to="/"
+                    id="header-link"
+                >
+                    <span id="bethinker-heading">Bethinker</span>
+                </Link>
+            }
+            >
+                
                 <IconMenu
                     iconButtonElement={
                         <IconButton
@@ -59,7 +68,14 @@ module.exports = React.createClass({
             return <span className="navBar">
             <AppBar 
             showMenuIconButton={false}
-            title="Bethinker"
+            title={
+                <Link 
+                    to="/"
+                    id="header-link"
+                >
+                    <span id="bethinker-heading">Bethinker</span>
+                </Link>
+            }
             >
                 <IconMenu
                         iconButtonElement={
@@ -92,7 +108,6 @@ module.exports = React.createClass({
                             onTouchTap={this.handleClose}
                         />
                     </Link>
-
                 </IconMenu>
             </AppBar>
             </span>
