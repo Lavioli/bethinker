@@ -80,6 +80,12 @@ module.exports = React.createClass({
                             onTouchTap={this.handleClose}
                         />
                     </Link>
+                    <Link to="/stickies">
+                        <MenuItem 
+                            primaryText="My Stickies"
+                            onTouchTap={this.handleClose}
+                        />
+                    </Link>
                     <Link to="/logout">
                         <MenuItem 
                             primaryText="Logout"

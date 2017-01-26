@@ -33,22 +33,24 @@ function stickyReducer(state, action) {
 
     switch(action.type) {
         case REGISTER_ERROR:
+            console.log(action.payload);
             return Object.assign({}, state, {
-                registerError: true,
-                error: action.payload
+                registerError: action.payload
             });
 
         case LOGIN_SUCCESSFUL:
             return Object.assign({}, state, {
                 isAuthenticated: true,
                 hash: action.payloadHash,
-                currentUser: action.payloadUsername
+                currentUser: action.payloadUsername,
+                loginError: null,
+                registerError: null
             });
 
         case LOGIN_FAIL:
             return Object.assign({}, state, {
                 isAuthenticated: false,
-                error: action.payload
+                loginError: action.payload
             });
 
         case LOGOUT_USER_NOW:
