@@ -61,21 +61,18 @@ legend {
 #app_subline{
   font-size: 4em;
   text-align: center;
-  position: fixed;
-  top: 80%;
-  left: 50%;
-  /* bring your own prefixes */
-  transform: translate(-50%, -50%);
+  position: static;
+  padding-top: 7em;
 }
 #delete_button {
   float: right;
-    border: none;
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    border-radius: 1px;
+  border: none;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  border-radius: 1px;
 }
 #done_button {
   background-color: green;
@@ -153,6 +150,18 @@ legend {
   height: 36px !important;
   color: white !important;
   width: inherit !important;
+}
+
+#bethinker-heading {
+  color: white;
+}
+
+#bethinker-heading:hover {
+  text-decoration: none;
+}
+
+#header-link:hover {
+  color: transparent;
 }
 /*****************CLASSES*********************/
 

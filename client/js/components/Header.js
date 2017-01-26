@@ -20,16 +20,28 @@ module.exports = React.createClass({
     handleClose: function() {
         this.setState({open: false});
     },
+    handleOpenCloseToggle: function() {
+        this.setState({open: !this.state.open})
+    },
     render: function () {
         if (!this.props.currentUser) {
             return <span className="navBar">
             <AppBar
             showMenuIconButton={false} 
-            title="Bethinker">
+            title={
+                <Link 
+                    to="/"
+                    id="header-link"
+                >
+                    <span id="bethinker-heading">Bethinker</span>
+                </Link>
+            }
+            >
                 <IconMenu
                     iconButtonElement={
                         <IconButton
                             id="icon-button"
+                            onBlur={this.handleOpenCloseToggle}
                         >
                             <Menu/>
                         </IconButton>
@@ -37,7 +49,7 @@ module.exports = React.createClass({
                     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                     targetOrigin={{horizontal: 'right', vertical: 'bottom'}}
                     open={this.state.open}
-                    onTouchTap={this.handleOpen}
+                    onTouchTap={this.handleOpenCloseToggle}
                 >   
                     <Link to="/login">
                         <MenuItem 
@@ -59,12 +71,20 @@ module.exports = React.createClass({
             return <span className="navBar">
             <AppBar 
             showMenuIconButton={false}
-            title="Bethinker"
+            title={
+                <Link 
+                    to="/"
+                    id="header-link"
+                >
+                    <span id="bethinker-heading">Bethinker</span>
+                </Link>
+            }
             >
                 <IconMenu
                         iconButtonElement={
                             <IconButton  
                                 id="icon-button"
+                                onBlur={this.handleOpenCloseToggle}
                             >
                                 <Menu/>
                             </IconButton>
@@ -92,7 +112,6 @@ module.exports = React.createClass({
                             onTouchTap={this.handleClose}
                         />
                     </Link>
-
                 </IconMenu>
             </AppBar>
             </span>
