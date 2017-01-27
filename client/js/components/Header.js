@@ -13,108 +13,87 @@ module.exports = React.createClass({
             open: false
         }
     },
-    handleOpen: function() {
+    handleOpen: function(e) {
+        e.preventDefault();
         this.setState({open: true});
     },
 
-    handleClose: function() {
+    handleClose: function(e) {
+        e.preventDefault();
         this.setState({open: false});
     },
-    handleOpenCloseToggle: function() {
+    handleOpenCloseToggle: function(e) {
+        e.preventDefault();
         this.setState({open: !this.state.open})
     },
     render: function () {
         if (!this.props.currentUser) {
+            console.log(this.state)
             return <span className="navBar">
-            <AppBar
-            showMenuIconButton={false} 
-            title={
-                <Link 
-                    to="/"
-                    id="header-link"
-                >
-                    <span id="bethinker-heading">Bethinker</span>
-                </Link>
-            }
-            >
-                <IconMenu
-                    iconButtonElement={
-                        <IconButton
-                            id="icon-button"
-                            onBlur={this.handleOpenCloseToggle}
-                        >
-                            <Menu/>
-                        </IconButton>
-                    }
-                    anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                    targetOrigin={{horizontal: 'right', vertical: 'bottom'}}
-                    open={this.state.open}
-                    onTouchTap={this.handleOpenCloseToggle}
-                >   
-                    <Link to="/login">
-                        <MenuItem 
-                            primaryText="Login"
-                            onTouchTap={this.handleClose}
-                        />
-                    </Link>
-                    <Link to="/register">
-                        <MenuItem 
-                            primaryText="Register"
-                            onTouchTap={this.handleClose}
-                        />
-                    </Link>
-                </IconMenu>
-            </AppBar>
-            </span>
+                        <AppBar
+                        showMenuIconButton={false} 
+                        title="Bethinker">
+                            <IconMenu
+                                iconButtonElement={
+                                    <IconButton
+                                        id="icon-button"
+                                        onClick={this.handleOpenCloseToggle}
+                                    >
+                                        <Menu 
+                                            onBlur={this.handleClose}
+                                        />
+                                    </IconButton>
+                                }
+                                anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                                targetOrigin={{horizontal: 'right', vertical: 'bottom'}}
+                                open={this.state.open}
+                                onClick={this.handleOpenCloseToggle}
+                                onItemTouchTap={this.handleOpenCloseToggle}
+                            >   
+                                <Link to="/login">
+                                    <MenuItem primaryText="Login"/>
+                                </Link>
+                                <Link to="/register">
+                                    <MenuItem primaryText="Register"/>
+                                </Link>
+                            </IconMenu>
+                        </AppBar>
+                    </span>
         }
         else {
             return <span className="navBar">
-            <AppBar 
-            showMenuIconButton={false}
-            title={
-                <Link 
-                    to="/"
-                    id="header-link"
-                >
-                    <span id="bethinker-heading">Bethinker</span>
-                </Link>
-            }
-            >
-                <IconMenu
-                        iconButtonElement={
-                            <IconButton  
-                                id="icon-button"
-                                onBlur={this.handleOpenCloseToggle}
-                            >
-                                <Menu/>
-                            </IconButton>
-                        }
-                        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                        targetOrigin={{horizontal: 'right', vertical: 'bottom'}}
-                        open={this.state.open}
-                        onTouchTap={this.handleOpen}
-                    >   
-                    <Link to="/">
-                        <MenuItem 
-                            primaryText="Home"
-                            onTouchTap={this.handleClose}
-                        />
-                    </Link>
-                    <Link to="/stickies">
-                        <MenuItem 
-                            primaryText="My Stickies"
-                            onTouchTap={this.handleClose}
-                        />
-                    </Link>
-                    <Link to="/logout">
-                        <MenuItem 
-                            primaryText="Logout"
-                            onTouchTap={this.handleClose}
-                        />
-                    </Link>
-                </IconMenu>
-            </AppBar>
-            </span>
+                        <AppBar
+                        showMenuIconButton={false} 
+                        title="Bethinker">
+                            <IconMenu
+                                iconButtonElement={
+                                    <IconButton
+                                        id="icon-button"
+                                        onClick={this.handleOpenCloseToggle}
+                                    >
+                                        <Menu 
+                                            onBlur={this.handleClose}
+                                        />
+                                    </IconButton>
+                                }
+                                anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                                targetOrigin={{horizontal: 'right', vertical: 'bottom'}}
+                                open={this.state.open}
+                                onClick={this.handleOpenCloseToggle}
+                                onItemTouchTap={this.handleOpenCloseToggle}
+                            >   
+                                <Link to="/">
+                                    <MenuItem primaryText="Home"/>
+                                </Link>
+                                <Link to="/stickies">
+                                    <MenuItem primaryText="My Stickies"/>
+                                </Link>
+                                <Link to="/logout">
+                                    <MenuItem primaryText="Logout"/>
+                                </Link>
+                            </IconMenu>
+                        </AppBar>
+                    </span>
         }
     }
 });
