@@ -50,6 +50,7 @@ var Register = React.createClass({
                 <div>{this.props.registerError}</div>
                 <Card
                     style={styles.cardStyle}
+                    className="register-page"
                 >
                     <CardHeader
                       title="Register for an account"

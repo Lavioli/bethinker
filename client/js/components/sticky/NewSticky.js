@@ -29,7 +29,7 @@ var NewSticky = React.createClass({
             cardStyle: {
                 display: 'inline-block',
                 width: '50em',
-                marginTop: '5em'
+                margin: '10% 0% 10%'
             }
         }
         return (

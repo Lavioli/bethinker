@@ -176,7 +176,7 @@ legend {
   font-family: 'Roboto', sans-serif;
 }
 .Register {
-  padding:20px;
+  padding: 3%;
 
   height:523px;
   text-align:center;
@@ -290,6 +290,12 @@ span.password{
   .edit_sticky_container {
     min-width: 88%;
     max-width: 90%;
+  }
+  .login-page {
+    width: 22em !important;
+  }
+  .register-page {
+    width: 22em !important;
   }
 }
 
