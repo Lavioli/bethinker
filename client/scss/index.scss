@@ -176,7 +176,7 @@ legend {
   font-family: 'Roboto', sans-serif;
 }
 .Register {
-  padding:20px;
+  padding: 3%;
 
   height:523px;
   text-align:center;
@@ -239,7 +239,7 @@ span.password{
 
 }
 .sticky_list {
-    margin: 7em;
+    margin: 3em;
 }
 
 .add_sticky_button {
@@ -255,17 +255,57 @@ span.password{
   }
 }
 
+//phone screens
 @media screen and (max-width:680px) {
   #app_title {
   text-align: center;
   font-size: 3.5em;
   top: 10%
-}
+  }
   #app_subline{
     font-size: 2.5em;
     text-align: center;
     position: fixed;
     top: 80%;
     left: 50%;
+  }
+  #new-sticky-wrapper {
+    > div {
+      width: 90% !important;
+      form {
+        > div {
+          &:nth-child(1) {
+            width: 90% !important;
+          }
+          &:nth-child(2) {
+            width: 90% !important;
+          }
+        }
+      }
+    }
+  }
+  .sticky_list {
+    margin: 0;
+  }
+  .edit_sticky_container {
+    min-width: 88%;
+    max-width: 90%;
+  }
+  .login-page {
+    width: 22em !important;
+  }
+  .register-page {
+    width: 22em !important;
+  }
+}
+
+//iPad, iPad Pro
+@media screen and (min-width:681px) and (max-width:1024px) {
+  .sticky_list {
+    margin: 0;
+  }
+  .edit_sticky_container {
+    min-width: 44%;
+    max-width: 44%;
   }
 }

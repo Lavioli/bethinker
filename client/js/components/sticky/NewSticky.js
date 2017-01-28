@@ -24,12 +24,12 @@ var NewSticky = React.createClass({
             textBoxUnderlineStyle: {
                 borderColor: orange500,
                 display: 'block',
-                width: '40em'
+                width: '90%'
             },
             cardStyle: {
                 display: 'inline-block',
                 width: '50em',
-                marginTop: '5em'
+                margin: '10% 0% 10%'
             }
         }
         return (
@@ -59,7 +59,8 @@ var NewSticky = React.createClass({
                     />
                     <CardActions>
                       <RaisedButton 
-                        label="Submit" 
+                        label="Submit"
+                        className="sticky_add_submit"
                         type="submit" 
                         onSubmit={this.onSubmitAddSticky}
                         primary={true}
