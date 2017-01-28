@@ -107,7 +107,7 @@ module.exports = React.createClass({
                                 </Link>
                             </IconMenu>
                         </AppBar>
-                    </span>
+                   </span>
         }
     }
 });
