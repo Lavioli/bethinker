@@ -16,16 +16,16 @@ var REGISTER_SUCCESS = actions.REGISTER_SUCCESS,
     LOGOUT_USER_ERROR = actions.LOGOUT_USER_ERROR;
 
 var initialState = {
-      stickies: [],
-      loginError: null,
-      fetchGetError: null,
-      fetchPostError: null,
-      editPostError: null,
-      deletePostError: null,
-      isAuthenticated: false,
-      registerError: null,
-      hash: null,
-      currentUser: null
+    stickies: [],
+    loginError: null,
+    fetchGetError: null,
+    fetchPostError: null,
+    editPostError: null,
+    deletePostError: null,
+    isAuthenticated: false,
+    registerError: null,
+    hash: null,
+    currentUser: null
 };
 
 function stickyReducer(state, action) {

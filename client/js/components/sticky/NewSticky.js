@@ -1,11 +1,9 @@
 var React = require('react');
 var connect = require('react-redux').connect;
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import {Card, CardActions, CardHeader} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {orange500} from 'material-ui/styles/colors';
-import FloatingActionButton from 'material-ui/FloatingActionButton'
-
 
 var postSticky = require('../../actions/actions').postSticky;
 

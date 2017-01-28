@@ -8,7 +8,6 @@ var registerRequest = require('../../actions/actions').registerRequest;
 var registerError = require('../../actions/actions').registerError;
 
 var Register = React.createClass({
-
     onLinkClick: function (e) {
         e.preventDefault();
         var username = this.refs.usernameText.getValue(),
@@ -48,17 +47,12 @@ var Register = React.createClass({
         return (
             <div className="Register">
                 <div>{this.props.registerError}</div>
-                <Card
-                    style={styles.cardStyle}
-                    className="register-page"
-                >
+                <Card style={styles.cardStyle} className="register-page">
                     <CardHeader
                       title="Register for an account"
                       className="card_header"
                     />
-                    <form 
-                        onSubmit={this.onLinkClick}
-                    >
+                    <form onSubmit={this.onLinkClick}>
                        <TextField
                           hintText="Type username here"
                           floatingLabelText="Username"
@@ -90,7 +84,7 @@ var Register = React.createClass({
                           />
                         </CardActions>
                     </form>
-              </Card>
+                </Card>
             </div>
         );
     }

@@ -1,5 +1,6 @@
 var React = require('react');
 var connect = require('react-redux').connect;
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 var NewSticky = require('./NewSticky');
 var Sticky = require('./Sticky');
@@ -7,10 +8,7 @@ var fetchStickies = require('../../actions/actions').fetchStickies;
 var deleteSticky = require('../../actions/actions').deleteSticky;
 var editSticky = require('../../actions/actions').editSticky;
 
-//google material UI theme provider
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
-var clickToDisplay = false;
+// var clickToDisplay = false;
 
 var StickyList = React.createClass({
     componentDidMount: function() {
@@ -19,15 +17,15 @@ var StickyList = React.createClass({
     
     render: function(props) {
         //bind allows us to bind the function to this(StickyList) component specifically, so child(Sticky) can easily grab this prop
-        var deleteSticky = this.props.deleteSticky.bind(this);
-        var editSticky = this.props.editSticky.bind(this);
+        // var deleteSticky = this.props.deleteSticky.bind(this);
+        // var editSticky = this.props.editSticky.bind(this);
         var stickyList = this.props.stickies.map(
             function(sticky, index) {
                 return (
                     <Sticky sticky={sticky}
                     key={index}
                     />
-                )
+                );
             }
         );
         return (

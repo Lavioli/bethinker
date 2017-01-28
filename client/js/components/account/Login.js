@@ -1,11 +1,11 @@
 var React = require('react');
-var loginRequest = require('../../actions/actions').loginRequest;
 var connect = require('react-redux').connect;
 
 import TextField from 'material-ui/TextField';
-import Paper from 'material-ui/Paper';
-import {Card, CardActions, CardHeader} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import {Card, CardActions, CardHeader} from 'material-ui/Card';
+
+var loginRequest = require('../../actions/actions').loginRequest;
 
 var Login = React.createClass({
     onSubmit: function (e) {
