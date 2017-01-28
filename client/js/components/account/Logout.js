@@ -1,13 +1,14 @@
 var React = require('react');
 var connect = require('react-redux').connect;
+
 var logoutUser = require('../../actions/actions').logoutUser;
 
 var Logout = React.createClass({
     render: function (props){
         return (
             <div className="Logout">
-                        <p className="logoutMessage">Thanks for stopping by, {this.props.previousUser}!</p>
-                        <p className="logoutMessage">Remember, Stick It so you can Forget It.</p>
+                <p className="logoutMessage">Thanks for stopping by, {this.props.previousUser}!</p>
+                <p className="logoutMessage">Remember, Stick It so you can Forget It.</p>
             </div>
         );
     },

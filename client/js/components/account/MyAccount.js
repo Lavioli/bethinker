@@ -1,7 +1,8 @@
 var React = require('react');
-var registerRequest = require('../../actions/actions').registerRequest;
 var connect = require('react-redux').connect;
 var Link = require('react-router').Link;
+
+var registerRequest = require('../../actions/actions').registerRequest;
 
 var MyAccountChoices = (currentUser) => {
     if (!currentUser) {
@@ -10,8 +11,8 @@ var MyAccountChoices = (currentUser) => {
         ];
     } else {
         return [
-             <li key="1"><Link to="myaccount/changepassword">Change Password</Link></li>,
-             <li key="2"><Link to="myaccount/deleteaccount">Delete My Account</Link></li>
+            <li key="1"><Link to="myaccount/changepassword">Change Password</Link></li>,
+            <li key="2"><Link to="myaccount/deleteaccount">Delete My Account</Link></li>
         ];
     }
 };
