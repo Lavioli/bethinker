@@ -254,13 +254,6 @@ function deleteSticky(stickyId) {
   };
 }
 
-// var DELETE_STICKY_SUCCESS = 'DELETE_STICKY_SUCCESS';
-// function deleteStickySuccess(stickyArray) {
-//     return {
-//         type: DELETE_STICKY_SUCCESS,
-//     };
-// }
-
 var DELETE_STICKY_ERROR = 'DELETE_STICKY_ERROR';
 function deleteStickyError(error) {
     return {
