@@ -10,7 +10,7 @@ module.exports = React.createClass({
     getInitialState: function() {
         return {
             open: false
-        }
+        };
     },
     handleOpen: function(e) {
         e.preventDefault();
@@ -23,7 +23,7 @@ module.exports = React.createClass({
     },
     handleOpenCloseToggle: function(e) {
         e.preventDefault();
-        this.setState({open: !this.state.open})
+        this.setState({open: !this.state.open});
     },
     render: function () {
         if (!this.props.currentUser) {
@@ -64,7 +64,7 @@ module.exports = React.createClass({
                                 </Link>
                             </IconMenu>
                         </AppBar>
-                    </span>
+                    </span>;
         }
         else {
             return <span className="navBar">
@@ -107,7 +107,7 @@ module.exports = React.createClass({
                                 </Link>
                             </IconMenu>
                         </AppBar>
-                   </span>
+                   </span>;
         }
     }
 });
