@@ -28,7 +28,6 @@ module.exports = React.createClass({
     },
     render: function () {
         if (!this.props.currentUser) {
-            console.log(this.state)
             return <span className="navBar">
                         <AppBar
                         showMenuIconButton={false} 
