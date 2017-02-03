@@ -24,7 +24,6 @@ stickyRouter.get('/users/:username/stickies', passport.authenticate('basic', {se
         }
         return res.status(200).json(stickies);
     });
-
 });
 
 //should allow authorized users to delete their sticky
@@ -114,7 +113,6 @@ stickyRouter.put("/users/:username/stickies/:stickyId", passport.authenticate('b
             }
 
     });
-
 });
 
 module.exports = stickyRouter;
