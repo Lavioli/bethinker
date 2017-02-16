@@ -69,47 +69,49 @@ module.exports = React.createClass({
             );
         }
         else {
-            return <span className="navBar">
-                        <AppBar
-                        showMenuIconButton={false} 
-                        title={
-                            <Link 
-                              to="/"
-                              id="header-link"
-                            >
-                              <span id="bethinker-heading">Bethinker</span>
-                            </Link>
-                        }
+            return (
+                <span className="navBar">
+                    <AppBar
+                    showMenuIconButton={false} 
+                    title={
+                        <Link 
+                          to="/"
+                          id="header-link"
                         >
-                            <IconMenu
-                                iconButtonElement={
-                                    <IconButton
-                                        id="icon-button"
-                                        onClick={this.handleOpenCloseToggle}
-                                    >
-                                        <Menu 
-                                            onBlur={this.handleClose}
-                                        />
-                                    </IconButton>
-                                }
-                                anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                                targetOrigin={{horizontal: 'right', vertical: 'bottom'}}
-                                open={this.state.open}
-                                onClick={this.handleOpenCloseToggle}
-                                onItemTouchTap={this.handleOpenCloseToggle}
-                            >   
-                                <Link to="/">
-                                    <MenuItem primaryText="Home"/>
-                                </Link>
-                                <Link to="/stickies">
-                                    <MenuItem primaryText="My Stickies"/>
-                                </Link>
-                                <Link to="/logout">
-                                    <MenuItem primaryText="Logout"/>
-                                </Link>
-                            </IconMenu>
-                        </AppBar>
-                   </span>;
+                          <span id="bethinker-heading">Bethinker</span>
+                        </Link>
+                    }
+                    >
+                        <IconMenu
+                            iconButtonElement={
+                                <IconButton
+                                    id="icon-button"
+                                    onClick={this.handleOpenCloseToggle}
+                                >
+                                    <Menu 
+                                        onBlur={this.handleClose}
+                                    />
+                                </IconButton>
+                            }
+                            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                            targetOrigin={{horizontal: 'right', vertical: 'bottom'}}
+                            open={this.state.open}
+                            onClick={this.handleOpenCloseToggle}
+                            onItemTouchTap={this.handleOpenCloseToggle}
+                        >   
+                            <Link to="/">
+                                <MenuItem primaryText="Home"/>
+                            </Link>
+                            <Link to="/stickies">
+                                <MenuItem primaryText="My Stickies"/>
+                            </Link>
+                            <Link to="/logout">
+                                <MenuItem primaryText="Logout"/>
+                            </Link>
+                        </IconMenu>
+                    </AppBar>
+                </span>
+            );
         }
     }
 });
